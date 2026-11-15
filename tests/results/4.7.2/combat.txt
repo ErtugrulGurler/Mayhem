@@ -1,0 +1,8 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: UI buttons construct the correct tower types
+PASS: Towers automatically acquire enemies and fire
+PASS: Real-time projectiles kill enemies and award gold
+PASS: A full wave resolves through real-time gameplay
+PASS: First wave is survivable
+COMBAT TEST FAILURES: 0
