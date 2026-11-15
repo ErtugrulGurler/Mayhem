@@ -1,0 +1,20 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS: Session starts with 240 gold and 20 lives
+PASS: Nine build sites available
+PASS: Builds two distinct towers and debits costs
+PASS: Cannot build without enough gold
+PASS: Cannot overwrite an occupied site
+PASS: Upgrades improve damage and cap at level 3
+PASS: All three enemy types instantiate
+PASS: A kill grants its reward exactly once
+PASS: Cannon splash affects only nearby enemies
+PASS: Enemy follows the route
+PASS: Escaping enemy costs one life
+PASS: Cannot start overlapping waves
+PASS: First wave spawns eight enemies
+PASS: Wave completes only after all enemies leave
+PASS: Next wave increases enemy count
+PASS: Zero lives pauses gameplay and shows restart
+PASS: Restart reloads a clean playable session
+SMOKE TEST FAILURES: 0

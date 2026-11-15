@@ -10,8 +10,8 @@ GDScript ve Godot Compatibility renderer kullanır. Grafikler tamamen proje içi
 4. **Dalgayı başlat** düğmesine bas. Dalgalar arasında altınını harcayıp hazırlanabilirsin.
 5. Kurulu kuleye dokunarak seviye 3'e kadar yükselt. Can sıfır olursa **Yeniden başlat**.
 
-Hedef editör **Godot 4.7.2**. Bu ortamda yalnızca **4.6.3 stable** bulundu; testler bu sürümde yapıldı. Proje kararlı Godot 4.x API'lerini kullanır; **4.7.2 üzerinde doğrulama henüz yapılmadı**.
-`config/features` içindeki 4.6, kullanılan API tabanını belirtir.
+Hedef ve doğrulanan editör **Godot 4.7.2 stable** (`ed1daf0bf`). Resmi Linux paketiyle headless import, açılış ve 22 otomatik kontrol geçti. İlk prototip ayrıca 4.6.3 ile test edilmişti; geliştirme hedefi 4.7.2 olarak korunur.
+`config/features` hedef Godot 4.7 serisini belirtir; geliştirme hedefi 4.7.2’dir.
 
 ## Prototip
 - Kıvrımlı yol, dokuz inşa noktası, ağaçlar, taşlar ve çiçeklerle renkli çayır.
