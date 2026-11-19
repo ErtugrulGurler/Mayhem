@@ -1,0 +1,30 @@
+# MAYHEM — CODEX CLOUD IMPLEMENTATION TASK (2026-11-19)
+
+## Repository and workflow
+Repo: **ErtugrulGurler/Mayhem**, default branch **main**. Work on a **new feature branch**, NOT directly on main. Existing repo contains a working classic path-based TD prototype; this is NOT the desired game. Preserve it as legacy (Git history / backup folder or tag as appropriate), but implement the new gameplay within the SAME repo. Build and test in Codex Cloud, commit/push branch, create a PR targeting main. Do NOT merge the PR yourself. User merges/reviews then pulls the updated main to Android Godot.
+
+**Authoritative documents:** Read `docs/DESIGN_V0_4.md` and `docs/REQUIREMENTS_V0_1.md` fully before coding. Newer rules in this task take precedence if documents conflict. Do NOT substitute the prior assistant-generated ZIP for doing the work: generate and validate the project in the repository.
+
+## Deliverable: P0 vertical slice, not fake full game
+Godot 4.7.2 + GDScript, Compatibility renderer, Android landscape, touch/twin-stick controls, simple nonpixel cartoon placeholders. A modular data-driven prototype where user can TRY functional interactions. Keep 4 basic character definitions (distinct melee/skills, no in-depth art), only one map sufficient in P0. Prioritize mechanics and readability, not pretty graphics.
+
+Aim for playable representative loops:
+1. Session starts at wave 1 with a vulnerable central HP objective, zero walls/production. Players gather basic resources by interaction, limited inventory and physical delivery. Small items in inventory; larger loads via carried object/tool. All physical resources belong to team, no abstract currency.
+2. Place walls, turret, storage, infirmary, crafting workshop, source/extractor, production machines on free terrain with smart snap. Materials physically delivered to build site; timed self-completing construction; structures can be damaged/destroyed while building; dismantle refunds only some materials. Storage capacity limited, destroyed depot drops some contents (not all).
+3. Show a representative 2–4 stage production line: resource -> intermediate -> ammo -> defense; machine output buffer finite and blocking; conveyor/splitter logistics; after wave 10 automation unlocks. Resource supply includes renewable and finite types; advancing technologies appear in 20-wave eras. For P0 you may include a debug shortcut to preview each era rather than implementing six complete eras.
+4. Electrical systems shown through a simple generator + cable + consumer, damaged wires cut power immediately; no automatic reserve. Local HP and visual damage status, distant warning only on critical attack; no global management dashboard.
+5. Continuous minor threat plus finite wave main assaults; main wave clearance increments level. Wave 5,10,15... checkpoint. Boss every 10, strong assault at intervening fifth wave. Core danger always felt; saboteurs sometimes target production and transports. Different enemy roles may pathfind/break/avoid walls.
+6. Left joystick 360 movement; right joystick shoots toward aim while held, no aim assist. One fixed melee per character, two swappable weapon slots; cooldown skills no mana; limited physical ammo, reload; optional weapon parts attached only at workshop. Weapon durability OFF. Random era-appropriate drop (auto pickup healing/temporary effects; manual weapons/resources).
+7. Downed-state bleedout, crawl/self-rescue attempt, team rescue. In co-op if any team member alive, fully dead player revives after a delay; active infirmary shortens it. Solo fully dead -> checkpoint. Entire team down simultaneously or central objective destroyed -> checkpoint rollback or restart vote. Checkpoint stores full world; temporary pause-save resumes exact scene; retry changes attack variations but not boss identity/era.
+8. End-run stats: time survived, max wave, enemy kills, player direct damage, turret damage separately, resources harvested; wave retry attempts tracked separately. 1/2/3/4-person leaderboards by peak concurrent player count (P1/P2 network service).
+9. Dedicated server and 1–4 real client networking are **P1**, not to be falsely claimed as working in the initial local P0. Session roster allows max four unique players ever; reserved slot on disconnect, returning same identity permitted. Last player leaves => pause and save (P1).
+
+## Architecture and verification
+- Favor separated systems: GameSession, WaveDirector, EnemyAI/Pathfinding, Building/Placement, Inventory/Logistics, Production, Power, Characters/Combat, SaveSnapshot, Statistics/UI. Avoid one 1000+ line game controller. Config/recipes/unit stats data-driven.
+- Add Godot headless tests and automated project import/smoke tests for every implemented P0 subsystem. Test pathfinding with obstacles, material consumption, timings, storage/production buffers, death/checkpoint/retry, power cut, loot rules, serialization. Add CI test workflow if practical.
+- Run actual commands in environment (adapt Godot binary name): `godot --headless --path . --editor --import --quit`, `godot --headless --path . --quit-after 180`, and included test scripts. If Godot isn't available, install or use available runner; never mark tests PASS without executing.
+- No API keys or paid services. Do not infer Android touch is validated by headless tests. Put a clear TEST_RESULTS.md with per-requirement status/command/evidence, list unimplemented P0/P1/P2 features and Android manual test steps.
+- Keep existing working demo recoverable. Ensure new project has a single clear `project.godot` opening path. Commit all changes, push your branch, and open PR to main; in PR give summary + passed/failed/not-run tests and remaining gaps. Do not merge.
+
+## Scope discipline
+This is a large design. If P0 cannot be completed in one task, implement the smallest genuinely playable full gather -> deliver -> build -> produce -> defend -> fail/retry loop and produce an honest unimplemented requirements list. Never replace incomplete features with “done” claims. Future tasks can expand. Prefer reliable, testable gameplay over broad broken mockups.
