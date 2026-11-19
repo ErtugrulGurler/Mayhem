@@ -2,10 +2,10 @@
 config_version=5
 
 [application]
-config/name="Mayhem • Meadow Guard"
-run/main_scene="res://scenes/main.tscn"
+config/name="Mayhem"
+run/main_scene="res://prototype/scenes/session.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
-config/description="A cheerful, touch-first tower defense prototype."
+config/description="Action, physical production and base defense prototype."
 
 [display]
 window/size/viewport_width=960

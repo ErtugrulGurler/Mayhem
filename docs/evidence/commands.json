@@ -1,0 +1,115 @@
+[
+  {
+    "name": "import",
+    "engine": "4.7.2.stable.official.ed1daf0bf",
+    "command": [
+      "godot",
+      "--headless",
+      "--path",
+      ".",
+      "--editor",
+      "--import",
+      "--quit"
+    ],
+    "exit_code": 0,
+    "passed": true
+  },
+  {
+    "name": "startup",
+    "engine": "4.7.2.stable.official.ed1daf0bf",
+    "command": [
+      "godot",
+      "--headless",
+      "--path",
+      ".",
+      "--quit-after",
+      "180"
+    ],
+    "exit_code": 0,
+    "passed": true
+  },
+  {
+    "name": "session_rules",
+    "engine": "4.7.2.stable.official.ed1daf0bf",
+    "command": [
+      "godot",
+      "--headless",
+      "--path",
+      ".",
+      "--script",
+      "tests/session_rules_smoke.gd"
+    ],
+    "exit_code": 0,
+    "passed": true
+  },
+  {
+    "name": "systems",
+    "engine": "4.7.2.stable.official.ed1daf0bf",
+    "command": [
+      "godot",
+      "--headless",
+      "--path",
+      ".",
+      "--script",
+      "tests/p0/systems_test.gd"
+    ],
+    "exit_code": 0,
+    "passed": true
+  },
+  {
+    "name": "loop",
+    "engine": "4.7.2.stable.official.ed1daf0bf",
+    "command": [
+      "godot",
+      "--headless",
+      "--path",
+      ".",
+      "--script",
+      "tests/p0/loop_test.gd"
+    ],
+    "exit_code": 0,
+    "passed": true
+  },
+  {
+    "name": "scene",
+    "engine": "4.7.2.stable.official.ed1daf0bf",
+    "command": [
+      "godot",
+      "--headless",
+      "--path",
+      ".",
+      "--script",
+      "tests/p0/scene_test.gd"
+    ],
+    "exit_code": 0,
+    "passed": true
+  },
+  {
+    "name": "legacy_smoke",
+    "engine": "4.7.2.stable.official.ed1daf0bf",
+    "command": [
+      "godot",
+      "--headless",
+      "--path",
+      ".",
+      "--script",
+      "tests/smoke_test.gd"
+    ],
+    "exit_code": 0,
+    "passed": true
+  },
+  {
+    "name": "legacy_combat",
+    "engine": "4.7.2.stable.official.ed1daf0bf",
+    "command": [
+      "godot",
+      "--headless",
+      "--path",
+      ".",
+      "--script",
+      "tests/combat_test.gd"
+    ],
+    "exit_code": 0,
+    "passed": true
+  }
+]

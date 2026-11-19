@@ -1,0 +1,22 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS E2E smelter starts as material-less construction site
+PASS E2E smelter finishes with harvested delivered materials
+PASS E2E ammo_bench starts as material-less construction site
+PASS E2E ammo_bench finishes with harvested delivered materials
+PASS E2E turret starts as material-less construction site
+PASS E2E turret finishes with harvested delivered materials
+PASS E2E physical ore and fuel loaded
+PASS E2E ore becomes metal
+PASS E2E metal becomes carried ammunition
+PASS E2E physical ammo delivered to defense
+PASS E2E attack warning before spawn
+Loop observation: wave=2 lost=false structures=3 remaining=0 team damage=41.0
+PASS E2E active player and loaded turret resolve actual first wave
+PASS ENM-004 wave five strong attacker
+PASS SAV-001 fifth wave completion emits checkpoint once
+PASS E2E full post-production checkpoint saved
+PASS E2E checkpoint restores physical production world
+PASS ENM-008 fixed boss identity and warning
+PASS ENM-004 wave ten spawns boss
+LOOP: 18 checks, 0 failures

@@ -1,0 +1,106 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS SYS-002 zero free equipment or buildings
+PASS SYS-010 four distinct profiles
+PASS CBT-004 character 0 can gather without tools
+PASS CBT-004 character 1 can gather without tools
+PASS CBT-004 character 2 can gather without tools
+PASS CBT-004 character 3 can gather without tools
+PASS RES-006 inventory capacity
+PASS RES-005 failed spend atomic
+PASS RES-005 local transfer honors capacity
+PASS BLD-009 player occupied area rejected
+PASS MAP-004 river placement rejected
+PASS BLD-009 enemy occupied area rejected
+PASS BLD-001 free placement away from core
+PASS BLD-003 global inventory does not auto build
+PASS BLD-003 distant delivery rejected without consuming
+PASS BLD-003 material arrives physically
+PASS BLD-004 build completes after leaving
+PASS BLD-002 near structure alignment
+PASS BLD-007 repair consumes local resource
+PASS BLD-007 repair respects time cooldown
+PASS BLD-006 dismantle creates physical partial refund
+PASS BLD-005 unfinished building destructible
+PASS RES-007 depot capacity
+PASS RES-008 destroyed depot spills half physical stock
+PASS PRD-003 input starvation
+PASS PRD-003 full output stops consumption
+PASS PRD-004 damaged machine slows
+PASS PRD-001 ore to intermediate metal
+PASS PRD-005 parallel production
+PASS PRD-005 physical machine upgrade
+PASS SYS-004 core zero HP defeats session
+PASS SYS-009 age threshold 1
+PASS SYS-009 age threshold 20
+PASS SYS-009 age threshold 21
+PASS SYS-009 age threshold 40
+PASS SYS-009 age threshold 41
+PASS SYS-009 age threshold 60
+PASS SYS-009 age threshold 61
+PASS SYS-009 age threshold 80
+PASS SYS-009 age threshold 81
+PASS SYS-009 age threshold 100
+PASS SYS-009 age threshold 101
+PASS SYS-009 age threshold 121
+PASS MAP-002 source reachability location 0 variation 0
+PASS MAP-002 source reachability location 0 variation 1
+PASS MAP-002 source reachability location 1 variation 0
+PASS MAP-002 source reachability location 1 variation 1
+PASS RES-002 renewable source rate limited
+PASS RES-002 basic source remains renewable
+PASS RES-003 finite rare source cannot become renewable
+PASS RES-006 heavy carrying slows player
+PASS RES-006 heavy load physically dropped
+PASS CBT-014 separate built clinic healing
+PASS CBT-014 medkit physically consumed
+PASS CBT-010 heal auto, resource requires interaction
+PASS CBT-005 equip produced ranged weapon
+PASS CBT-005 two independent changeable weapon slots
+PASS CBT-007 modification rejected outside workshop
+PASS CBT-007 physical parts installed only at workshop
+PASS CBT-014 damaged clinic cannot rescue
+PASS PWR-002 two physical networks powered
+PASS PWR-003 cut only affects connected network
+PASS PWR-003 disconnected production halts immediately
+PASS PWR-004 overload shuts down whole affected network
+PASS PWR-004 reducing load restores production
+PASS PRD-006 no automation before 11
+PASS PRD-006 physical in-flight packet
+PASS PRD-006 packet arrives in destination buffer
+PASS RES-005 severed conveyor preserves in-flight loot
+PASS CBT-006 cannot reload without physical ammo
+PASS CBT-006 magazine plus reserve
+PASS CBT-001 exact aim direction, ammo consumed
+PASS CBT-015 strong melee no ammo, player attribution
+PASS PRD-011 empty turret cannot shoot
+PASS PRD-011 loaded turret auto fire
+PASS STA-002 team damage separate from direct player
+PASS CBT-002 distinct cooldown skill
+PASS CBT-009 independent dodge
+PASS CBT-012 downed crawl
+PASS SAV-003 solo bleedout defeat
+PASS MAP-002 required source route wood
+PASS MAP-002 required source route stone
+PASS MAP-002 required source route ore
+PASS MAP-002 required source route rare
+PASS MAP-002 required source route heavy
+PASS MAP-004 navigation crosses bridge around river
+PASS ENM-002 siege breaks obstructing wall
+PASS ENM-003 unseen distant production ignored
+PASS ENM-003 visible production targeted
+PASS SAV-002 atomic snapshot write
+PASS SAV-002 full state roundtrip exact including RNG
+PASS SAV-002 next RNG value exact on resume
+PASS ENM-005 retry keeps world/boss, changes attack sub-seed
+PASS STA-003 time and attempt history preserved
+PASS SAV-002 corrupt save rejected
+PASS P1 MODEL roster slot 0
+PASS P1 MODEL roster slot 1
+PASS P1 MODEL roster slot 2
+PASS P1 MODEL roster slot 3
+PASS P1 MODEL fifth identity rejected after disconnect
+PASS P1 MODEL rejoin restores reserved character and gear
+PASS P1 MODEL revive paused with session
+PASS P1 MODEL clinic speeds timed revival
+SYSTEMS: 103 checks, 0 failures
