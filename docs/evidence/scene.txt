@@ -1,0 +1,15 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS F5 exposes character and map selection
+PASS Menu selection starts correct empty session
+PASS SYS-001 camera follows moving player
+PASS SYS-001 zoom changes within limits
+PASS CBT-001 independent simultaneous touch IDs (synthetic)
+PASS CBT-016 releasing move does not release aim
+PASS NFR-006 action HUD area not captured as stick
+PASS Debug skips are explicitly UNRANKED
+PASS Save/Resume UI restores exact state
+PASS SAV-003 defeat invalidates suspend save
+PASS SAV-003 retry UI returns to checkpoint
+PASS SYS-002 new session resets progress
+SCENE: 12 checks, 0 failures
