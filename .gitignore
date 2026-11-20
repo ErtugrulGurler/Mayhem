@@ -4,3 +4,6 @@ build/
 *.aab
 *.keystore
 export_credentials.cfg
+
+# Documentation screenshots are not game textures.
+docs/ux/*.png.import

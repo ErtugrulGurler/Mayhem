@@ -1,11 +1,15 @@
 class_name TwinStickInput
 extends Node
 ## Owns only pointer IDs inside pad circles. World placement has a separate band.
+var enabled := true
 var movement:=Vector2.ZERO
 var aim:=Vector2.ZERO
 var owners: Dictionary={}
 var centers=[Vector2(90,395),Vector2(870,395)]
 func _input(event: InputEvent) -> void:
+	if not enabled:
+		clear()
+		return
 	if event is InputEventScreenTouch:
 		if event.pressed:
 			for side in range(2):

@@ -4,6 +4,7 @@ signal checkpoint_due
 var state: Dictionary
 func _init(initial: Dictionary = {}) -> void:
 	state=MayhemState.fresh() if initial.is_empty() else initial
+	TutorialGuide.ensure(state)
 func tick(dt: float,movement: Vector2=Vector2.ZERO,aim: Vector2=Vector2.ZERO) -> void:
 	if state.lost: return
 	state.core.repair_cd=maxf(0,state.core.repair_cd-dt)
@@ -17,7 +18,9 @@ func tick(dt: float,movement: Vector2=Vector2.ZERO,aim: Vector2=Vector2.ZERO) ->
 	LogisticsSystem.tick(state,dt)
 	CombatSystem.tick(state,dt)
 	EnemySystem.tick(state,dt)
-	if MayhemWaves.tick(state,dt): checkpoint_due.emit()
+	var checkpoint := MayhemWaves.tick(state,dt)
+	TutorialGuide.observe(state)
+	if checkpoint: checkpoint_due.emit()
 func nearest() -> Dictionary:
 	var result: Dictionary={}
 	var distance:=MayhemCatalog.REACH

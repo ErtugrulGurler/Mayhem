@@ -18,9 +18,10 @@ static func tick(s: Dictionary, dt: float, movement: Vector2) -> void:
 			if loot.kind=="heal": p.hp=minf(data.hp,p.hp+25)
 			else: p.buff=5.0
 			s.loot.erase(loot)
-static func gather(s: Dictionary) -> bool:
+static func gather(s: Dictionary, selected: Dictionary = {}) -> bool:
 	if s.player.down: return false
 	for loot in s.loot.duplicate():
+		if not selected.is_empty() and selected != loot: continue
 		if s.player.pos.distance_to(loot.pos)<=MayhemCatalog.REACH:
 			if loot.kind=="heavy":
 				if s.player.heavy: continue
@@ -32,6 +33,7 @@ static func gather(s: Dictionary) -> bool:
 			if loot.amount==0: s.loot.erase(loot)
 			if amount>0: return true
 	for source in s.sources:
+		if not selected.is_empty() and selected != source: continue
 		if s.player.pos.distance_to(source.pos)>MayhemCatalog.REACH or source.cooldown>0 or source.left==0: continue
 		if source.kind=="heavy":
 			if s.player.heavy: continue
