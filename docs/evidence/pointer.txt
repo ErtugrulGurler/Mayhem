@@ -1,0 +1,14 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS Real GUI mouse events activate start button
+PASS Real GUI mouse events open build panel
+PASS First recipe is the tutorial's recommended smelter
+PASS Recipe choice starts a preview, not instant construction
+PASS Confirmation click creates a material-less site
+PASS Menu can be opened with actual pointer dispatch
+PASS Open panel releases and disables stick owners
+PASS Closing panel restores sticks
+PASS Pointer in analog area cannot place buildings
+PASS Synthetic touchscreen tap reaches mobile build button
+PASS Third touch activates skill while both stick IDs remain owned
+POINTER: 11 checks, 0 failures

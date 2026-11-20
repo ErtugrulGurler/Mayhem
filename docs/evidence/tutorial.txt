@@ -1,0 +1,27 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS Tutorial begins with actual wood counter
+PASS Wood collection triggers stone goal
+PASS Stone triggers placement goal
+PASS Mobile confirmation places smelter
+PASS Physical delivery builds smelter
+PASS Placed, delivered, finished smelter triggers metal goal
+PASS Suspend/resume preserves exact tutorial step
+PASS Tutorial can be skipped without blocking gameplay
+PASS Skip preference survives reload
+PASS Reopen resumes same step
+PASS Produced metal must physically reach player
+PASS Collecting metal advances tutorial
+PASS Mobile confirmation places ammo_bench
+PASS Physical delivery builds ammo_bench
+PASS Ammo building teaches its own construction materials
+PASS Ammo recipe produces carried physical ammunition
+PASS Mobile confirmation places turret
+PASS Physical delivery builds turret
+PASS New tower does not auto-spend carried ammo
+PASS Loading tower advances defense goal
+PASS Normal mobile menu starts attack
+PASS Full gather/production/build/defense tutorial completes
+PASS Loaded tower still contributes real projectile damage
+PASS Pre-UX progressed saves migrate without resetting world
+TUTORIAL: 24 checks, 0 failures

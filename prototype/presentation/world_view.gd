@@ -16,12 +16,12 @@ func _draw() -> void:
 	for y in range(470,740,22): draw_line(Vector2(850,y),Vector2(950,y),Color("#8c9066"),3)
 	draw_rect(Rect2(1260,150,140,180),Color("#7b8c83"))
 	label(Vector2(1267,175),"UÇURUM")
+	var active: Dictionary = session.context_target()
 	for source in s.sources:
-		var colors={"wood":Color("#417e50"),"stone":Color("#b5bbb0"),"ore":Color("#af897a"),"rare":Color("#bf94cf"),"heavy":Color("#916c49")}
-		draw_circle(source.pos+Vector2(3,6),26,Color("#5e8c5a"))
-		draw_circle(source.pos,24,colors[source.kind])
-		label(source.pos+Vector2(-28,40),MayhemCatalog.LABELS[source.kind])
-		if source.left>=0: label(source.pos+Vector2(-8,5),str(source.left))
+		draw_circle(source.pos+Vector2(3,15),27,Color(0.15,0.28,0.2,0.18))
+		ObjectGlyphs.draw(self,source.kind,source.pos,Color.WHITE)
+		nameplate(source.pos+Vector2(0,42),MayhemCatalog.LABELS[source.kind].capitalize())
+		if source.left>=0: label(source.pos+Vector2(26,-12),str(source.left),Color("#fff0c4"),14)
 	draw_circle(s.core.pos+Vector2(0,8),47,Color("#476e50"))
 	draw_circle(s.core.pos,37,Color("#e4d29e"))
 	draw_circle(s.core.pos,23,Color("#eea65c"))
@@ -34,24 +34,21 @@ func _draw() -> void:
 				for other in s.structures:
 					if other.id==id:
 						draw_line(b.pos,other.pos,Color("#f9d36f") if b.kind=="cable" else Color("#547e85"),5)
-		var color:=Color(MayhemCatalog.BUILDINGS[b.kind].color)
-		if not b.built: color.a=0.5
-		draw_style_box(box(color),Rect2(b.pos-Vector2(26,24),Vector2(52,48)))
-		draw_circle(b.pos-Vector2(9,7),8,Color("#fff0ca"))
-		if b.kind=="turret":
-			draw_line(b.pos,b.pos+Vector2(27,-8),Color("#4e6070"),9)
-		if b.kind=="smelter": draw_circle(b.pos,11,Color("#f48952"))
-		if b.kind=="clinic":
-			draw_line(b.pos-Vector2(9,0),b.pos+Vector2(9,0),Color("#fff6ea"),5)
-			draw_line(b.pos-Vector2(0,9),b.pos+Vector2(0,9),Color("#fff6ea"),5)
-		if b.hp<b.max_hp*0.5: draw_circle(b.pos-Vector2(0,26),10,Color(0.28,0.24,0.25,0.6))
-		if b.pos.distance_to(s.player.pos)<260:
-			health_bar(b.pos+Vector2(0,-36),b.hp/b.max_hp,48)
-			label(b.pos+Vector2(-30,45),MayhemCatalog.BUILDINGS[b.kind].name,Color("#253d34"),14)
-			if not b.built:
-				label(b.pos+Vector2(-26,60),"%.1f s" % b.progress,Color("#253d34"),13)
-			elif b.kind in ["generator","electric_bench","cable"]:
-				label(b.pos+Vector2(-24,60),"ENERJİ" if b.powered else "KESİK",Color("#253d34"),13)
+		var color := Color(MayhemCatalog.BUILDINGS[b.kind].color)
+		if not b.built:
+			draw_rect(Rect2(b.pos-Vector2(30,28),Vector2(60,56)),Color(0.95,0.85,0.65,0.35))
+			for x in [-26,26]: draw_line(b.pos+Vector2(x,24),b.pos+Vector2(x,-29),Color("#9d724a"),5)
+		ObjectGlyphs.draw(self,b.kind,b.pos,color)
+		if b.hp<b.max_hp*0.5:
+			draw_circle(b.pos-Vector2(8,36),9,Color(0.3,0.25,0.28,0.65))
+			draw_circle(b.pos-Vector2(0,46),7,Color(0.3,0.25,0.28,0.5))
+			draw_arc(b.pos,38,0,TAU,32,Color("#f29781"),3)
+		if b.pos.distance_to(s.player.pos)<280:
+			health_bar(b.pos+Vector2(0,-83),b.hp/b.max_hp,48)
+			nameplate(b.pos+Vector2(0,43),MayhemCatalog.BUILDINGS[b.kind].name)
+			var state_text := InteractionGuide.status(b)
+			if state_text not in ["Hazır","Savunmaya hazır"]:
+				nameplate(b.pos+Vector2(0,-58),state_text,Color("#ffd19a") if state_text!="Üretiliyor" else Color("#bdebaa"),12)
 	for loot in s.loot:
 		draw_circle(loot.pos,8,Color("#eac88e") if loot.kind not in ["heal","speed"] else Color("#f1a6a2"))
 		label(loot.pos+Vector2(-16,-13),MayhemCatalog.LABELS.get(loot.kind,loot.kind),Color("#253d34"),12)
@@ -60,6 +57,8 @@ func _draw() -> void:
 		var colors={"normal":"#d28072","runner":"#d8b468","siege":"#aa93b4","saboteur":"#8d9cb8","boss":"#c8727b"}
 		var radius:=28 if enemy.kind=="boss" else 16
 		draw_circle(enemy.pos+Vector2(2,6),radius,Color("#537e55"))
+		ObjectGlyphs.polygon(self,[enemy.pos+Vector2(-radius,-5),enemy.pos+Vector2(-radius-5,-radius-10),enemy.pos+Vector2(-4,-radius)],Color("#57434b"))
+		ObjectGlyphs.polygon(self,[enemy.pos+Vector2(radius,-5),enemy.pos+Vector2(radius+5,-radius-10),enemy.pos+Vector2(4,-radius)],Color("#57434b"))
 		draw_circle(enemy.pos,radius+2,Color("#544957"))
 		draw_circle(enemy.pos,radius,Color.WHITE if enemy.flash>0 else Color(colors[enemy.kind]))
 		draw_circle(enemy.pos+Vector2(-5,-3),4,Color("#fff7d9"))
@@ -71,15 +70,22 @@ func _draw() -> void:
 	var p: Dictionary=s.player
 	var profile: Dictionary=MayhemCatalog.CHARACTERS[p.character]
 	draw_circle(p.pos+Vector2(0,8),20,Color("#537e55"))
+	ObjectGlyphs.polygon(self,[p.pos+Vector2(-13,2),p.pos+Vector2(-20,26),p.pos+Vector2(18,24),p.pos+Vector2(12,0)],Color(profile.color).darkened(0.25))
 	draw_circle(p.pos,19,Color("#364b50"))
 	draw_circle(p.pos,16,Color("#aa8881") if p.down else Color(profile.color))
 	draw_circle(p.pos+Vector2(-5,-3),3,Color("#fff5db"))
 	draw_circle(p.pos+Vector2(5,-3),3,Color("#fff5db"))
+	draw_arc(p.pos+Vector2(0,-2),18,PI,TAU,20,Color("#e3e8d4"),6)
 	draw_line(p.pos,p.pos+p.aim*29,Color("#fff4d2"),4)
 	if p.shot_cd>0.32 and p.slot<0:
 		draw_arc(p.pos,65,p.aim.angle()-0.7,p.aim.angle()+0.7,20,Color("#ffe19d"),5)
 	if p.heavy: draw_line(p.pos+Vector2(-20,-24),p.pos+Vector2(20,-24),Color("#795d47"),12)
 	if p.brace>0: draw_arc(p.pos,24,0,TAU,24,Color("#abcdf3"),3)
+	if not active.is_empty():
+		draw_arc(active.data.pos,40,0,TAU,48,Color("#fff4af"),3)
+	if session.running and not s.tutorial.skipped and s.tutorial.step<TutorialGuide.STEPS.size():
+		var target: Vector2=TutorialGuide.task(s).target
+		draw_arc(target,46,0,TAU,48,Color("#bdf5e9"),3)
 	if session.build_kind!="" and session.running:
 		var ghost: Vector2=BuildingSystem.snap(s,session.ghost)
 		var tint:=Color(0.7,1,0.7,0.5) if BuildingSystem.can_place(s,session.build_kind,ghost) else Color(1,0.4,0.4,0.5)
@@ -94,3 +100,8 @@ func box(color: Color) -> StyleBoxFlat:
 	style.set_border_width_all(3)
 	style.set_corner_radius_all(8)
 	return style
+
+func nameplate(at: Vector2,text: String,color: Color=Color("#fff3d7"),font_size: int=14) -> void:
+	var width := ThemeDB.fallback_font.get_string_size(text,HORIZONTAL_ALIGNMENT_LEFT,-1,font_size).x+12
+	draw_style_box(box(Color("#365548")),Rect2(at-Vector2(width/2,16),Vector2(width,23)))
+	label(at+Vector2(-width/2+6,0),text,color,font_size)

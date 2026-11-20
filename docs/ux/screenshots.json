@@ -1,0 +1,52 @@
+[
+  {
+    "image": "01-menu.png",
+    "width": 960,
+    "height": 540
+  },
+  {
+    "image": "02-first-task.png",
+    "width": 960,
+    "height": 540
+  },
+  {
+    "image": "02-task-1200x540.png",
+    "width": 1200,
+    "height": 540
+  },
+  {
+    "image": "02-task-960x720.png",
+    "width": 960,
+    "height": 720
+  },
+  {
+    "image": "03-build-panel.png",
+    "width": 960,
+    "height": 540
+  },
+  {
+    "image": "04-placement.png",
+    "width": 960,
+    "height": 540
+  },
+  {
+    "image": "05-inventory.png",
+    "width": 960,
+    "height": 540
+  },
+  {
+    "image": "06-readable-objects.png",
+    "width": 960,
+    "height": 540
+  },
+  {
+    "image": "07-ratio-1200x540.png",
+    "width": 1200,
+    "height": 540
+  },
+  {
+    "image": "07-ratio-960x720.png",
+    "width": 960,
+    "height": 720
+  }
+]

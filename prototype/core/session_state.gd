@@ -14,7 +14,7 @@ static func fresh(character: int = 0, location: int = 0, variation: int = 0) -> 
 		"inventory":{},"heavy":false,"weapons":["",""],"magazines":[0,0],"slot":-1,"aim":Vector2.RIGHT,"shot_cd":0.0,"dodge_cd":0.0,
 		"dodge_time":0.0,"skill_cd":0.0,"buff":0.0,"brace":0.0,"down":false,"bleed":12.0,"repair_cd":0.0,"weapon_level":1},
 		"sources":sources,"structures":[],"enemies":[],"projectiles":[],"loot":[],"packets":[],"stats":SessionStatistics.fresh(),
-		"unranked":false,"lost":false,"elapsed":0.0,"roster":{}}
+		"tutorial":{"step":0,"skipped":false},"unranked":false,"lost":false,"elapsed":0.0,"roster":{}}
 static func next_id(s: Dictionary) -> int:
 	var id: int = s.next_id
 	s.next_id += 1
