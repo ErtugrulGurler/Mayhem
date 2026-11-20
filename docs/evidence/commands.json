@@ -85,6 +85,48 @@
     "passed": true
   },
   {
+    "name": "tutorial",
+    "engine": "4.7.2.stable.official.ed1daf0bf",
+    "command": [
+      "godot",
+      "--headless",
+      "--path",
+      ".",
+      "--script",
+      "tests/ux/tutorial_test.gd"
+    ],
+    "exit_code": 0,
+    "passed": true
+  },
+  {
+    "name": "layout",
+    "engine": "4.7.2.stable.official.ed1daf0bf",
+    "command": [
+      "godot",
+      "--headless",
+      "--path",
+      ".",
+      "--script",
+      "tests/ux/layout_test.gd"
+    ],
+    "exit_code": 0,
+    "passed": true
+  },
+  {
+    "name": "pointer",
+    "engine": "4.7.2.stable.official.ed1daf0bf",
+    "command": [
+      "godot",
+      "--headless",
+      "--path",
+      ".",
+      "--script",
+      "tests/ux/pointer_test.gd"
+    ],
+    "exit_code": 0,
+    "passed": true
+  },
+  {
     "name": "legacy_smoke",
     "engine": "4.7.2.stable.official.ed1daf0bf",
     "command": [

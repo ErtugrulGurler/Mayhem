@@ -1,0 +1,144 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS start buttons stay inside (960.0, 540.0)
+PASS start button hit regions do not overlap
+PASS start all targets at least 48x48 logical pixels
+PASS normal buttons stay inside (960.0, 540.0)
+PASS normal button hit regions do not overlap
+PASS normal all targets at least 48x48 logical pixels
+PASS Normal HUD has at most eight visible buttons
+PASS Gameplay center is free
+PASS At least 55 percent of the viewport remains outside HUD footprints
+PASS ranged buttons stay inside (960.0, 540.0)
+PASS ranged button hit regions do not overlap
+PASS ranged all targets at least 48x48 logical pixels
+PASS Ranged equipment exposes quick reload
+PASS Reload does not overlap aim pad
+PASS build buttons stay inside (960.0, 540.0)
+PASS build button hit regions do not overlap
+PASS build all targets at least 48x48 logical pixels
+PASS Panel does not intersect analog region
+PASS Panel does not intersect analog region
+PASS inventory buttons stay inside (960.0, 540.0)
+PASS inventory button hit regions do not overlap
+PASS inventory all targets at least 48x48 logical pixels
+PASS Panel does not intersect analog region
+PASS Panel does not intersect analog region
+PASS options buttons stay inside (960.0, 540.0)
+PASS options button hit regions do not overlap
+PASS options all targets at least 48x48 logical pixels
+PASS Panel does not intersect analog region
+PASS Panel does not intersect analog region
+PASS developer buttons stay inside (960.0, 540.0)
+PASS developer button hit regions do not overlap
+PASS developer all targets at least 48x48 logical pixels
+PASS Panel does not intersect analog region
+PASS Panel does not intersect analog region
+PASS object buttons stay inside (960.0, 540.0)
+PASS object button hit regions do not overlap
+PASS object all targets at least 48x48 logical pixels
+PASS Panel does not intersect analog region
+PASS Panel does not intersect analog region
+PASS confirm buttons stay inside (960.0, 540.0)
+PASS confirm button hit regions do not overlap
+PASS confirm all targets at least 48x48 logical pixels
+PASS Panel does not intersect analog region
+PASS Panel does not intersect analog region
+PASS defeat buttons stay inside (960.0, 540.0)
+PASS defeat button hit regions do not overlap
+PASS defeat all targets at least 48x48 logical pixels
+PASS start buttons stay inside (1200.0, 540.0)
+PASS start button hit regions do not overlap
+PASS start all targets at least 48x48 logical pixels
+PASS normal buttons stay inside (1200.0, 540.0)
+PASS normal button hit regions do not overlap
+PASS normal all targets at least 48x48 logical pixels
+PASS Normal HUD has at most eight visible buttons
+PASS Gameplay center is free
+PASS At least 55 percent of the viewport remains outside HUD footprints
+PASS ranged buttons stay inside (1200.0, 540.0)
+PASS ranged button hit regions do not overlap
+PASS ranged all targets at least 48x48 logical pixels
+PASS Ranged equipment exposes quick reload
+PASS Reload does not overlap aim pad
+PASS build buttons stay inside (1200.0, 540.0)
+PASS build button hit regions do not overlap
+PASS build all targets at least 48x48 logical pixels
+PASS Panel does not intersect analog region
+PASS Panel does not intersect analog region
+PASS inventory buttons stay inside (1200.0, 540.0)
+PASS inventory button hit regions do not overlap
+PASS inventory all targets at least 48x48 logical pixels
+PASS Panel does not intersect analog region
+PASS Panel does not intersect analog region
+PASS options buttons stay inside (1200.0, 540.0)
+PASS options button hit regions do not overlap
+PASS options all targets at least 48x48 logical pixels
+PASS Panel does not intersect analog region
+PASS Panel does not intersect analog region
+PASS developer buttons stay inside (1200.0, 540.0)
+PASS developer button hit regions do not overlap
+PASS developer all targets at least 48x48 logical pixels
+PASS Panel does not intersect analog region
+PASS Panel does not intersect analog region
+PASS object buttons stay inside (1200.0, 540.0)
+PASS object button hit regions do not overlap
+PASS object all targets at least 48x48 logical pixels
+PASS Panel does not intersect analog region
+PASS Panel does not intersect analog region
+PASS confirm buttons stay inside (1200.0, 540.0)
+PASS confirm button hit regions do not overlap
+PASS confirm all targets at least 48x48 logical pixels
+PASS Panel does not intersect analog region
+PASS Panel does not intersect analog region
+PASS defeat buttons stay inside (1200.0, 540.0)
+PASS defeat button hit regions do not overlap
+PASS defeat all targets at least 48x48 logical pixels
+PASS start buttons stay inside (960.0, 720.0)
+PASS start button hit regions do not overlap
+PASS start all targets at least 48x48 logical pixels
+PASS normal buttons stay inside (960.0, 720.0)
+PASS normal button hit regions do not overlap
+PASS normal all targets at least 48x48 logical pixels
+PASS Normal HUD has at most eight visible buttons
+PASS Gameplay center is free
+PASS At least 55 percent of the viewport remains outside HUD footprints
+PASS ranged buttons stay inside (960.0, 720.0)
+PASS ranged button hit regions do not overlap
+PASS ranged all targets at least 48x48 logical pixels
+PASS Ranged equipment exposes quick reload
+PASS Reload does not overlap aim pad
+PASS build buttons stay inside (960.0, 720.0)
+PASS build button hit regions do not overlap
+PASS build all targets at least 48x48 logical pixels
+PASS Panel does not intersect analog region
+PASS Panel does not intersect analog region
+PASS inventory buttons stay inside (960.0, 720.0)
+PASS inventory button hit regions do not overlap
+PASS inventory all targets at least 48x48 logical pixels
+PASS Panel does not intersect analog region
+PASS Panel does not intersect analog region
+PASS options buttons stay inside (960.0, 720.0)
+PASS options button hit regions do not overlap
+PASS options all targets at least 48x48 logical pixels
+PASS Panel does not intersect analog region
+PASS Panel does not intersect analog region
+PASS developer buttons stay inside (960.0, 720.0)
+PASS developer button hit regions do not overlap
+PASS developer all targets at least 48x48 logical pixels
+PASS Panel does not intersect analog region
+PASS Panel does not intersect analog region
+PASS object buttons stay inside (960.0, 720.0)
+PASS object button hit regions do not overlap
+PASS object all targets at least 48x48 logical pixels
+PASS Panel does not intersect analog region
+PASS Panel does not intersect analog region
+PASS confirm buttons stay inside (960.0, 720.0)
+PASS confirm button hit regions do not overlap
+PASS confirm all targets at least 48x48 logical pixels
+PASS Panel does not intersect analog region
+PASS Panel does not intersect analog region
+PASS defeat buttons stay inside (960.0, 720.0)
+PASS defeat button hit regions do not overlap
+PASS defeat all targets at least 48x48 logical pixels
+LAYOUT: 141 checks, 0 failures

@@ -1,3 +1,5 @@
+> 20 Kasım mobil UX revizyonu ve güncel 349 kontrol: [UX raporu](ux/REPORT.md). Aşağıdaki bölüm 19 Kasım P0 temel tesliminin kapsam kaydıdır.
+
 # Gereksinim izlenebilirliği — P0 dikey kesit
 
 Kaynak: REQUIREMENTS_V0_2.md — **104 satır: 76 P0 + 27 P1 + 1 P2**. Öncelikler değiştirilmedi.

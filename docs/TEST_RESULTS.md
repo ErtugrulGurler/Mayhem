@@ -1,3 +1,5 @@
+> 20 Kasım mobil UX revizyonu ve güncel 349 kontrol: [UX raporu](ux/REPORT.md). Aşağıdaki bölüm 19 Kasım P0 temel tesliminin kapsam kaydıdır.
+
 # Mayhem P0 — gerçek test sonuçları
 
 Tarih: **19 Kasım 2026**, Linux headless.

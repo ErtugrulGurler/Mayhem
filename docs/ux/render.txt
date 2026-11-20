@@ -1,0 +1,15 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:372)
+OpenGL API 4.5 (Core Profile) Mesa 25.0.7-2+deb13u1 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 19.1.7, 256 bits)
+
+CAPTURE 01-menu exit 0 viewport (960.0, 540.0)
+CAPTURE 02-first-task exit 0 viewport (960.0, 540.0)
+CAPTURE 02-task-1200x540 exit 0 viewport (1200.0, 540.0)
+CAPTURE 02-task-960x720 exit 0 viewport (960.0, 720.0)
+CAPTURE 03-build-panel exit 0 viewport (960.0, 540.0)
+CAPTURE 04-placement exit 0 viewport (960.0, 540.0)
+CAPTURE 05-inventory exit 0 viewport (960.0, 540.0)
+CAPTURE 06-readable-objects exit 0 viewport (960.0, 540.0)
+CAPTURE 07-ratio-1200x540 exit 0 viewport (1200.0, 540.0)
+CAPTURE 07-ratio-960x720 exit 0 viewport (960.0, 720.0)

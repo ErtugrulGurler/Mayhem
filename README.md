@@ -1,105 +1,67 @@
-# Mayhem — aksiyon, üretim ve üs savunması
+# Mayhem
 
-**Godot 4.7.2 / GDScript / Compatibility / yatay Android.**
-Tek yerel oyunculu P0 dikey kesit. Dört basit karakterden biriyle kaynak topla,
-malzemeyi fiziksel olarak taşı, tesis kur, mühimmat üret ve HP hedefi olan merkezi koru.
-Gerçek ağlı co-op bu sürümde yoktur.
+**Godot 4.7.2 · Compatibility · Android yatay ekran.**
+Kaynakları fiziksel olarak taşıdığın, üretim hattı kurup merkezi savunduğun yerel aksiyon prototipi.
+Oyun içindeki rehber, ilk üretim ve savunma zincirini adım adım öğretir.
 
-## Aç / dene
+## Aç ve oyna
 
-PR merge edildikten sonra mevcut klonda:
-```sh
-git switch main
-git pull --ff-only origin main
-```
-İlk kez:
-```sh
-git clone https://github.com/ErtugrulGurler/Mayhem.git
-```
-Merge öncesi deneme dalı: `feature/mayhem-p0-functional`.
-Android Git istemcisinden bu dalı checkout edebilir veya GitHub'da dalı seçip Code → Download ZIP kullanabilirsin.
-ZIP'i tamamen aç; yalnız tek script indirme. Godot Android 4.7.2 proje listesinde
-klasörün kökündeki **project.godot** dosyasını içe aktar, **F5 / Projeyi Çalıştır** ile aç.
-Karakter, merkez konumu ve harita varyasyonunu seçip **Sıfırdan başla**.
-İlk kurulumda yalnız merkez vardır; çanta ve iki menzilli slot boştur.
+PR birleştirildikten sonra main dalını güncelle veya GitHub'dan ZIP indir.
+Klasörü tamamen aç, kökteki project.godot dosyasını **Godot 4.7.2** ile içe aktar.
+**F5 / Projeyi Çalıştır → karakter ve merkez seç → Oyuna başla.**
+Rehberi görmek için yeni oturum başlat; önceki dünya kaydını korumak istiyorsan **Kayıttan devam** seç.
 
-## İlk 10 dakikanın yolu
+- Sol analog: hareket. Sağ analog: tuttuğun yöne saldırı; aim assist yok.
+- Üstte: HP, merkez HP, bölüm/hazırlık süresi ve çantandaki temel kaynaklar.
+- Görev kartı ve açık renk ok: sıradaki hedef. Nesne ekran dışındaysa ok o yönü gösterir.
+- Alt ortadaki büyük düğme yakındaki nesneye göre **Topla**, **Teslim et** veya **Tesisi aç** olur.
+- **İnşa**: tarif seç → dünyada boş alana dokun/sürükle → yeşil önizlemede **Yerleştir**.
+  Şantiyeye malzeme götürmeden inşa başlamaz. Kırmızı önizleme engel/canlı/teknoloji kısıtıdır.
+- **Tesisi aç**: gereken girdi, çıkan ürün, durum ve stok; yükleme, ürün alma, tamir,
+  geliştirme, bağlantı ve sökme işlemleri burada. Listeleri dikey kaydırabilirsin.
+- **Çanta**: silah slotu, üretilen silahı kuşanma, reload, medkit ve yük bırakma.
+  Menzilli silah seçiliyken ayrıca sağ analogun üstünde hızlı **Doldur** bulunur.
+- **Kaç** ve **Yetenek** ayrı düğmelerdir. Yapılar, oyuncu, düşmanlar ve kaynaklar farklı silüet kullanır.
+- **Menü**: saldırıyı başlat, kaydet/ara ver, sürdür, zoom ve rehberi tekrar göster.
+  Rehberde **Atla** oyunu kilitlemez; ilerleme ve tercih kayıtta korunur.
+- **Menü → Geliştirici araçları**: DEBUG bölüm atlamaları. Bu oturumu UNRANKED yapar;
+  normal oyuncu HUD'sinde DEBUG düğmesi yoktur.
 
-1. **0–2 dk:** Sol analog hareket, sağ analog sabit yönde sürekli saldırı.
-   Başlangıçta yakın dövüştesin. Ayrı **Kaç** ve **Yetenek** düğmelerini dene.
-   Yeşil odun, açık gri taş ve kahverengi cevher noktalarında **Topla**; basılı tutmak yerine tekrar dokun.
-   Her etkileşim 2 malzeme, 0.7 sn kaynak cooldown; çanta 30 birim.
-2. **2–4 dk:** Üst menüden **İzabe** seç; ekrandaki üst-orta boş araziye dokun/sürükle-bırak.
-   Önizleme yeşil olmalı. Analogların üzeri yerleştirme alanı değildir.
-   Şantiyeye yaklaş ve **Topla** ile **2 odun + 4 taş** teslim et.
-   4 sn sonra kendiliğinden tamamlanır. İnşa için kaynak uzaktaki çanta/depolardan çekilmez.
-3. **4–6 dk:** İzabeye **2 cevher + 1 odun** götür, **Yükle**; 3 sn sonra **2 metal** çıkar.
-   **Ürün** ile al. **Mühimmat** tezgâhı için **4 odun + 2 taş** teslim et.
-   **1 metal + 1 odun** yükle → **8 mermi**. Girdi ve çıktı kutuları 24 birimle sınırlı.
-4. **6–8 dk:** **Kule** şantiyesine **6 odun + 3 taş** teslim et. Mühimmatı taşı, kule yanında
-   **Yükle**. Kule boşken ateş etmez; doluyken menzilde otomatik ateşler.
-   **Dalga** düğmesi saldırıdan 5 sn önce uyarır. İlk hazırlık 180 sn; sonraki hazırlık 30 sn.
-   Oyuncuyla da savaş: tek kuleye güvenip üretimi savunmasız bırakma.
-5. **8–10 dk:** Yakın tesise **Tamir** (1 odun / en çok 30 HP), **Geliştir** (2 metal + 2 odun)
-   veya **Sök** uygula. Kaynak kısmen yere iade edilir.
-   Beşinci saldırı sonrası checkpoint alınır. **Kaydet** ara verir; menüde **Ara verme kaydını sürdür**
-   aynı dünya/RNG ile döner. Yenilgide checkpoint veya yeni oturum seç.
+Tarifler ve eksik malzeme bilgisi oyunun içindedir; oynamak için belge okuman gerekmez.
+Kayıtlı eski P0 dünyaları açılırken yalnız eksik rehber verisi tamamlanır; dünya sıfırlanmaz.
+İlk saldırı ve küçük baskınlar önceki prototipteki zamanlamalarını korur; rehber dünyayı duraklatmaz.
 
-Hızlı mekanik denemesi için **DEBUG** düğmesi sırayla 5/10/11/21/41/61/81/101/121'e gider.
-Oturum **UNRANKED** olur; ücretsiz stok veya bina verilmez, sonraki saldırıyı **Dalga** ile başlat.
-Yeni oturum debug işaretini temizler; checkpoint retry temizlemez.
+## Masaüstü
 
-## Diğer denemeler
+WASD hareket; sağ fare nişan/otomatik saldırı. E bağlamsal etkileşim,
+F girdi yükle, G ürün al, T tamir, X sök, Q slot, R reload,
+Space dodge, C skill, H medkit. Esc paneli kapatır veya menüyü açar.
+Sol fareyle seçili nesneyi vurgulayabilir ve inşa önizlemesini konumlandırabilirsin;
+**Yerleştir** ayrıca onay ister.
 
-- **Yay tezgâhı:** 3 odun + 2 taş ile kur; 3 odun + 1 taş yükle → yay.
-- **Saçmalı tezgâhı:** 4 odun + 4 taş ile kur; 2 metal + 2 odun → saçmalı.
-  Ürünü al, **Silah** ile hedef slotu seç, **Kuşan**; tekrar **Silah** ile melee/slot1/slot2 değiştir.
-  Mermi taşı ve **Doldur**. Nişan yardımı yoktur; mermiler verilen yönde gider.
-- **Parça atölyesi:** 5 odun + 3 taş; 1 metal + 1 odun → parça.
-  Parçayı alıp çalışan atölye yanında **Modifiye** ile basit hasar seviyesi artırılır.
-- **Klinik:** 6 odun + 4 taş; yanında 1 odunla iyileşme.
-  **Medkit tezgâhı:** 4 odun + 3 taş; 2 odun + 1 taş → medkit; **İyileş** ile tüket.
-- **Depo:** 5 odun; 60 birim. Yıkılınca stokun yarısı kaybolur, yarısı elle toplanan loot olur.
-- **Konveyör (11+):** 3 odun + 2 metal. Bir üretici ve bir uygun alıcı arasına kur.
-  İki uç da konveyöre en çok 180 birim uzakta olsun. **Bağla** en erken kurulmuş uygun kaynak/alıcıyı bağlar.
-  Gerekirse tek hatla izabe → mühimmat, ayrı hatla mühimmat → kule düzenini dene.
-- **Elektrik (61+ / Sanayi):** Jeneratör (4 taş + 4 metal), elektrikli mühimmat
-  tezgâhı (4 metal + 3 taş), araya kablo (1 metal) kur.
-  Kablo yanında **Bağla**: en yakın iki tamamlanmış elektrik yapısını bağlar (220 birim).
-  Jeneratör kapasitesi 4, tüketici yükü 3. İki tüketici overload yapar; **Aç/Kapat** ile biri kapatılınca düzelir.
-  Kabloyu kapat/sök: tüketici anında durur. Ayrı ağlar birbirine enerji aktarmaz.
-- Ağır kütük elde taşınır ve yavaşlatır; **Bırak** ile yere bırakılır, bu kesitte araç yoktur.
-- Kırmızı HP sıfırda sürünme/12 sn kan kaybı; solo tam ölüm yenilgi.
-  Dört gerçek oyunculu canlanma henüz ağda çalışmaz; yalnız veri modeli testlidir.
+## Doğrulama
 
-## Masaüstü kontrolleri
+Linux'ta Godot 4.7.2 binary ile:
 
-WASD hareket; sağ fare basılıyken nişan/otomatik saldırı; E toplama/teslim (basılı tutma da desteklenir).
-F yükle, G ürün al, T tamir, X sök, Q silah slotu, R doldur, Space dodge, C skill, H medkit.
-Sol fare: seçili inşa önizlemesini dünya alanında yerleştir.
-`Zoom + / -` kamerayı sınırlar içinde değiştirir.
+    python3 tools/verify.py --godot /path/to/Godot_v4.7.2-stable_linux.x86_64
 
-## Test / mimari
+Import, açılış, eski regresyonlar, tutorial, HUD geometri ve GUI giriş testleri çalışır.
+Sonuçlar: **349 kontrol, 0 hata**. Android fiziksel cihaz testi değildir.
+Kayıt dosyaları test sırasında izole XDG dizinlerinde tutulur.
 
-Linux'ta (Python standart kitaplığı dışında bağımlılık yok):
-```sh
-python3 tools/verify.py --godot /path/to/Godot_v4.7.2-stable_linux.x86_64
-```
-Araç sürümü doğrular, izole kayıt dizinlerinde import/runtime ve testleri çalıştırır;
-ham çıktılar `docs/evidence/` altındadır. Testleri kişisel Android oyun kaydın üzerinde çalıştırma.
+- [Mobil UX revizyonu, kabul sonuçları ve görüntüler](docs/ux/REPORT.md)
+- [Test komutları / çıkış kodları](docs/evidence/commands.json)
+- [Genel P0 eksikleri](docs/PROTOTYPE_LIMITATIONS.md)
+- [104 ürün gereksiniminin tarihsel tablosu](docs/REQUIREMENTS_TRACEABILITY.md)
+- [19 Kasım mekanik referansı](docs/P0_GAMEPLAY_REFERENCE.md)
 
-`prototype/core/`: veri, durum, envanter, istatistik, arazi ve offline roster modeli.
-`prototype/systems/`: oyuncu/savaş/inşa/üretim/lojistik/enerji/AI/dalga/kayıt.
-`prototype/presentation/`: dokunma, HUD, çizimler ve minimap.
-`prototype/session.gd`: yalnız sahne bileşimi ve komut yönlendirme.
-Simülasyon durumu nesnesiz Dictionary/Vector2 verisidir; snapshot mermileri ve yoldaki ürünleri de içerir.
+Gerçek online co-op, kapsamlı boss/çağ içerikleri ve online rekor bu prototipte yoktur.
+Eski sabit yol demosu korunur ve başlangıç menüsünden açılır.
+APK üretimi için 4.7.2 Android export templates, JDK ve Android SDK ayrıca gerekir.
 
-- [104 gereksinim ve durum](docs/REQUIREMENTS_TRACEABILITY.md)
-- [Gerçek test sonuçları](docs/TEST_RESULTS.md)
-- [Eksikler ve Android manuel kontrol listesi](docs/PROTOTYPE_LIMITATIONS.md)
-- [120 karar](docs/DECISIONS_ALL_120.md)
-- [Eski demonun README'si](docs/LEGACY_README.md)
+## Kod
 
-Eski demo `scenes/main.tscn` ve `scripts/` altında değiştirilmeden korunur;
-başlangıç menüsünden de açılır. Eski altın/sabit-yol kuralları yeni oyuna uygulanmaz.
-APK export için 4.7.2 Android template/JDK/SDK ayrıca gerekir; bu teslim APK içermez.
+- core: durum, envanter, istatistik, arazi, offline roster.
+- systems: savaş, üretim, inşa, fiziksel lojistik, enerji, AI, dalga ve kayıt.
+- presentation: bağlamsal işlemler, tutorial gözlemcisi, mobil HUD, analoglar, özgün vektör çizimleri.
+- session.gd: sahne ve komut yönlendirme. Tutorial yalnız durum gözler; kaynak vermez veya dalga kilitlemez.
