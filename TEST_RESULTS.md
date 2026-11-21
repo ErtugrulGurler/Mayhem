@@ -1,5 +1,34 @@
 # Doğrulama sonuçları
 
+## Yeni Faz 0 — Godot 4.3
+
+Bağımsız proje: `prototypes/phase0/project.godot`. Test motoru:
+**4.3.stable.official.77dcf97d8**, Linux x86_64, Compatibility renderer.
+
+| Kontrol | Sonuç |
+| --- | --- |
+| Gerçek 4.3 editor import / GDScript yükleme | Geçti, script/motor hatası yok |
+| Ana sahne, 180 kare headless açılış | Geçti |
+| `tests/prototype_test.gd`, headless | 57 kontrol, 0 hata |
+| Aynı test, grafik ekranlı Compatibility çalışma | 57 kontrol, 0 hata |
+| 960×540, 1200×540, 960×720 gerçek render | PNG'ler üretildi ve görsel olarak incelendi |
+| Sekiz yön ve dört yürüyüş fazı | Render atlası incelendi; sekiz yönün piksel çıktıları farklı |
+| Mevcut ana oyunun 4.7.2 regresyonu | Import/açılış dahil 14 süreç başarılı, 919 kontrol, 0 hata |
+
+Faz 0 testleri gerçek Godot fiziğiyle hareket, çapraz hızın eşitliği, durma,
+ağaç/kaya/sınır çarpışması, yumuşak kamera takibi, sekiz yön, gerçek viewport giriş
+hattına gönderilen sentetik eşzamanlı dokunma/klavye/fare, analog dışı bırakma,
+iptal edilen dokunma ve odak kaybını kontrol eder. HUD sınır/çakışma kontrolleri
+960×540, 1200×540, 960×720, 1280×800, 1920×1080 ve 2400×1080 boyutlarında geçti.
+
+Render Linux Mesa llvmpipe yazılım sürücüsünde yapıldı; VSync'in desteklenmediği
+uyarısı bu ortama aittir. Fiziksel Android, gerçek iki parmaklı donanım girişi,
+çentik/safe-area, DPI, telefon FPS/ısınma/batarya ve APK dışa aktarma **test edilmedi**.
+İlk import denemesinde korumalı ev dizinine yazılamadı; XDG veri/ayar/önbellek
+yolları çalışma alanına alınarak import temiz biçimde tekrarlandı.
+
+## Önceki kule savunması prototipi
+
 Tarih: 15 Kasım 2026. Hedef motor: **4.7.2.stable.official.ed1daf0bf**, headless Linux.
 
 Resmi Godot GitHub sürümünden `Godot_v4.7.2-stable_linux.x86_64.zip` indirildi ve binary sürümü doğrulandı. Aşağıdaki bütün kontroller bu binary ile tekrar çalıştırıldı. İlk prototipte aynı kontroller 4.6.3 ile de geçmişti.
