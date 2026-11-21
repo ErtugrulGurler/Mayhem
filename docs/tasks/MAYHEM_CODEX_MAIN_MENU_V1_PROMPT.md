@@ -12,6 +12,8 @@
 
 Bu göreve eklenmiş **`MAYHEM_UI_THEME_REFERENCE.png` görselini** ana **görsel dil referansı** olarak kullan. PNG, **tam ekran arka plan resmi veya Godot'a doğrudan gömülecek işlevsel UI değildir**; çerçeve, renk, tipografi, boşluk, panel hiyerarşisi, düğme ve ikon ruhunu gösteren *concept art*tır. Menü kontrollerini Godot `Control` ve sahne elemanlarıyla gerçek, tıklanabilir bileşenler halinde uygula. Görseldeki her sayı, ekonomi, silah, HUD yerleşimi veya kamera açısı gereksinim sayılmaz. Görselde bulunabilecek seviye/para/XP göstergelerini oyuna ekleme.
 
+**ÖNEMLİ — HUD görseli kamera referansı DEĞİLDİR:** PNG'nin sağ üstündeki oyun içi örnek, karakteri arkadan gösteren third-person / over-the-shoulder 3D sahnesidir. Bu, Mayhem için onaylanmış kamera veya gameplay kararı değildir. Bu PR'da kesinlikle third-person shooter kamerasına, 3D dünyaya veya omuz üstü bakışa geçme; mevcut yukarıdan bakışlı 2D oynanışı ve input düzenini koru. PNG'den sadece UI görsel dilini, renkleri, düğme ve panel düzenleme prensiplerini al. Gelecekteki hacimli çizgi film 2.5D oyun dünyası kamera/teknoloji kararları ayrı görsel prototip ve kullanıcı onayına tabidir.
+
 **Son kullanıcı kararı:** Hacimli, sıcak, okunabilir çizgi film görselliği; giriş ekranının merkezinde savunulan **Merkez/teknolojik çekirdek**; temayla uyumlu tüm menüler; **Çıkış/Quit düğmesi yok**. Dört mevcut karakteri şimdilik basit ama seçilebilir ve farklı silüetli tut. 2.5D tam oyun dünyası ve ayrıntılı karakter sanatı **ayrı geliştirme aşaması**. Bu PR'da oyun mekaniğini sıfırdan yazma.
 
 ## 1. Beklenen kullanıcı deneyimi ve ana ekran kompozisyonu
