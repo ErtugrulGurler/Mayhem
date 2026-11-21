@@ -1,0 +1,519 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS MM-017 home in bounds (960.0, 540.0)
+PASS MM-017 home no overlapping hit regions
+PASS MM-017 home minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 character in bounds (960.0, 540.0)
+PASS MM-017 character no overlapping hit regions
+PASS MM-017 character minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 map in bounds (960.0, 540.0)
+PASS MM-017 map no overlapping hit regions
+PASS MM-017 map minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 summary in bounds (960.0, 540.0)
+PASS MM-017 summary no overlapping hit regions
+PASS MM-017 summary minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 confirm in bounds (960.0, 540.0)
+PASS MM-017 confirm no overlapping hit regions
+PASS MM-017 confirm minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 settings in bounds (960.0, 540.0)
+PASS MM-017 settings no overlapping hit regions
+PASS MM-017 settings minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 statistics in bounds (960.0, 540.0)
+PASS MM-017 statistics no overlapping hit regions
+PASS MM-017 statistics minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 controls in bounds (960.0, 540.0)
+PASS MM-017 controls no overlapping hit regions
+PASS MM-017 controls minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 scaled gameplay panel in bounds
+PASS MM-017 scaled gameplay panel buttons do not overlap
+PASS MM-017 panel text does not overlap close button
+PASS MM-017 pause in bounds (960.0, 540.0)
+PASS MM-017 pause no overlapping hit regions
+PASS MM-017 pause minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 defeat in bounds (960.0, 540.0)
+PASS MM-017 defeat no overlapping hit regions
+PASS MM-017 defeat minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 home in bounds (960.0, 540.0)
+PASS MM-017 home no overlapping hit regions
+PASS MM-017 home minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 character in bounds (960.0, 540.0)
+PASS MM-017 character no overlapping hit regions
+PASS MM-017 character minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 map in bounds (960.0, 540.0)
+PASS MM-017 map no overlapping hit regions
+PASS MM-017 map minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 summary in bounds (960.0, 540.0)
+PASS MM-017 summary no overlapping hit regions
+PASS MM-017 summary minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 confirm in bounds (960.0, 540.0)
+PASS MM-017 confirm no overlapping hit regions
+PASS MM-017 confirm minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 settings in bounds (960.0, 540.0)
+PASS MM-017 settings no overlapping hit regions
+PASS MM-017 settings minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 statistics in bounds (960.0, 540.0)
+PASS MM-017 statistics no overlapping hit regions
+PASS MM-017 statistics minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 controls in bounds (960.0, 540.0)
+PASS MM-017 controls no overlapping hit regions
+PASS MM-017 controls minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 scaled gameplay panel in bounds
+PASS MM-017 scaled gameplay panel buttons do not overlap
+PASS MM-017 panel text does not overlap close button
+PASS MM-017 pause in bounds (960.0, 540.0)
+PASS MM-017 pause no overlapping hit regions
+PASS MM-017 pause minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 defeat in bounds (960.0, 540.0)
+PASS MM-017 defeat no overlapping hit regions
+PASS MM-017 defeat minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 home in bounds (960.0, 540.0)
+PASS MM-017 home no overlapping hit regions
+PASS MM-017 home minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 character in bounds (960.0, 540.0)
+PASS MM-017 character no overlapping hit regions
+PASS MM-017 character minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 map in bounds (960.0, 540.0)
+PASS MM-017 map no overlapping hit regions
+PASS MM-017 map minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 summary in bounds (960.0, 540.0)
+PASS MM-017 summary no overlapping hit regions
+PASS MM-017 summary minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 confirm in bounds (960.0, 540.0)
+PASS MM-017 confirm no overlapping hit regions
+PASS MM-017 confirm minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 settings in bounds (960.0, 540.0)
+PASS MM-017 settings no overlapping hit regions
+PASS MM-017 settings minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 statistics in bounds (960.0, 540.0)
+PASS MM-017 statistics no overlapping hit regions
+PASS MM-017 statistics minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 controls in bounds (960.0, 540.0)
+PASS MM-017 controls no overlapping hit regions
+PASS MM-017 controls minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 scaled gameplay panel in bounds
+PASS MM-017 scaled gameplay panel buttons do not overlap
+PASS MM-017 panel text does not overlap close button
+PASS MM-017 pause in bounds (960.0, 540.0)
+PASS MM-017 pause no overlapping hit regions
+PASS MM-017 pause minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 defeat in bounds (960.0, 540.0)
+PASS MM-017 defeat no overlapping hit regions
+PASS MM-017 defeat minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 home in bounds (1920.0, 1080.0)
+PASS MM-017 home no overlapping hit regions
+PASS MM-017 home minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 character in bounds (1920.0, 1080.0)
+PASS MM-017 character no overlapping hit regions
+PASS MM-017 character minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 map in bounds (1920.0, 1080.0)
+PASS MM-017 map no overlapping hit regions
+PASS MM-017 map minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 summary in bounds (1920.0, 1080.0)
+PASS MM-017 summary no overlapping hit regions
+PASS MM-017 summary minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 confirm in bounds (1920.0, 1080.0)
+PASS MM-017 confirm no overlapping hit regions
+PASS MM-017 confirm minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 settings in bounds (1920.0, 1080.0)
+PASS MM-017 settings no overlapping hit regions
+PASS MM-017 settings minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 statistics in bounds (1920.0, 1080.0)
+PASS MM-017 statistics no overlapping hit regions
+PASS MM-017 statistics minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 controls in bounds (1920.0, 1080.0)
+PASS MM-017 controls no overlapping hit regions
+PASS MM-017 controls minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 scaled gameplay panel in bounds
+PASS MM-017 scaled gameplay panel buttons do not overlap
+PASS MM-017 panel text does not overlap close button
+PASS MM-017 pause in bounds (1920.0, 1080.0)
+PASS MM-017 pause no overlapping hit regions
+PASS MM-017 pause minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 defeat in bounds (1920.0, 1080.0)
+PASS MM-017 defeat no overlapping hit regions
+PASS MM-017 defeat minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 home in bounds (1920.0, 1080.0)
+PASS MM-017 home no overlapping hit regions
+PASS MM-017 home minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 character in bounds (1920.0, 1080.0)
+PASS MM-017 character no overlapping hit regions
+PASS MM-017 character minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 map in bounds (1920.0, 1080.0)
+PASS MM-017 map no overlapping hit regions
+PASS MM-017 map minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 summary in bounds (1920.0, 1080.0)
+PASS MM-017 summary no overlapping hit regions
+PASS MM-017 summary minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 confirm in bounds (1920.0, 1080.0)
+PASS MM-017 confirm no overlapping hit regions
+PASS MM-017 confirm minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 settings in bounds (1920.0, 1080.0)
+PASS MM-017 settings no overlapping hit regions
+PASS MM-017 settings minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 statistics in bounds (1920.0, 1080.0)
+PASS MM-017 statistics no overlapping hit regions
+PASS MM-017 statistics minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 controls in bounds (1920.0, 1080.0)
+PASS MM-017 controls no overlapping hit regions
+PASS MM-017 controls minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 scaled gameplay panel in bounds
+PASS MM-017 scaled gameplay panel buttons do not overlap
+PASS MM-017 panel text does not overlap close button
+PASS MM-017 pause in bounds (1920.0, 1080.0)
+PASS MM-017 pause no overlapping hit regions
+PASS MM-017 pause minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 defeat in bounds (1920.0, 1080.0)
+PASS MM-017 defeat no overlapping hit regions
+PASS MM-017 defeat minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 home in bounds (1920.0, 1080.0)
+PASS MM-017 home no overlapping hit regions
+PASS MM-017 home minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 character in bounds (1920.0, 1080.0)
+PASS MM-017 character no overlapping hit regions
+PASS MM-017 character minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 map in bounds (1920.0, 1080.0)
+PASS MM-017 map no overlapping hit regions
+PASS MM-017 map minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 summary in bounds (1920.0, 1080.0)
+PASS MM-017 summary no overlapping hit regions
+PASS MM-017 summary minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 confirm in bounds (1920.0, 1080.0)
+PASS MM-017 confirm no overlapping hit regions
+PASS MM-017 confirm minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 settings in bounds (1920.0, 1080.0)
+PASS MM-017 settings no overlapping hit regions
+PASS MM-017 settings minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 statistics in bounds (1920.0, 1080.0)
+PASS MM-017 statistics no overlapping hit regions
+PASS MM-017 statistics minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 controls in bounds (1920.0, 1080.0)
+PASS MM-017 controls no overlapping hit regions
+PASS MM-017 controls minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 scaled gameplay panel in bounds
+PASS MM-017 scaled gameplay panel buttons do not overlap
+PASS MM-017 panel text does not overlap close button
+PASS MM-017 pause in bounds (1920.0, 1080.0)
+PASS MM-017 pause no overlapping hit regions
+PASS MM-017 pause minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 defeat in bounds (1920.0, 1080.0)
+PASS MM-017 defeat no overlapping hit regions
+PASS MM-017 defeat minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 home in bounds (2340.0, 1080.0)
+PASS MM-017 home no overlapping hit regions
+PASS MM-017 home minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 character in bounds (2340.0, 1080.0)
+PASS MM-017 character no overlapping hit regions
+PASS MM-017 character minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 map in bounds (2340.0, 1080.0)
+PASS MM-017 map no overlapping hit regions
+PASS MM-017 map minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 summary in bounds (2340.0, 1080.0)
+PASS MM-017 summary no overlapping hit regions
+PASS MM-017 summary minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 confirm in bounds (2340.0, 1080.0)
+PASS MM-017 confirm no overlapping hit regions
+PASS MM-017 confirm minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 settings in bounds (2340.0, 1080.0)
+PASS MM-017 settings no overlapping hit regions
+PASS MM-017 settings minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 statistics in bounds (2340.0, 1080.0)
+PASS MM-017 statistics no overlapping hit regions
+PASS MM-017 statistics minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 controls in bounds (2340.0, 1080.0)
+PASS MM-017 controls no overlapping hit regions
+PASS MM-017 controls minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 scaled gameplay panel in bounds
+PASS MM-017 scaled gameplay panel buttons do not overlap
+PASS MM-017 panel text does not overlap close button
+PASS MM-017 pause in bounds (2340.0, 1080.0)
+PASS MM-017 pause no overlapping hit regions
+PASS MM-017 pause minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 defeat in bounds (2340.0, 1080.0)
+PASS MM-017 defeat no overlapping hit regions
+PASS MM-017 defeat minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 home in bounds (2340.0, 1080.0)
+PASS MM-017 home no overlapping hit regions
+PASS MM-017 home minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 character in bounds (2340.0, 1080.0)
+PASS MM-017 character no overlapping hit regions
+PASS MM-017 character minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 map in bounds (2340.0, 1080.0)
+PASS MM-017 map no overlapping hit regions
+PASS MM-017 map minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 summary in bounds (2340.0, 1080.0)
+PASS MM-017 summary no overlapping hit regions
+PASS MM-017 summary minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 confirm in bounds (2340.0, 1080.0)
+PASS MM-017 confirm no overlapping hit regions
+PASS MM-017 confirm minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 settings in bounds (2340.0, 1080.0)
+PASS MM-017 settings no overlapping hit regions
+PASS MM-017 settings minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 statistics in bounds (2340.0, 1080.0)
+PASS MM-017 statistics no overlapping hit regions
+PASS MM-017 statistics minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 controls in bounds (2340.0, 1080.0)
+PASS MM-017 controls no overlapping hit regions
+PASS MM-017 controls minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 scaled gameplay panel in bounds
+PASS MM-017 scaled gameplay panel buttons do not overlap
+PASS MM-017 panel text does not overlap close button
+PASS MM-017 pause in bounds (2340.0, 1080.0)
+PASS MM-017 pause no overlapping hit regions
+PASS MM-017 pause minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 defeat in bounds (2340.0, 1080.0)
+PASS MM-017 defeat no overlapping hit regions
+PASS MM-017 defeat minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 home in bounds (2340.0, 1080.0)
+PASS MM-017 home no overlapping hit regions
+PASS MM-017 home minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 character in bounds (2340.0, 1080.0)
+PASS MM-017 character no overlapping hit regions
+PASS MM-017 character minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 map in bounds (2340.0, 1080.0)
+PASS MM-017 map no overlapping hit regions
+PASS MM-017 map minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 summary in bounds (2340.0, 1080.0)
+PASS MM-017 summary no overlapping hit regions
+PASS MM-017 summary minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 confirm in bounds (2340.0, 1080.0)
+PASS MM-017 confirm no overlapping hit regions
+PASS MM-017 confirm minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 settings in bounds (2340.0, 1080.0)
+PASS MM-017 settings no overlapping hit regions
+PASS MM-017 settings minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 statistics in bounds (2340.0, 1080.0)
+PASS MM-017 statistics no overlapping hit regions
+PASS MM-017 statistics minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 controls in bounds (2340.0, 1080.0)
+PASS MM-017 controls no overlapping hit regions
+PASS MM-017 controls minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 scaled gameplay panel in bounds
+PASS MM-017 scaled gameplay panel buttons do not overlap
+PASS MM-017 panel text does not overlap close button
+PASS MM-017 pause in bounds (2340.0, 1080.0)
+PASS MM-017 pause no overlapping hit regions
+PASS MM-017 pause minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 defeat in bounds (2340.0, 1080.0)
+PASS MM-017 defeat no overlapping hit regions
+PASS MM-017 defeat minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 home in bounds (2400.0, 1080.0)
+PASS MM-017 home no overlapping hit regions
+PASS MM-017 home minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 character in bounds (2400.0, 1080.0)
+PASS MM-017 character no overlapping hit regions
+PASS MM-017 character minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 map in bounds (2400.0, 1080.0)
+PASS MM-017 map no overlapping hit regions
+PASS MM-017 map minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 summary in bounds (2400.0, 1080.0)
+PASS MM-017 summary no overlapping hit regions
+PASS MM-017 summary minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 confirm in bounds (2400.0, 1080.0)
+PASS MM-017 confirm no overlapping hit regions
+PASS MM-017 confirm minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 settings in bounds (2400.0, 1080.0)
+PASS MM-017 settings no overlapping hit regions
+PASS MM-017 settings minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 statistics in bounds (2400.0, 1080.0)
+PASS MM-017 statistics no overlapping hit regions
+PASS MM-017 statistics minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 controls in bounds (2400.0, 1080.0)
+PASS MM-017 controls no overlapping hit regions
+PASS MM-017 controls minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 scaled gameplay panel in bounds
+PASS MM-017 scaled gameplay panel buttons do not overlap
+PASS MM-017 panel text does not overlap close button
+PASS MM-017 pause in bounds (2400.0, 1080.0)
+PASS MM-017 pause no overlapping hit regions
+PASS MM-017 pause minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 defeat in bounds (2400.0, 1080.0)
+PASS MM-017 defeat no overlapping hit regions
+PASS MM-017 defeat minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 home in bounds (2400.0, 1080.0)
+PASS MM-017 home no overlapping hit regions
+PASS MM-017 home minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 character in bounds (2400.0, 1080.0)
+PASS MM-017 character no overlapping hit regions
+PASS MM-017 character minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 map in bounds (2400.0, 1080.0)
+PASS MM-017 map no overlapping hit regions
+PASS MM-017 map minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 summary in bounds (2400.0, 1080.0)
+PASS MM-017 summary no overlapping hit regions
+PASS MM-017 summary minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 confirm in bounds (2400.0, 1080.0)
+PASS MM-017 confirm no overlapping hit regions
+PASS MM-017 confirm minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 settings in bounds (2400.0, 1080.0)
+PASS MM-017 settings no overlapping hit regions
+PASS MM-017 settings minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 statistics in bounds (2400.0, 1080.0)
+PASS MM-017 statistics no overlapping hit regions
+PASS MM-017 statistics minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 controls in bounds (2400.0, 1080.0)
+PASS MM-017 controls no overlapping hit regions
+PASS MM-017 controls minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 scaled gameplay panel in bounds
+PASS MM-017 scaled gameplay panel buttons do not overlap
+PASS MM-017 panel text does not overlap close button
+PASS MM-017 pause in bounds (2400.0, 1080.0)
+PASS MM-017 pause no overlapping hit regions
+PASS MM-017 pause minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 defeat in bounds (2400.0, 1080.0)
+PASS MM-017 defeat no overlapping hit regions
+PASS MM-017 defeat minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 home in bounds (2400.0, 1080.0)
+PASS MM-017 home no overlapping hit regions
+PASS MM-017 home minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 character in bounds (2400.0, 1080.0)
+PASS MM-017 character no overlapping hit regions
+PASS MM-017 character minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 map in bounds (2400.0, 1080.0)
+PASS MM-017 map no overlapping hit regions
+PASS MM-017 map minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 summary in bounds (2400.0, 1080.0)
+PASS MM-017 summary no overlapping hit regions
+PASS MM-017 summary minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 confirm in bounds (2400.0, 1080.0)
+PASS MM-017 confirm no overlapping hit regions
+PASS MM-017 confirm minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 settings in bounds (2400.0, 1080.0)
+PASS MM-017 settings no overlapping hit regions
+PASS MM-017 settings minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 statistics in bounds (2400.0, 1080.0)
+PASS MM-017 statistics no overlapping hit regions
+PASS MM-017 statistics minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 controls in bounds (2400.0, 1080.0)
+PASS MM-017 controls no overlapping hit regions
+PASS MM-017 controls minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 scaled gameplay panel in bounds
+PASS MM-017 scaled gameplay panel buttons do not overlap
+PASS MM-017 panel text does not overlap close button
+PASS MM-017 pause in bounds (2400.0, 1080.0)
+PASS MM-017 pause no overlapping hit regions
+PASS MM-017 pause minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+PASS MM-017 defeat in bounds (2400.0, 1080.0)
+PASS MM-017 defeat no overlapping hit regions
+PASS MM-017 defeat minimum 48 logical-pixel targets
+PASS MM-012 no Quit/Exit/level select
+MENU LAYOUT: 516 checks, 0 failures

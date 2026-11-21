@@ -1,0 +1,62 @@
+[
+  {
+    "file": "01-core-touch.png",
+    "width": 960,
+    "height": 540
+  },
+  {
+    "file": "01-main-menu.png",
+    "width": 960,
+    "height": 540
+  },
+  {
+    "file": "02-character.png",
+    "width": 960,
+    "height": 540
+  },
+  {
+    "file": "03-map.png",
+    "width": 960,
+    "height": 540
+  },
+  {
+    "file": "04-summary.png",
+    "width": 960,
+    "height": 540
+  },
+  {
+    "file": "05-pause.png",
+    "width": 960,
+    "height": 540
+  },
+  {
+    "file": "06-settings.png",
+    "width": 960,
+    "height": 540
+  },
+  {
+    "file": "07-top-down-gameplay.png",
+    "width": 960,
+    "height": 540
+  },
+  {
+    "file": "08-continue-enabled.png",
+    "width": 960,
+    "height": 540
+  },
+  {
+    "file": "09-main-1920x1080.png",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "09-main-2340x1080.png",
+    "width": 2340,
+    "height": 1080
+  },
+  {
+    "file": "09-main-2400x1080.png",
+    "width": 2400,
+    "height": 1080
+  }
+]
