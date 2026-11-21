@@ -1,3 +1,5 @@
+> 21 Kasım ayrı ana menü/pause akışı: [güncel rapor](menu/REPORT.md). Önceki aşağıdaki teslim kayıtları tarihçedir.
+
 > 20 Kasım mobil UX revizyonu ve güncel 349 kontrol: [UX raporu](ux/REPORT.md). Aşağıdaki bölüm 19 Kasım P0 temel tesliminin kapsam kaydıdır.
 
 # Mayhem P0 — gerçek test sonuçları

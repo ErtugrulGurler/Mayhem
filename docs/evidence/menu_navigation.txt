@@ -1,0 +1,42 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS MM-001 startup has separate menu and zero gameplay instances
+PASS MM-002 menu decoration animates independently of gameplay
+PASS MM-011 low effects actually stop decorative motion
+PASS MM-007 missing suspend disables Continue
+PASS MM-009 no fake multiplayer
+PASS MM-010 no fabricated statistics
+PASS MM-010 malformed statistics handled safely
+PASS MM-010 empty statistics message
+PASS MM-007 checkpoint is never treated as suspend
+PASS MM-007 corrupted save disables Continue safely
+PASS MM-007 failed continue reports understandable error
+PASS MM-007 checksum-valid malformed player is rejected
+PASS MM-017 explicit physical-pixel / stretch / dpi target conversion
+PASS MM-004 back preserves all selections
+PASS MM-004 setup does not mutate world or save
+PASS MM-004 start hands input to gameplay
+PASS MM-005 selected character and location reach real session
+PASS MM-006 new session has no free equipment or buildings
+PASS MM-013 pause freezes world, AI, production, waves and cooldowns
+PASS MM-013 pause hides gameplay input targets
+PASS MM-016 nested panel Back returns to pause
+PASS MM-014 failed write stays in paused world
+PASS MM-014 successful save returns to real menu
+PASS MM-014 full saved state exactly matches paused state
+PASS MM-007 resume restores world, player, buffers, RNG and tutorial exactly
+PASS MM-008 existing save requires overwrite confirmation
+PASS MM-008 cancel preserves exact old save
+PASS MM-008 confirmed new session resets and removes suspend
+PASS MM-006 no previous progression inherited
+PASS MM-011 persisted working UI/effect/zoom settings
+PASS MM-011 settings actually affect game camera
+PASS MM-015 defeat invalidates suspend and opens separate screen
+PASS MM-015 checkpoint retry differs from exact suspend continuation
+PASS MM-016 Android Back signal resumes pause
+PASS MM-010 real statistics retain separate team damage
+PASS MM-005 real profile 0
+PASS MM-005 real profile 1
+PASS MM-005 real profile 2
+PASS MM-005 real profile 3
+MENU NAVIGATION: 39 checks, 0 failures

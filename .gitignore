@@ -7,3 +7,5 @@ export_credentials.cfg
 
 # Documentation screenshots are not game textures.
 docs/ux/*.png.import
+docs/menu/*.png.import
+docs/design/*.png.import

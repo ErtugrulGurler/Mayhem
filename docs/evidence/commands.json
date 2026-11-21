@@ -127,6 +127,48 @@
     "passed": true
   },
   {
+    "name": "menu_navigation",
+    "engine": "4.7.2.stable.official.ed1daf0bf",
+    "command": [
+      "godot",
+      "--headless",
+      "--path",
+      ".",
+      "--script",
+      "tests/menu/navigation_test.gd"
+    ],
+    "exit_code": 0,
+    "passed": true
+  },
+  {
+    "name": "menu_layout",
+    "engine": "4.7.2.stable.official.ed1daf0bf",
+    "command": [
+      "godot",
+      "--headless",
+      "--path",
+      ".",
+      "--script",
+      "tests/menu/layout_test.gd"
+    ],
+    "exit_code": 0,
+    "passed": true
+  },
+  {
+    "name": "menu_pointer",
+    "engine": "4.7.2.stable.official.ed1daf0bf",
+    "command": [
+      "godot",
+      "--headless",
+      "--path",
+      ".",
+      "--script",
+      "tests/menu/pointer_test.gd"
+    ],
+    "exit_code": 0,
+    "passed": true
+  },
+  {
     "name": "legacy_smoke",
     "engine": "4.7.2.stable.official.ed1daf0bf",
     "command": [
