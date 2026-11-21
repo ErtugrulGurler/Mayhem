@@ -3,7 +3,8 @@ config_version=5
 
 [application]
 config/name="Mayhem"
-run/main_scene="res://prototype/scenes/session.tscn"
+config/quit_on_go_back=false
+run/main_scene="res://ui/main_menu.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/description="Action, physical production and base defense prototype."
 

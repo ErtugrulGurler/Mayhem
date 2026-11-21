@@ -53,7 +53,7 @@ func make_label(parent: Node, font_size: int = 18) -> Label:
 func make_button(parent: Node, text: String, callback: Callable, id: String = "") -> Button:
 	var button := Button.new()
 	button.text = text
-	button.custom_minimum_size = Vector2(0,54)
+	button.custom_minimum_size = Vector2(0,ceilf(54*UserPreferences.ui_scale))
 	button.pressed.connect(callback)
 	button.focus_mode = Control.FOCUS_NONE
 	parent.add_child(button)
@@ -64,15 +64,7 @@ func _ready() -> void:
 	root = Control.new()
 	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(root)
-	var theme := Theme.new()
-	theme.default_font_size = 18
-	theme.set_color("font_color","Button",Color("#fff3d9"))
-	theme.set_color("font_disabled_color","Button",Color("#94a69d"))
-	for state in ["normal","hover","pressed","disabled"]:
-		theme.set_stylebox(state,"Button",style(Color("#304f47") if state != "pressed" else Color("#56755a")))
-	theme.set_stylebox("panel","PanelContainer",style(Color("#203d36")))
-	theme.set_stylebox("panel","Panel",style(Color("#203d36")))
-	root.theme = theme
+	root.theme = MenuTheme.create()
 	var bar := Panel.new()
 	bar.name = "TopBar"
 	bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -155,7 +147,7 @@ func create_menu() -> void:
 		choices.add_child(choice)
 	make_button(choices,"Oyuna başla",session.action.bind("new"),"start")
 	make_button(choices,"Kayıttan devam",session.action.bind("resume"),"resume_menu")
-	make_button(choices,"Eski kule savunması demosu",session.action.bind("legacy"))
+
 	var hint := make_label(choices,15)
 	hint.text = "Oyun içindeki rehber sana ilk üretim hattını gösterecek."
 	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -174,6 +166,10 @@ func create_report() -> void:
 func layout(viewport_size: Vector2) -> void:
 	size = viewport_size
 	root.size = size
+	root.theme=MenuTheme.create()
+	for button in dock:
+		button.add_theme_font_size_override("font_size",roundi(18*UserPreferences.ui_scale))
+
 	root.get_node("TopBar").size = Vector2(size.x-16,50)
 	stats.position = Vector2(20,10)
 	stats.size = Vector2(size.x-240,24)
@@ -183,23 +179,23 @@ func layout(viewport_size: Vector2) -> void:
 	menu_button.size = Vector2(96,48)
 	menu_button.custom_minimum_size.y = 48
 	mission.position = Vector2(16,70)
-	mission.size = Vector2(minf(500,size.x-200),110)
+	mission.size = Vector2(minf(500*UserPreferences.ui_scale,size.x-200),110*UserPreferences.ui_scale)
 	mission_title.position = Vector2(12,6)
 	mission_title.size = Vector2(mission.size.x-94,27)
-	mission_hint.position = Vector2(12,36)
-	mission_hint.size = Vector2(mission.size.x-94,44)
-	mission_progress.position = Vector2(12,82)
+	mission_hint.position = Vector2(12,36*UserPreferences.ui_scale)
+	mission_hint.size = Vector2(mission.size.x-94,44*UserPreferences.ui_scale)
+	mission_progress.position = Vector2(12,82*UserPreferences.ui_scale)
 	mission_progress.size = Vector2(mission.size.x-24,22)
 	skip_button.position = Vector2(mission.size.x-78,5)
 	skip_button.size = Vector2(70,48)
 	skip_button.custom_minimum_size.y = 48
-	var center_width := minf(568,size.x-360)
+	var center_width := minf(568*UserPreferences.ui_scale,size.x-360)
 	var x := (size.x-center_width)/2
 	var widths := [0.17,0.17,0.32,0.16,0.18]
 	for i in range(dock.size()):
 		var width: float = (center_width-32)*widths[i]
 		dock[i].position = Vector2(x,size.y-70)
-		dock[i].size = Vector2(width,54)
+		dock[i].size = Vector2(width,ceilf(54*UserPreferences.ui_scale))
 		x += width+8
 	session.router.centers = [Vector2(88,size.y-90),Vector2(size.x-88,size.y-90)]
 	controls.reload.position = Vector2(size.x-136,size.y-224)
@@ -212,12 +208,12 @@ func layout(viewport_size: Vector2) -> void:
 	panel_title.position = Vector2(14,10)
 	panel_title.size = Vector2(415,36)
 	panel_close.position = Vector2(446,8)
-	panel_close.size = Vector2(102,50)
-	panel_close.custom_minimum_size.y = 50
-	panel_info.position = Vector2(14,60)
+	panel_close.custom_minimum_size.y = ceilf(50*UserPreferences.ui_scale)
+	panel_close.size = Vector2(102,ceilf(50*UserPreferences.ui_scale))
+	panel_info.position = Vector2(14,panel_close.position.y+panel_close.size.y+10)
 	panel_info.size = Vector2(532,50)
-	panel_scroll.position = Vector2(14,116)
-	panel_scroll.size = Vector2(532,panel.size.y-130)
+	panel_scroll.position = Vector2(14,panel_info.position.y+panel_info.size.y+8)
+	panel_scroll.size = Vector2(532,panel.size.y-panel_scroll.position.y-14)
 	panel_feedback.position = Vector2(14,panel.size.y-54)
 	panel_feedback.size = Vector2(532,46)
 	menu.size = Vector2(540,452)
@@ -233,6 +229,9 @@ func close_panel() -> void:
 	session.refresh_ui()
 
 func show_panel(kind: String) -> void:
+	if kind=="options" and session.managed_flow!=null:
+		session.managed_flow.pause_game()
+		return
 	open_panel = kind
 	panel.show()
 	session.router.clear()
@@ -294,7 +293,7 @@ func show_panel(kind: String) -> void:
 			make_button(panel_body,"Evet, sök",session.action.bind("dismantle"))
 		"options":
 			panel_title.text = "Oyun menüsü"
-			panel_info.text = "Oyun devam ediyor. İşin bitince paneli kapat."
+			panel_info.text = "Oyun duraklatıldı. İşin bitince paneli kapat."
 			for pair in [["Saldırıyı başlat","wave"],["Kaydet ve ara ver","save"],["Kayıttan devam","resume"],["Kamerayı yakınlaştır","zoom_in"],["Kamerayı uzaklaştır","zoom_out"],
 				["Rehberi göster / gizle","tutorial_toggle"]]:
 				make_button(panel_body,pair[0],session.action.bind(pair[1]))
@@ -343,6 +342,8 @@ func refresh() -> void:
 	var p: Dictionary = s.player
 	var current_size := get_viewport().get_visible_rect().size
 	if current_size != size: layout(current_size)
+	mission_title.add_theme_font_size_override("font_size",roundi(19*UserPreferences.ui_scale))
+	mission_hint.add_theme_font_size_override("font_size",roundi(16*UserPreferences.ui_scale))
 	var preparing: String = "Hazırlık %d sn" % ceili(s.phase_time) if s.phase=="prepare" else ("SALDIRI %d sn" % ceili(s.phase_time) if s.phase=="warning" else "Savaş")
 	stats.text = "HP %d/%d    Merkez %d/%d    Bölüm %d · %s%s" % [p.hp,MayhemCatalog.CHARACTERS[p.character].hp,s.core.hp,s.core.max_hp,s.wave,preparing," · UNRANKED" if s.unranked else ""]
 	resources.text = "Odun %d   Taş %d   Cevher %d   Metal %d   Mermi %d     Çanta %d/30" % [p.inventory.get("wood",0),p.inventory.get("stone",0),p.inventory.get("ore",0),p.inventory.get("metal",0),p.inventory.get("ammo",0),PhysicalInventory.total(p.inventory)]
@@ -353,10 +354,10 @@ func refresh() -> void:
 	mission.visible = session.running and not s.lost and not s.tutorial.skipped and open_panel=="" and s.tutorial.step<TutorialGuide.STEPS.size()
 	minimap.visible = session.running and not s.lost and open_panel==""
 	menu.visible = not session.running
-	report.visible = s.lost and session.running
+	report.visible = s.lost and session.running and session.managed_flow==null
 	panel.visible = session.running and not s.lost and open_panel!=""
 	menu_button.visible = session.running and not s.lost
-	session.router.enabled = session.running and not s.lost and open_panel==""
+	session.router.enabled = session.running and not s.lost and open_panel=="" and not session.local_paused
 	for button in dock: button.visible = session.running and not s.lost and open_panel==""
 	controls.reload.visible = session.running and not s.lost and open_panel=="" and p.slot>=0 and p.weapons[p.slot]!=""
 	controls.context.text = InteractionGuide.primary(session.context_target())

@@ -1,5 +1,9 @@
 extends Node2D
 ## Composition and input routing. Menus use the same checked gameplay commands.
+var launch_state: Dictionary = {}
+var managed_flow: Node
+var local_paused := false
+var loss_reported := false
 var sim: MayhemSimulation
 var router: TwinStickInput
 var camera: Camera2D
@@ -16,7 +20,7 @@ var place_touch := -1
 var debug_index := 0
 
 func _ready() -> void:
-	sim = MayhemSimulation.new()
+	sim = MayhemSimulation.new(launch_state)
 	sim.checkpoint_due.connect(save_checkpoint)
 	router = TwinStickInput.new()
 	add_child(router)
@@ -25,29 +29,43 @@ func _ready() -> void:
 	add_child(view)
 	camera = Camera2D.new()
 	camera.position = sim.state.player.pos
-	camera.zoom = Vector2.ONE * 1.2
+	camera.zoom = Vector2.ONE * UserPreferences.camera_zoom
 	add_child(camera)
 	hud = preload("res://prototype/presentation/hud.gd").new()
 	hud.session = self
 	add_child(hud)
 	ghost = sim.state.player.pos+Vector2(0,-100)
 	checkpoint = sim.state.duplicate(true)
+	if managed_flow!=null: running=true
 	refresh_ui()
 
 func _process(dt: float) -> void:
 	message_time = maxf(0,message_time-dt)
 	var movement := router.movement
 	var aim := router.aim
-	var input_allowed: bool = hud.open_panel==""
+	var input_allowed: bool = hud.open_panel=="" and not paused_now()
 	if not OS.has_feature("mobile") and input_allowed:
 		movement += Vector2(float(Input.is_physical_key_pressed(KEY_D))-float(Input.is_physical_key_pressed(KEY_A)),float(Input.is_physical_key_pressed(KEY_S))-float(Input.is_physical_key_pressed(KEY_W)))
 		if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT): aim = (get_global_mouse_position()-sim.state.player.pos).normalized()
 	if not input_allowed: movement=Vector2.ZERO; aim=Vector2.ZERO
-	if running:
+	if running and not paused_now():
 		sim.tick(minf(dt,0.05),movement.limit_length(),aim)
 		camera.position = sim.state.player.pos
-		if sim.state.lost: DirAccess.remove_absolute("user://suspend.bin")
+		if sim.state.lost:
+			DirAccess.remove_absolute("user://suspend.bin")
+			if managed_flow!=null and not loss_reported:
+				loss_reported=true
+				managed_flow.show_defeat()
 		if input_allowed and Input.is_physical_key_pressed(KEY_E) and not sim.state.lost: action("interact")
+	refresh_ui()
+
+func paused_now() -> bool:
+	return local_paused or (is_instance_valid(hud) and hud.open_panel in ["options","developer"])
+
+func apply_preferences() -> void:
+	camera.zoom=Vector2.ONE*UserPreferences.camera_zoom
+	hud.root.theme=MenuTheme.create()
+	hud.layout(hud.get_viewport().get_visible_rect().size)
 	refresh_ui()
 
 func notify(text: String) -> void:
@@ -56,7 +74,9 @@ func notify(text: String) -> void:
 
 func refresh_ui() -> void:
 	TutorialGuide.observe(sim.state)
-	if is_instance_valid(hud): hud.refresh()
+	if is_instance_valid(hud):
+		hud.refresh()
+		if managed_flow!=null: hud.root.visible=not local_paused
 	if is_instance_valid(view): view.queue_redraw()
 
 func context_target() -> Dictionary:
@@ -65,7 +85,11 @@ func context_target() -> Dictionary:
 	return InteractionGuide.target(sim.state,selection)
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not running: return
+	if not running or local_paused: return
+	if managed_flow!=null and event is InputEventKey and event.pressed and event.physical_keycode==KEY_ESCAPE:
+		managed_flow.back()
+		get_viewport().set_input_as_handled()
+		return
 	if event is InputEventKey and event.pressed and not event.echo:
 		if event.physical_keycode==KEY_ESCAPE:
 			if hud.open_panel!="": hud.close_panel()
@@ -116,6 +140,12 @@ func save_checkpoint() -> void:
 	if MayhemSave.write("user://checkpoint.bin",checkpoint): notify("Checkpoint kaydedildi · Bölüm %d" % sim.state.wave)
 
 func action(command: String) -> void:
+	if managed_flow!=null:
+		if command=="save": managed_flow.save_and_home(); return
+		if command=="menu": managed_flow.new_setup(); return
+		if command=="new": managed_flow.new_setup(); return
+		if command=="resume": managed_flow.resume_saved(); return
+		if local_paused and command!="retry": return
 	if command in ["new","menu","legacy","resume","retry"]:
 		match command:
 			"new":
@@ -150,6 +180,7 @@ func action(command: String) -> void:
 				hud.close_panel()
 				notify("Kaldığın yerden devam. Rehber ilerlemen korundu.")
 			"retry":
+				loss_reported=false
 				if checkpoint.is_empty(): return
 				sim.state=MayhemSave.retry(checkpoint,sim.state)
 				TutorialGuide.ensure(sim.state)

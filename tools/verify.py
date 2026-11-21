@@ -24,6 +24,9 @@ suites = [
     ("tutorial", ["--script", "tests/ux/tutorial_test.gd"]),
     ("layout", ["--script", "tests/ux/layout_test.gd"]),
     ("pointer", ["--script", "tests/ux/pointer_test.gd"]),
+    ("menu_navigation", ["--script", "tests/menu/navigation_test.gd"]),
+    ("menu_layout", ["--script", "tests/menu/layout_test.gd"]),
+    ("menu_pointer", ["--script", "tests/menu/pointer_test.gd"]),
     ("legacy_smoke", ["--script", "tests/smoke_test.gd"]),
     ("legacy_combat", ["--script", "tests/combat_test.gd"]),
 ]

@@ -39,7 +39,7 @@ func _draw() -> void:
 			draw_rect(Rect2(b.pos-Vector2(30,28),Vector2(60,56)),Color(0.95,0.85,0.65,0.35))
 			for x in [-26,26]: draw_line(b.pos+Vector2(x,24),b.pos+Vector2(x,-29),Color("#9d724a"),5)
 		ObjectGlyphs.draw(self,b.kind,b.pos,color)
-		if b.hp<b.max_hp*0.5:
+		if b.hp<b.max_hp*0.5 and not UserPreferences.low_effects:
 			draw_circle(b.pos-Vector2(8,36),9,Color(0.3,0.25,0.28,0.65))
 			draw_circle(b.pos-Vector2(0,46),7,Color(0.3,0.25,0.28,0.5))
 			draw_arc(b.pos,38,0,TAU,32,Color("#f29781"),3)
