@@ -1,6 +1,39 @@
 # Doğrulama sonuçları
 
-## Asker ön yön rig'i — Godot 4.3
+## Güncel sekiz yön / altı kare asker atlası — Godot 4.3
+
+Hedef yalnız `prototypes/phase0/project.godot`; motor gerçek
+**4.3.stable.official.77dcf97d8**, Linux, Compatibility/Mesa llvmpipe.
+
+| Kontrol | Sonuç |
+| --- | --- |
+| Editor import ve ana sahne 180 kare açılış | Script/motor hatası yok |
+| `soldier_atlas_test.gd` | 200 kontrol, 0 hata |
+| `prototype_test.gd` | 57 kontrol, 0 hata |
+| Korunan eski cutout bileşeni: `soldier_rig_test.gd` | 37 kontrol, 0 hata |
+| Grafik ekranlı aynı üç test | 294 kontrol, 0 hata |
+| Gerçek render, 960×540 / 1200×540 / 960×720 | Görüntüler üretildi ve incelendi |
+| Sekiz idle ve 48 yürüyüş karesi render'ı | Her yönde altı ayrı kare ve sekiz ayrı duruş doğrulandı |
+
+Yeni test atlas RGBA özetini yüklenen manifestle karşılaştırır; 48 yürüyüş
+hücresi ve sekiz idle hücresi, yüklenen tekil PNG'lerle piksel piksel eşleşir.
+Gerçek `Sprite2D` bölgeleri, E/SE/S/SW/W/NW/N/NE sırası, 8 FPS döngüsü,
+yarım hız, yürürken yön değişimi, durunca faz sıfırlama, idle'da nişanla yönelme,
+sabit ayak pivotu, tek renderer ve y-sort katmanı kontrol edildi.
+
+Eski ön rig ve kaynakları korunur, oyuncuya eklenmez. Oyuncu hareketi, input,
+HUD, kamera, çarpışma ve dünya dosyaları değiştirilmedi. Altı yan/çapraz yön
+geçici prosedürel çizim taslaklarıdır; ön ve arka yönler gönderilen GIF
+kareleridir. Bu paket nihai animasyon kalitesini doğrulamaz.
+
+Kanıtlar: [oyun](prototypes/phase0/evidence/soldier-8dir-gameplay.png),
+[48 yürüyüş karesi](prototypes/phase0/evidence/soldier-8dir-48-frames.png),
+[animasyon](prototypes/phase0/evidence/soldier-8dir-walk.gif),
+[motor/komut/exit sonuçları](prototypes/phase0/evidence/verification.json).
+Önbelleksiz ZIP kopyasında editor import, 180 kare açılış ve 294 kontrol de geçti.
+Fiziksel Android, GPU/FPS/ısınma, çentik/DPI ve APK dışa aktarma denenmedi.
+
+## Önceki ön yön rig denemesi — arşiv sonuçları
 
 `mayhem_original_soldier_rig.zip` içindeki sekiz PNG parçası, orijinal ön görünüş
 ve manifest mevcut Faz 0 projesine eklendi. Kaynak dosyalar yüklemeyle bayt bayt
@@ -18,8 +51,8 @@ orijinal arasında **0 farklı RGBA piksel** vardır.
   Önceki render ile karşılaştırmada diğer yedi yönün bütün pikselleri, ayrıca üç
   çözünürlükte karakter dışındaki harita/HUD pikselleri aynı kaldı.
 
-Pakette ve repoda sekiz yönlü asker atlası bulunmuyor. Yalnız ön yön (index 2)
-asker rig'ini kullanır; diğer yedi yön önceki placeholder görselleri korur.
+Bu önceki pakette sekiz yönlü atlas yoktu. O aşamada yalnız ön yön (index 2)
+asker rig'ini kullanıyor, diğer yedi yön önceki placeholder görselleri koruyordu.
 Kol/bacak parçalarının altında eksik gizli çizimler üretilmedi; küçük açılar kullanılır.
 Fiziksel Android, cihaz FPS/DPI/çentik ve APK dışa aktarma bu değişiklikte test edilmedi.
 

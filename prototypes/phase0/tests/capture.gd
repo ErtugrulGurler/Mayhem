@@ -30,42 +30,57 @@ func run() -> void:
 			return
 		game.queue_free()
 		await process_frame
-	# Render all eight poses and four walking phases, including the back diagonals.
-	var atlas := Image.create(512, 384, false, Image.FORMAT_RGBA8)
-	atlas.fill(Color("648d54"))
-	var hashes: Dictionary = {}
-	for index in range(12):
-		var viewport := SubViewport.new()
-		viewport.size = Vector2i(128, 128)
-		viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
-		viewport.transparent_bg = true
-		root.add_child(viewport)
-		var player: CharacterBody2D = load("res://scenes/player.tscn").instantiate()
-		player.get_node("Camera").enabled = false
-		viewport.add_child(player)
-		player.set_physics_process(false)
-		player.position = Vector2(64, 105)
-		if index < 8:
-			player.visual.update_motion(0, Vector2.from_angle(index * PI / 4.0), 0)
-		else:
-			player.visual.movement_amount = 1
-			player.visual.step_phase = (index - 8) * PI / 2.0
-			player.visual.update_motion(1, Vector2.DOWN, 0)
+	# Capture the real renderer for all idle poses and every uploaded walk frame.
+	var idle_sheet := Image.create(512, 288, false, Image.FORMAT_RGBA8)
+	var walk_sheet := Image.create(768, 1152, false, Image.FORMAT_RGBA8)
+	idle_sheet.fill(Color("648d54"))
+	walk_sheet.fill(Color("648d54"))
+	var viewport := SubViewport.new()
+	viewport.size = Vector2i(128, 144)
+	viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	viewport.transparent_bg = true
+	root.add_child(viewport)
+	var player: CharacterBody2D = load("res://scenes/player.tscn").instantiate()
+	player.get_node("Camera").enabled = false
+	viewport.add_child(player)
+	player.set_physics_process(false)
+	player.position = Vector2(64, 132)
+	var caption := Label.new()
+	caption.position = Vector2(5, 0)
+	caption.add_theme_font_size_override("font_size", 13)
+	viewport.add_child(caption)
+	var idle_hashes: Dictionary = {}
+	var walk_hashes: Dictionary = {}
+	var directions := ["E", "SE", "S", "SW", "W", "NW", "N", "NE"]
+	for index in range(56):
+		var direction_index: int = index if index < 8 else (index - 8) / 6
+		var frame: int = -1 if index < 8 else (index - 8) % 6
+		var direction := Vector2.from_angle(direction_index * PI / 4.0)
+		player.visual.update_motion(0, direction, 0)
+		if frame >= 0: player.visual.update_motion(1, direction, (frame + 0.001) / 8.0)
+		caption.text = directions[direction_index] + (" / idle" if frame < 0 else " / %d" % (frame + 1))
 		await process_frame
 		await RenderingServer.frame_post_draw
 		var pose := viewport.get_texture().get_image()
-		if index < 8: hashes[hash(pose.get_data())] = true
 		pose.convert(Image.FORMAT_RGBA8)
-		atlas.blend_rect(pose, Rect2i(0, 0, 128, 128), Vector2i((index % 4) * 128, (index / 4) * 128))
-		viewport.queue_free()
-		await process_frame
-	if hashes.size() != 8:
-		push_error("Eight facing poses must all have distinct rendered pixels.")
-		quit(1)
-		return
-	var saved := atlas.save_png(destination.path_join("phase0-character-poses.png"))
-	print("Eight distinct rendered facing poses; atlas save result ", saved)
-	if saved != OK:
+		# Exclude captions so they cannot make identical poses look distinct.
+		var body_hash := hash(pose.get_region(Rect2i(0, 25, 128, 119)).get_data())
+		if frame < 0:
+			idle_hashes[body_hash] = true
+			idle_sheet.blend_rect(pose, Rect2i(0, 0, 128, 144), Vector2i((index % 4) * 128, (index / 4) * 144))
+		else:
+			if not walk_hashes.has(direction_index): walk_hashes[direction_index] = {}
+			walk_hashes[direction_index][body_hash] = true
+			walk_sheet.blend_rect(pose, Rect2i(0, 0, 128, 144), Vector2i(frame * 128, direction_index * 144))
+	var distinct := idle_hashes.size() == 8
+	for direction_index in range(8): distinct = distinct and walk_hashes[direction_index].size() == 6
+	viewport.queue_free()
+	await process_frame
+	var saved_idle := idle_sheet.save_png(destination.path_join("phase0-character-poses.png"))
+	var saved_walk := walk_sheet.save_png(destination.path_join("phase0-walk-48-frames.png"))
+	print("RENDER: eight distinct idle poses, six distinct walk frames per direction: ", distinct)
+	if not distinct or saved_idle != OK or saved_walk != OK:
+		push_error("Pose capture/uniqueness validation failed.")
 		quit(1)
 		return
 	quit()

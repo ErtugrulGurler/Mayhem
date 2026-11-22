@@ -55,7 +55,7 @@ func run() -> void:
 	await frames(30)
 	var straight_distance := player.position.distance_to(start)
 	check(straight_distance > 95 and straight_distance < 125, "Physical D key drives configured movement speed")
-	check(player.visual.movement_amount > 0.9 and player.visual.bob >= 0, "Real movement drives short-step animation")
+	check(player.visual.movement_amount > 0.9 and player.visual.walking, "Real movement drives short-step animation")
 	key(KEY_D, false)
 	await frames(20)
 	check(player.velocity.length() < 0.1, "Key release brakes to rest")

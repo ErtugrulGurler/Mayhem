@@ -1,80 +1,62 @@
 extends Node2D
-## Uploaded soldier cutout for the front; existing seven poses remain the fallback.
-## The upload contains no eight-direction soldier atlas. Do not invent missing art.
+## One atlas sprite for all eight directions. Physics and controls stay in Player.
+## Front/back use supplied GIF frames; the other six walks are draft artwork.
 
-const FrontRig = preload("res://scripts/scout_front_rig.gd")
-var front_rig: Node2D
+const WALK_ATLAS: Texture2D = preload("res://assets/mayhem_soldier/mayhem_walk_8dir_6f.png")
+const IDLE_ATLAS: Texture2D = preload("res://assets/mayhem_soldier/mayhem_idle_8dir.png")
+const FRAME_SIZE := Vector2(256, 320)
+const FOOT_ANCHOR := Vector2(128, 295)
+const WORLD_SCALE := 91.0 / 256.0
+const FRAME_COUNT := 6
+const ANIMATION_FPS := 8.0
+const MOTION_THRESHOLD := 0.02
 
 var facing_index := 2
-var step_phase := 0.0
+var frame_index := 0
+var animation_phase := 0.0
 var movement_amount := 0.0
-var bob := 0.0
-var sway := 0.0
-const INK := Color("263c38")
+var walking := false
+var sprite: Sprite2D
 
 func _ready() -> void:
-	front_rig = FrontRig.new()
-	front_rig.name = "SoldierFrontRig"
-	add_child(front_rig)
-	refresh_front()
+	sprite = Sprite2D.new()
+	sprite.name = "SoldierAtlas"
+	sprite.centered = false
+	sprite.region_enabled = true
+	sprite.region_filter_clip_enabled = true
+	sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+	sprite.scale = Vector2.ONE * WORLD_SCALE
+	sprite.position = -FOOT_ANCHOR * WORLD_SCALE
+	add_child(sprite)
+	refresh_sprite()
 
 func update_motion(speed_ratio: float, direction: Vector2, delta: float) -> void:
 	if not direction.is_zero_approx():
+		# Canvas coordinates: E, SE, S, SW, W, NW, N, NE.
 		facing_index = posmod(roundi(direction.angle() / (PI / 4.0)), 8)
-	movement_amount = move_toward(movement_amount, clampf(speed_ratio, 0, 1), delta * 12.0)
-	step_phase = fmod(step_phase + delta * 15.0 * speed_ratio, TAU)
-	bob = absf(sin(step_phase)) * 2.5 * movement_amount
-	sway = sin(step_phase) * 0.055 * movement_amount
-	refresh_front()
-	queue_redraw()
+	movement_amount = clampf(speed_ratio, 0.0, 1.0)
+	walking = movement_amount > MOTION_THRESHOLD
+	if walking:
+		animation_phase = fposmod(animation_phase + maxf(delta, 0.0) * ANIMATION_FPS * movement_amount, FRAME_COUNT)
+		frame_index = floori(animation_phase)
+	else:
+		animation_phase = 0.0
+		frame_index = 0
+	refresh_sprite()
 
-func refresh_front() -> void:
-	if not is_instance_valid(front_rig): return
-	front_rig.visible = facing_index == 2
-	front_rig.apply_pose(movement_amount, step_phase)
-
-func oval(center: Vector2, radii: Vector2, color: Color, border: float = 2.5) -> void:
-	var points := PackedVector2Array()
-	for i in range(25):
-		points.append(center + Vector2(cos(i * TAU / 24.0), sin(i * TAU / 24.0)) * radii)
-	draw_colored_polygon(points, color)
-	if border > 0: draw_polyline(points, INK, border, true)
+func refresh_sprite() -> void:
+	if not is_instance_valid(sprite): return
+	if walking:
+		sprite.texture = WALK_ATLAS
+		sprite.region_rect = Rect2(Vector2(frame_index, facing_index) * FRAME_SIZE, FRAME_SIZE)
+	else:
+		sprite.texture = IDLE_ATLAS
+		sprite.region_rect = Rect2(Vector2(facing_index * FRAME_SIZE.x, 0), FRAME_SIZE)
 
 func _draw() -> void:
-	oval(Vector2(1, 0), Vector2(24, 9), Color(0.08, 0.18, 0.14, 0.22), 0)
-	if facing_index == 2: return
-	var step := sin(step_phase) * 4.0 * movement_amount
-	oval(Vector2(-8, -5 + step), Vector2(7, 7), Color("4b5145"))
-	oval(Vector2(8, -5 - step), Vector2(7, 7), Color("4b5145"))
-	draw_set_transform(Vector2(0, -bob), sway)
-	# The small backpack, scarf and exposed face give this explorer its own silhouette.
-	var direction := Vector2.from_angle(facing_index * PI / 4.0)
-	var pack_side := -1.0 if direction.x >= -0.01 else 1.0
-	oval(Vector2(pack_side * 15, -23), Vector2(8, 13), Color("b38b58"))
-	oval(Vector2(0, -23), Vector2(17, 21), Color("3e9d8e"))
-	oval(Vector2(-17, -22 - step * 0.4), Vector2(5, 8), Color("e9b880"))
-	oval(Vector2(17, -22 + step * 0.4), Vector2(5, 8), Color("e9b880"))
-	draw_colored_polygon(PackedVector2Array([Vector2(pack_side * 4, -31), Vector2(pack_side * 22, -29), Vector2(pack_side * 18, -17), Vector2(pack_side * 6, -25)]), Color("bb6047"))
-	oval(Vector2(0, -33), Vector2(15, 5), Color("df8253"))
-	oval(Vector2(-17, -46), Vector2(5, 6), Color("e9b880"))
-	oval(Vector2(17, -46), Vector2(5, 6), Color("e9b880"))
-	oval(Vector2(0, -47), Vector2(18, 18), Color("f0c38f"))
-	var back := facing_index in [5, 6, 7]
-	if back:
-		oval(Vector2(direction.x * 3, -52), Vector2(17, 13), Color("644c3d"))
-		draw_arc(Vector2(direction.x * 5, -48), 9, 0.1, 2.7, 12, Color("866447"), 2.0, true)
-	else:
-		var side := 1.0 if facing_index == 0 else (-1.0 if facing_index == 4 else 0.0)
-		var face_shift := Vector2.from_angle(facing_index * PI / 4.0).x * 3.0
-		if side == 0:
-			draw_circle(Vector2(-6 + face_shift, -47), 2.2, INK)
-			draw_circle(Vector2(6 + face_shift, -47), 2.2, INK)
-		else:
-			draw_circle(Vector2(side * 10, -47), 2.3, INK)
-		oval(Vector2(face_shift + side * 10, -42), Vector2(3, 2), Color("d28c65"), 0)
-		draw_arc(Vector2(face_shift, -43), 6, 0.35, 2.5, 8, INK, 1.3, true)
-	# Uneven hair and a little sprout pin: no visor, spacesuit or copied costume.
-	draw_colored_polygon(PackedVector2Array([Vector2(-17, -52), Vector2(-15, -63), Vector2(-6, -67), Vector2(-1, -64), Vector2(5, -69), Vector2(15, -61), Vector2(18, -54), Vector2(5, -58), Vector2(-3, -54), Vector2(-8, -58)]), Color("644c3d"))
-	draw_line(Vector2(10, -64), Vector2(13, -72), INK, 2, true)
-	oval(Vector2(16, -72), Vector2(5, 3), Color("b6d46a"), 1.5)
-	draw_set_transform(Vector2.ZERO)
+	# Ground shadow remains outside the animated artwork and its fixed foot anchor.
+	var points := PackedVector2Array()
+	for i in range(25):
+		var angle := i * TAU / 24.0
+		points.append(Vector2(cos(angle) * 18.0, -3.0 + sin(angle) * 5.0))
+	draw_colored_polygon(points, Color(0.05, 0.09, 0.07, 0.22))

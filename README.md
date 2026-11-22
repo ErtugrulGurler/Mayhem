@@ -7,9 +7,9 @@ dosyasından ayrı proje olarak açılır. Godot **4.3 stable** ile içe aktar v
 Kökteki mevcut oyunun başlangıcı, sistemleri ve kayıtları değiştirilmedi.
 
 - Açık çayır haritası, yürünebilir patika, ağaç/kaya çarpışmaları ve harita sınırı.
-- Ön yönde yüklenen özgün asker rig'i; kısa adımlar, hafif kol/baş salınımı ve dikey hareket.
-- Paket yalnız ön yönü içerir. Diğer yedi yönde önceki placeholder görseller korunur;
-  `scout_soldier_8dir.png` pakette ve repoda bulunmadığından asker atlası varmış gibi kullanılmaz.
+- Sekiz yönde aynı asker; her yönde altı yürüyüş karesi ve ayrı duruş pozu.
+- Yürüyüş yaklaşık 8 FPS'tir ve hareket hızıyla ölçeklenir. Durunca aynı yönde
+  idle'a geçilir ve animasyon fazı sıfırlanır; başka karakter/placeholder çizilmez.
 - 360° hareket, yumuşak ve haritayla sınırlı kamera; Compatibility renderer, yatay mobil ekran.
 - Sol analog hareket; sağ analog yalnız bakış/nişan yönü. İki parmak aynı anda kullanılabilir.
 - Masaüstü: **WASD / oklar**, **sağ fareyi tutarak yönelme**. Analoglar sol fareyle de denenebilir.
@@ -18,10 +18,14 @@ Kökteki mevcut oyunun başlangıcı, sistemleri ve kayıtları değiştirilmedi
 `scripts/player.gd` hareketi, `character_visual.gd` değiştirilebilir çizimi/animasyonu,
 `input_router.gd` girişleri, `hud.gd` ekran yerleşimini yönetir. Ağaç/kayaların
 çarpışması yalnız yerdeki ayak izindedir; gövdelerin arkasından yürünebilir.
-Çevre ve eski yön görselleri kodla çizilir. Kullanıcının yüklediği asker PNG'leri
-`assets/characters/scout_front_rig/` altında değiştirilmeden saklanır; 3D model yoktur.
-`scout_front_rig.gd`, sekiz PNG parçasını manifestteki pivotlarla birleştirir.
-Referans yüksekliği 91 dünya birimidir; karakterin hareket/çarpışma/kamera kodu aynıdır.
+Çevre kodla çizilir; 3D model yoktur. Kullanıcının yüklediği asker PNG'leri
+`assets/mayhem_soldier/` altında değiştirilmeden saklanır. Tek `Sprite2D`,
+yürüyüşte 8×6 atlası, dururken 8×1 idle atlasını kullanır. Her hücre 256×320,
+ayak pivotu (128, 295), ölçek 91/256'dır; hareket/çarpışma/kamera kodu aynıdır.
+Ön ve arka yürüyüşler gönderilen çizilmiş GIF karelerindendir. Diğer altı yön
+geçici deformasyon taslaklarıdır; nihai/elle çizilmiş 48 kare diye sunulmaz.
+Eski `scout_front_rig.gd` ve `assets/characters/scout_front_rig/` korunur,
+aktif oyuncu tarafından çizilmez.
 `.gdignore`, bu bağımsız projenin eski ana projeye kaynak olarak karışmasını önler.
 
 Doğrulama komutları (Godot 4.3 executable'ı `godot` olarak varsayılmıştır):
@@ -29,26 +33,27 @@ Doğrulama komutları (Godot 4.3 executable'ı `godot` olarak varsayılmıştır
 ```sh
 godot --headless --path prototypes/phase0 --editor --import --quit
 godot --headless --fixed-fps 60 --path prototypes/phase0 --script tests/prototype_test.gd
+godot --headless --fixed-fps 60 --path prototypes/phase0 --script tests/soldier_atlas_test.gd
 godot --headless --fixed-fps 60 --path prototypes/phase0 --script tests/soldier_rig_test.gd
 godot --headless --path prototypes/phase0 --quit-after 180
 ```
 
 Grafik ekranı bulunan masaüstünde `tests/capture.gd` üç ekran oranını ve karakterin
-sekiz yönünü render eder. `MAYHEM_CAPTURE_DIR` verilmezse görüntüler `user://captures`
+sekiz idle yönünü ve 48 yürüyüş karesini render eder. `MAYHEM_CAPTURE_DIR` verilmezse görüntüler `user://captures`
 altına yazılır. Fiziksel Android dokunma/DPI/çentik ve cihaz performansı ayrıca denenmelidir.
 Gerçek Godot 4.3 import/açılış, headless ve grafik ekranlı 57 kontrol geçti.
-Asker rig'i için ek 39 kontrol kaynak piksel özeti, parça birleşimi, adımlar,
-duruş sıfırlama ve dünya çizim sırasını doğrular.
-Mevcut ana oyun için 4.7.2 regresyonu da tekrarlandı: 919 kontrol, 0 hata.
+Atlasın 200 kontrolü yönleri, 48 kareyi, döngüyü, hızı, idle geçişini ve ayak
+hizasını doğrular. Korunan eski rig için 37 bileşen kontrolü de geçer.
+Önceki ana oyun doğrulaması: Godot 4.7.2'de 919 kontrol, 0 hata.
 Ayrıntılar: [TEST_RESULTS.md](TEST_RESULTS.md).
+[Godot render'ından sekiz yön yürüyüş önizlemesi](prototypes/phase0/evidence/soldier-8dir-walk.gif).
 
 Elle kontrol: iki analogla aynı anda hareket et/yönel; parmağı analog dışına sürükleyip
 bırak; ağaç ve kayalara yürü; köşelere gidip harita sınırını dene; uygulamadan çıkıp
 dönünce karakterin kendiliğinden yürümediğini kontrol et.
-Asker rig'i: **S / aşağı ok** veya sol analogu aşağı sürükleyerek ön yöne yürü.
-Sağ analog başka yöne bakıyorsa bırak veya onu da aşağı yönelt. Kısa adımları izle,
-durunca kolların/bacakların orijinal duruşuna döndüğünü kontrol et. Diğer yönler
-tam asker atlası eklenene kadar önceki görselleri kullanır.
+Sekiz yön testi: WASD/oklarla dört ana ve dört çapraz yöne yürü. Her yönde durup
+doğru idle'a geçtiğini kontrol et. Sağ analogu/sağ fareyi tutarken bakış yönü
+hareket yönünden bağımsızdır; hareket yönünü görmek için nişanı bırak.
 
 ## Mevcut ana proje — Godot 4.7.2
 

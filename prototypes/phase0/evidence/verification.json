@@ -1,0 +1,83 @@
+{
+  "engine": "4.3.stable.official.77dcf97d8",
+  "project": "prototypes/phase0/project.godot",
+  "headless_clean_import": [
+    {
+      "name": "clean-import",
+      "exit": 0,
+      "passed": true,
+      "flags": [
+        "--editor",
+        "--import",
+        "--quit"
+      ],
+      "summary": []
+    },
+    {
+      "name": "clean-startup",
+      "exit": 0,
+      "passed": true,
+      "flags": [
+        "--quit-after",
+        "180"
+      ],
+      "summary": []
+    },
+    {
+      "name": "clean-atlas",
+      "exit": 0,
+      "passed": true,
+      "flags": [
+        "--script",
+        "tests/soldier_atlas_test.gd"
+      ],
+      "summary": [
+        "SOLDIER ATLAS: 200 checks, 0 failures"
+      ]
+    },
+    {
+      "name": "clean-prototype",
+      "exit": 0,
+      "passed": true,
+      "flags": [
+        "--script",
+        "tests/prototype_test.gd"
+      ],
+      "summary": [
+        "PHASE 0: 57 checks, 0 failures"
+      ]
+    },
+    {
+      "name": "clean-legacy",
+      "exit": 0,
+      "passed": true,
+      "flags": [
+        "--script",
+        "tests/soldier_rig_test.gd"
+      ],
+      "summary": [
+        "SOLDIER RIG: 37 checks, 0 failures"
+      ]
+    }
+  ],
+  "rendered": [
+    {
+      "name": "atlas-rendered",
+      "exit": 0,
+      "passed": true
+    },
+    {
+      "name": "prototype-rendered",
+      "exit": 0,
+      "passed": true
+    },
+    {
+      "name": "legacy-rig-rendered",
+      "exit": 0,
+      "passed": true
+    }
+  ],
+  "rendered_pose_validation": "8 distinct idle poses and 6 distinct walk frames in each of 8 directions",
+  "physical_android_tested": false,
+  "quality": "Front/back from supplied GIFs; six other directions are provisional procedural artwork."
+}
