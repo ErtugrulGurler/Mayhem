@@ -2,7 +2,7 @@ extends SceneTree
 ## Verify every region against the uploaded standalone PNGs, plus playback rules.
 
 const Visual = preload("res://scripts/character_visual.gd")
-const ASSETS := "res://assets/mayhem_soldier/"
+const ASSETS := "res://assets/characters/mayhem_soldier/"
 const DIRECTIONS := ["E", "SE", "S", "SW", "W", "NW", "N", "NE"]
 var checks := 0
 var failures := 0
@@ -25,15 +25,16 @@ func _initialize() -> void:
 
 func run() -> void:
 	var manifest: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(ASSETS + "manifest.json"))
-	var walk := image("mayhem_walk_8dir_6f.png")
+	var walk := image("mayhem_walk_8dir_8f.png")
 	var idle := image("mayhem_idle_8dir.png")
-	check(walk.get_size() == Vector2i(1536, 2560), "Walk atlas is six columns and eight rows")
-	check(idle.get_size() == Vector2i(2048, 320), "Idle atlas is eight columns")
+	check(walk.get_size() == Vector2i(2048, 2304), "Walk atlas is eight columns and eight rows")
+	check(idle.get_size() == Vector2i(2048, 288), "Idle atlas is eight columns")
 	var digest := HashingContext.new()
 	digest.start(HashingContext.HASH_SHA256)
 	digest.update(walk.get_data())
-	check(digest.finish().hex_encode() == manifest.image_sha256, "Original walk atlas RGBA hash matches uploaded manifest")
-	check(Vector2(manifest.foot_anchor_px[0], manifest.foot_anchor_px[1]) == Vector2(128, 295), "Uploaded foot anchor preserved")
+	check(digest.finish().hex_encode() == "e27ca4aa17a68f4a24802607fa2bac39c56623862003c957b298a2f458fa50aa", "Original walk atlas RGBA hash matches uploaded source")
+	check(Vector2(manifest.pivot_px[0], manifest.pivot_px[1]) == Vector2(128, 272), "Uploaded foot anchor preserved")
+	check(is_equal_approx(Visual.FRAME_DURATION, manifest.frame_duration_seconds), "Playback preserves the uploaded 95 ms frame duration")
 
 	var visual := Visual.new()
 	root.add_child(visual)
@@ -44,46 +45,50 @@ func run() -> void:
 	for direction_index in range(8):
 		var direction_name: String = DIRECTIONS[direction_index]
 		var direction := Vector2.from_angle(direction_index * PI / 4.0)
-		check(manifest.direction_index[str(direction_index)].name == direction_name, direction_name + " matches supplied direction order")
+		check(manifest.direction_index[str(direction_index)] == direction_name, direction_name + " matches supplied direction order")
 		visual.update_motion(0, direction, 0)
-		var idle_rect := Rect2i(direction_index * 256, 0, 256, 320)
+		var idle_rect := Rect2i(direction_index * 256, 0, 256, 288)
 		check(idle.get_region(idle_rect).get_data() == image("idle_" + direction_name + ".png").get_data(), direction_name + " idle pixels match uploaded standalone pose")
 		check(visual.facing_index == direction_index and visual.sprite.texture == Visual.IDLE_ATLAS and visual.sprite.region_rect == Rect2(idle_rect), direction_name + " selects correct idle region")
 		var frame_hashes: Dictionary = {}
-		for frame in range(6):
-			var rect := Rect2i(frame * 256, direction_index * 320, 256, 320)
+		check(idle.get_region(idle_rect).get_data() == walk.get_region(Rect2i(0, direction_index * 288, 256, 288)).get_data(), direction_name + " idle is the first walk frame")
+		for frame in range(8):
+			var rect := Rect2i(frame * 256, direction_index * 288, 256, 288)
 			var expected := image("frames/%s/%02d.png" % [direction_name, frame])
 			var pixels := walk.get_region(rect).get_data()
 			check(pixels == expected.get_data(), "%s frame %d matches uploaded standalone PNG" % [direction_name, frame])
+			var used := expected.get_used_rect()
+			check(used.has_area() and used.position.x > 0 and used.position.y > 0 and used.end.x < 256 and used.end.y < 288, "%s frame %d is nonempty with transparent padding on every edge" % [direction_name, frame])
 			frame_hashes[hash(pixels)] = true
 			visual.update_motion(0, direction, 0)
-			visual.update_motion(1, direction, (frame + 0.001) / 8.0)
+			visual.update_motion(1, direction, (frame + 0.001) * 0.095)
 			check(visual.sprite.texture == Visual.WALK_ATLAS and visual.sprite.region_rect == Rect2(rect), "%s frame %d selected for actual rendering" % [direction_name, frame])
-			check((visual.sprite.position + Vector2(128, 295) * visual.sprite.scale).is_zero_approx(), "%s frame %d keeps foot at player origin" % [direction_name, frame])
-		check(frame_hashes.size() == 6, direction_name + " contains six distinct uploaded frames")
+			check((visual.sprite.position + Vector2(128, 272) * visual.sprite.scale).is_zero_approx(), "%s frame %d keeps foot at player origin" % [direction_name, frame])
+		# The supplied N/00 and N/04 are identical; keep both timed slots.
+		check(frame_hashes.size() == (7 if direction_name == "N" else 8), direction_name + " preserves the supplied number of distinct poses")
 		visual.update_motion(0, Vector2.ZERO, 0.01)
 		check(not visual.walking and visual.frame_index == 0 and visual.animation_phase == 0 and visual.facing_index == direction_index and visual.sprite.region_rect == Rect2(idle_rect), direction_name + " stop selects matching idle, retains facing and resets phase")
 
 	visual.update_motion(0, Vector2.RIGHT, 0)
 	var sequence: Array[int] = []
-	for i in range(6):
-		visual.update_motion(1, Vector2.RIGHT, 0.125)
+	for i in range(8):
+		visual.update_motion(1, Vector2.RIGHT, 0.095)
 		sequence.append(visual.frame_index)
-	check(sequence == [1, 2, 3, 4, 5, 0], "Eight FPS playback wraps at six frames")
+	check(sequence == [1, 2, 3, 4, 5, 6, 7, 0], "Eight timed frame slots wrap from frame eight to frame one")
 	visual.update_motion(0, Vector2.ZERO, 0)
-	visual.update_motion(0.5, Vector2.RIGHT, 0.125)
+	visual.update_motion(0.5, Vector2.RIGHT, 0.095)
 	check(visual.frame_index == 0, "Half speed waits twice as long for a frame")
-	visual.update_motion(0.5, Vector2.RIGHT, 0.125)
-	check(visual.frame_index == 1, "Half speed advances after a quarter second")
+	visual.update_motion(0.5, Vector2.RIGHT, 0.095)
+	check(visual.frame_index == 1, "Half speed advances after 190 ms")
 	visual.update_motion(0, Vector2.LEFT, 0)
-	visual.update_motion(1, Vector2.LEFT, 0.125)
+	visual.update_motion(1, Vector2.LEFT, 0.095)
 	var phase: float = visual.animation_phase
 	visual.update_motion(1, Vector2.UP, 0)
-	check(visual.facing_index == 6 and visual.animation_phase == phase and visual.sprite.region_rect.position.y == 1920, "Moving direction changes row without restarting stride")
+	check(visual.facing_index == 6 and visual.animation_phase == phase and visual.sprite.region_rect.position.y == 1728, "Moving direction changes row without restarting stride")
 	visual.update_motion(0, Vector2.LEFT, 0)
 	check(visual.facing_index == 4 and visual.sprite.region_rect.position == Vector2(1024, 0), "Stationary aiming rotates the matching idle pose")
 	visual.update_motion(1, Vector2.ZERO, 1000)
-	check(visual.frame_index >= 0 and visual.frame_index < 6, "Long delta remains inside walk atlas")
+	check(visual.frame_index >= 0 and visual.frame_index < 8, "Long delta remains inside walk atlas")
 	phase = visual.animation_phase
 	visual.update_motion(1, Vector2.ZERO, -1)
 	check(visual.animation_phase == phase, "Negative delta cannot reverse animation")

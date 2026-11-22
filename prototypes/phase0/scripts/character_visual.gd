@@ -1,14 +1,15 @@
 extends Node2D
 ## One atlas sprite for all eight directions. Physics and controls stay in Player.
-## Front/back use supplied GIF frames; the other six walks are draft artwork.
+## Supplied eight-frame test artwork is shown in source order without mirroring.
 
-const WALK_ATLAS: Texture2D = preload("res://assets/mayhem_soldier/mayhem_walk_8dir_6f.png")
-const IDLE_ATLAS: Texture2D = preload("res://assets/mayhem_soldier/mayhem_idle_8dir.png")
-const FRAME_SIZE := Vector2(256, 320)
-const FOOT_ANCHOR := Vector2(128, 295)
-const WORLD_SCALE := 91.0 / 256.0
-const FRAME_COUNT := 6
-const ANIMATION_FPS := 8.0
+const WALK_ATLAS: Texture2D = preload("res://assets/characters/mayhem_soldier/mayhem_walk_8dir_8f.png")
+const IDLE_ATLAS: Texture2D = preload("res://assets/characters/mayhem_soldier/mayhem_idle_8dir.png")
+const FRAME_SIZE := Vector2(256, 288)
+const FOOT_ANCHOR := Vector2(128, 272)
+const WORLD_SCALE := 0.36
+const FRAME_COUNT := 8
+const FRAME_DURATION := 0.095
+const ANIMATION_FPS := 1.0 / FRAME_DURATION
 const MOTION_THRESHOLD := 0.02
 
 var facing_index := 2

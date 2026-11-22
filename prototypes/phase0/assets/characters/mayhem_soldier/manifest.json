@@ -1,0 +1,141 @@
+{
+  "title": "Mayhem 8 directions x 8 frames brisk cartoon walk",
+  "format": "rgba transparent PNG",
+  "sheet": "mayhem_walk_8dir_8f.png",
+  "directions": [
+    "E",
+    "SE",
+    "S",
+    "SW",
+    "W",
+    "NW",
+    "N",
+    "NE"
+  ],
+  "direction_index": {
+    "0": "E",
+    "1": "SE",
+    "2": "S",
+    "3": "SW",
+    "4": "W",
+    "5": "NW",
+    "6": "N",
+    "7": "NE"
+  },
+  "frame_width": 256,
+  "frame_height": 288,
+  "columns": 8,
+  "rows": 8,
+  "fps": 10.53,
+  "frame_duration_seconds": 0.095,
+  "playback": "loop",
+  "origin": "bottom-center",
+  "pivot_px": [
+    128,
+    272
+  ],
+  "godot_facing_index_map": {
+    "0": "E",
+    "1": "SE",
+    "2": "S",
+    "3": "SW",
+    "4": "W",
+    "5": "NW",
+    "6": "N",
+    "7": "NE"
+  },
+  "idle": "mayhem_idle_8dir.png",
+  "review_status": "Artist QA recommended in Godot; S gait lower-body leg alternation rebuilt; NE/NW back 3/4 corrected",
+  "frame_sources": {
+    "E": "chibi_kaşifin_8_karelik_yürüyüşü.png",
+    "SE": "chibi_asker_kaşif_yürüyüş_döngüsü_sprite_ı.png",
+    "S": "a_clean_transparent_background_sprite_sheet_no_t.png",
+    "SW": "chibi_kâşifin_dinamik_yürüyüş_döngüsü.png",
+    "W": "chibi_kaşif_asker_yürüme_döngüsü.png",
+    "NW": "a_clean_png_sprite_sheet_on_a_transparent_checkerb.png",
+    "N": "arkadan_yürüyen_chibi_kaşif_sprite_seti.png",
+    "NE": "a_clean_png_sprite_sheet_on_a_transparent_checkerb.png"
+  },
+  "frame_order": {
+    "E": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "SE": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "S": [
+      2,
+      1,
+      0,
+      4,
+      2,
+      1,
+      0,
+      4
+    ],
+    "SW": [
+      4,
+      0,
+      1,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "W": [
+      2,
+      1,
+      0,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "NW": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "N": [
+      0,
+      1,
+      2,
+      3,
+      0,
+      5,
+      6,
+      7
+    ],
+    "NE": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ]
+  }
+}

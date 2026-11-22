@@ -1,6 +1,48 @@
 # Doğrulama sonuçları
 
-## Güncel sekiz yön / altı kare asker atlası — Godot 4.3
+## Güncel sekiz yön / sekiz kare asker atlası — Godot 4.3
+
+Hedef `prototypes/phase0/project.godot`; gerçek motor
+**4.3.stable.official.77dcf97d8**, Linux, Compatibility/Mesa llvmpipe.
+
+| Kontrol | Sonuç |
+| --- | --- |
+| Editor import ve 180 kare açılış | Script/motor hatası yok |
+| Atlas, yön, kare, tempo, idle, ayak/kenar kontrolleri | 321 kontrol, 0 hata |
+| Mevcut hareket/kamera/çarpışma/dokunma regresyonu | 57 kontrol, 0 hata |
+| Korunan eski cutout bileşeni | 37 kontrol, 0 hata |
+| Grafik ekranlı aynı üç test | 415 kontrol, 0 hata |
+| 960×540 / 1200×540 / 960×720 gerçek render | Görüntüler üretildi ve incelendi |
+
+Önbelleksiz ZIP kopyasında editor import, 180 kare açılış ve aynı 415 kontrol de geçti.
+
+82 kaynak PNG ve manifest byte olarak değiştirilmeden
+`prototypes/phase0/assets/characters/mayhem_soldier/` altına alındı. Atlas 2048×2304,
+hücre 256×288, ayak pivotu (128, 272), tek sabit ölçek 0,36, kare süresi 95 ms.
+64 atlas hücresi ve sekiz idle pozu, tekil yükleme PNG'leriyle piksel piksel eşleşir.
+PNG'lerde boş veya kenardan kırpılmış kare yoktur. Her idle, ilgili yönün ilk karesidir.
+
+Godot render'ında 64 zaman yuvası ve sekiz idle yönü kontrol edildi. N yönündeki
+1/5. kare kaynakta aynıdır; toplam 63 benzersiz yürüyüş resmi vardır. Bu tekrar
+deduplikasyonla silinmedi; sekiz kareli ritim ve 8→1 geçişi korunur. Ayak pivotu
+bütün karelerde oyuncu origin'inde kalır; kaynak görsellerdeki 1–3 piksel dikey
+sekme ekstra kodla bastırılmadı (oyunda en fazla 1,08 dünya birimi).
+
+S/SE/SW ikinci yarı adımları ve NE/NW arka çapraz yönler render temas tablosunda
+incelendi. Nötr poza dönüşler ve 8→1 zamanlamasında kare atlama/atlas kayması
+bulunmadı. E/W profil ve SE/SW temas pozlarının örtüşme/çizim tutarlılığı test
+sanatının sınırıdır; yazılım testi nihai animasyon kalitesi onayı değildir.
+Kaynak kareleri aynalama, yeniden çizme veya yeniden sıralama yapılmadı.
+
+Kanıtlar: [oyun](prototypes/phase0/evidence/soldier-8dir-gameplay.png),
+[64 kare](prototypes/phase0/evidence/soldier-8dir-64-frames.png),
+[normal tempo](prototypes/phase0/evidence/soldier-8dir-walk.gif),
+[4× yavaş](prototypes/phase0/evidence/soldier-8dir-walk-slow.gif),
+[motor/komut/exit sonuçları](prototypes/phase0/evidence/verification.json).
+Oyuncu hareketi, nişan önceliği, HUD, kamera, dünya, çarpışma ve kökteki ana proje
+değiştirilmedi. Fiziksel Android, cihaz FPS/ısınma, DPI/çentik ve APK denenmedi.
+
+## Önceki altı kare asker atlası — arşiv sonuçları
 
 Hedef yalnız `prototypes/phase0/project.godot`; motor gerçek
 **4.3.stable.official.77dcf97d8**, Linux, Compatibility/Mesa llvmpipe.
@@ -26,10 +68,9 @@ HUD, kamera, çarpışma ve dünya dosyaları değiştirilmedi. Altı yan/çapra
 geçici prosedürel çizim taslaklarıdır; ön ve arka yönler gönderilen GIF
 kareleridir. Bu paket nihai animasyon kalitesini doğrulamaz.
 
-Kanıtlar: [oyun](prototypes/phase0/evidence/soldier-8dir-gameplay.png),
-[48 yürüyüş karesi](prototypes/phase0/evidence/soldier-8dir-48-frames.png),
-[animasyon](prototypes/phase0/evidence/soldier-8dir-walk.gif),
-[motor/komut/exit sonuçları](prototypes/phase0/evidence/verification.json).
+Bu aşamanın kanıtları [f3752c6 sürümündedir](https://github.com/ErtugrulGurler/Mayhem/tree/f3752c6/prototypes/phase0/evidence).
+Eski [48 yürüyüş karesi](prototypes/phase0/evidence/soldier-8dir-48-frames.png) korunur.
+
 Önbelleksiz ZIP kopyasında editor import, 180 kare açılış ve 294 kontrol de geçti.
 Fiziksel Android, GPU/FPS/ısınma, çentik/DPI ve APK dışa aktarma denenmedi.
 

@@ -7,8 +7,8 @@ dosyasından ayrı proje olarak açılır. Godot **4.3 stable** ile içe aktar v
 Kökteki mevcut oyunun başlangıcı, sistemleri ve kayıtları değiştirilmedi.
 
 - Açık çayır haritası, yürünebilir patika, ağaç/kaya çarpışmaları ve harita sınırı.
-- Sekiz yönde aynı asker; her yönde altı yürüyüş karesi ve ayrı duruş pozu.
-- Yürüyüş yaklaşık 8 FPS'tir ve hareket hızıyla ölçeklenir. Durunca aynı yönde
+- Sekiz yönde aynı asker; her yönde sekiz yürüyüş karesi ve ilk kareyle aynı duruş pozu.
+- Yürüyüş yaklaşık 10,53 FPS'tir (95 ms/kare) ve hareket hızıyla ölçeklenir. Durunca aynı yönde
   idle'a geçilir ve animasyon fazı sıfırlanır; başka karakter/placeholder çizilmez.
 - 360° hareket, yumuşak ve haritayla sınırlı kamera; Compatibility renderer, yatay mobil ekran.
 - Sol analog hareket; sağ analog yalnız bakış/nişan yönü. İki parmak aynı anda kullanılabilir.
@@ -19,13 +19,14 @@ Kökteki mevcut oyunun başlangıcı, sistemleri ve kayıtları değiştirilmedi
 `input_router.gd` girişleri, `hud.gd` ekran yerleşimini yönetir. Ağaç/kayaların
 çarpışması yalnız yerdeki ayak izindedir; gövdelerin arkasından yürünebilir.
 Çevre kodla çizilir; 3D model yoktur. Kullanıcının yüklediği asker PNG'leri
-`assets/mayhem_soldier/` altında değiştirilmeden saklanır. Tek `Sprite2D`,
-yürüyüşte 8×6 atlası, dururken 8×1 idle atlasını kullanır. Her hücre 256×320,
-ayak pivotu (128, 295), ölçek 91/256'dır; hareket/çarpışma/kamera kodu aynıdır.
-Ön ve arka yürüyüşler gönderilen çizilmiş GIF karelerindendir. Diğer altı yön
-geçici deformasyon taslaklarıdır; nihai/elle çizilmiş 48 kare diye sunulmaz.
-Eski `scout_front_rig.gd` ve `assets/characters/scout_front_rig/` korunur,
-aktif oyuncu tarafından çizilmez.
+`assets/characters/mayhem_soldier/` altında değiştirilmeden saklanır. Tek `Sprite2D`,
+yürüyüşte 8×8 atlası, dururken 8×1 idle atlasını kullanır. Her hücre 256×288,
+ayak pivotu (128, 272), sabit ölçek 0,36'dır; hareket/çarpışma/kamera kodu aynıdır.
+Kareler kaynak sırasıyla oynar; runtime'da aynalanmaz veya yeniden sıralanmaz.
+N yönünün 1. ve 5. kareleri kaynakta aynıdır; sekiz zaman yuvası aynen korunur.
+Bu bir test çizim paketidir; profil/çapraz pozların nihai sanat değerlendirmesi gerekir.
+Eski `scout_front_rig.gd`, ön cutout kaynakları ve `assets/mayhem_soldier/`
+altındaki altı karelik paket korunur, aktif oyuncu tarafından çizilmez.
 `.gdignore`, bu bağımsız projenin eski ana projeye kaynak olarak karışmasını önler.
 
 Doğrulama komutları (Godot 4.3 executable'ı `godot` olarak varsayılmıştır):
@@ -39,14 +40,15 @@ godot --headless --path prototypes/phase0 --quit-after 180
 ```
 
 Grafik ekranı bulunan masaüstünde `tests/capture.gd` üç ekran oranını ve karakterin
-sekiz idle yönünü ve 48 yürüyüş karesini render eder. `MAYHEM_CAPTURE_DIR` verilmezse görüntüler `user://captures`
+sekiz idle yönünü ve 64 yürüyüş karesini render eder. `MAYHEM_CAPTURE_DIR` verilmezse görüntüler `user://captures`
 altına yazılır. Fiziksel Android dokunma/DPI/çentik ve cihaz performansı ayrıca denenmelidir.
 Gerçek Godot 4.3 import/açılış, headless ve grafik ekranlı 57 kontrol geçti.
-Atlasın 200 kontrolü yönleri, 48 kareyi, döngüyü, hızı, idle geçişini ve ayak
+Atlasın 321 kontrolü yönleri, 64 kareyi, şeffaf kenarları, döngüyü, hızı, idle geçişini ve ayak
 hizasını doğrular. Korunan eski rig için 37 bileşen kontrolü de geçer.
 Önceki ana oyun doğrulaması: Godot 4.7.2'de 919 kontrol, 0 hata.
 Ayrıntılar: [TEST_RESULTS.md](TEST_RESULTS.md).
 [Godot render'ından sekiz yön yürüyüş önizlemesi](prototypes/phase0/evidence/soldier-8dir-walk.gif).
+[Dört kat yavaş inceleme](prototypes/phase0/evidence/soldier-8dir-walk-slow.gif).
 
 Elle kontrol: iki analogla aynı anda hareket et/yönel; parmağı analog dışına sürükleyip
 bırak; ağaç ve kayalara yürü; köşelere gidip harita sınırını dene; uygulamadan çıkıp

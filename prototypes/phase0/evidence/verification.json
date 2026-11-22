@@ -32,7 +32,7 @@
         "tests/soldier_atlas_test.gd"
       ],
       "summary": [
-        "SOLDIER ATLAS: 200 checks, 0 failures"
+        "SOLDIER ATLAS: 321 checks, 0 failures"
       ]
     },
     {
@@ -72,12 +72,20 @@
       "passed": true
     },
     {
-      "name": "legacy-rig-rendered",
+      "name": "legacy-rendered",
       "exit": 0,
       "passed": true
     }
   ],
-  "rendered_pose_validation": "8 distinct idle poses and 6 distinct walk frames in each of 8 directions",
+  "frame_slots": 64,
+  "source_unique_walk_images": 63,
+  "source_repeated_pose": "N/00.png equals N/04.png; both timed slots retained",
+  "frame_duration_seconds": 0.095,
+  "foot_anchor_px": [
+    128,
+    272
+  ],
+  "scale": 0.36,
   "physical_android_tested": false,
-  "quality": "Front/back from supplied GIFs; six other directions are provisional procedural artwork."
+  "quality": "Test artwork; source frames preserved without mirroring, reordering or redrawing."
 }
