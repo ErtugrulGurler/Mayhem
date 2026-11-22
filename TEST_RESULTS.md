@@ -1,5 +1,28 @@
 # Doğrulama sonuçları
 
+## Asker ön yön rig'i — Godot 4.3
+
+`mayhem_original_soldier_rig.zip` içindeki sekiz PNG parçası, orijinal ön görünüş
+ve manifest mevcut Faz 0 projesine eklendi. Kaynak dosyalar yüklemeyle bayt bayt
+aynıdır. Orijinal RGBA SHA-256 özeti manifestle eşleşir; cutout birleşimiyle
+orijinal arasında **0 farklı RGBA piksel** vardır.
+
+- `tests/soldier_rig_test.gd`: **39 kontrol, 0 hata**. Kaynak görsel bütünlüğü,
+  sekiz parça, 91 birim yükseklik/pivot, dönüşümlü kısa adımlar, kol/baş salınımı,
+  durunca tam pivot sıfırlama ve y-sort grubundan taşmayan çizim sırası kontrol edildi.
+- Mevcut `tests/prototype_test.gd`: **57 kontrol, 0 hata**. Hareket, kamera,
+  çarpışma ve mobil kontrol regresyonu geçti.
+- Her iki test de gerçek **4.3.stable.official.77dcf97d8** motorunda headless
+  ve grafik ekranlı Compatibility çalışma ile doğrulandı.
+- 960×540, 1200×540 ve 960×720 ekran görüntüleri ve yürüyüş atlası incelendi.
+  Önceki render ile karşılaştırmada diğer yedi yönün bütün pikselleri, ayrıca üç
+  çözünürlükte karakter dışındaki harita/HUD pikselleri aynı kaldı.
+
+Pakette ve repoda sekiz yönlü asker atlası bulunmuyor. Yalnız ön yön (index 2)
+asker rig'ini kullanır; diğer yedi yön önceki placeholder görselleri korur.
+Kol/bacak parçalarının altında eksik gizli çizimler üretilmedi; küçük açılar kullanılır.
+Fiziksel Android, cihaz FPS/DPI/çentik ve APK dışa aktarma bu değişiklikte test edilmedi.
+
 ## Yeni Faz 0 — Godot 4.3
 
 Bağımsız proje: `prototypes/phase0/project.godot`. Test motoru:

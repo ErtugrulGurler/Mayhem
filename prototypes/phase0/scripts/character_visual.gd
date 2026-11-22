@@ -1,6 +1,9 @@
 extends Node2D
-## Procedural placeholder: eight facing poses, distance-paced short steps.
-## Replace this child with AnimatedSprite2D/AnimationTree later, keeping update_motion.
+## Uploaded soldier cutout for the front; existing seven poses remain the fallback.
+## The upload contains no eight-direction soldier atlas. Do not invent missing art.
+
+const FrontRig = preload("res://scripts/scout_front_rig.gd")
+var front_rig: Node2D
 
 var facing_index := 2
 var step_phase := 0.0
@@ -9,13 +12,26 @@ var bob := 0.0
 var sway := 0.0
 const INK := Color("263c38")
 
+func _ready() -> void:
+	front_rig = FrontRig.new()
+	front_rig.name = "SoldierFrontRig"
+	add_child(front_rig)
+	refresh_front()
+
 func update_motion(speed_ratio: float, direction: Vector2, delta: float) -> void:
-	facing_index = posmod(roundi(direction.angle() / (PI / 4.0)), 8)
+	if not direction.is_zero_approx():
+		facing_index = posmod(roundi(direction.angle() / (PI / 4.0)), 8)
 	movement_amount = move_toward(movement_amount, clampf(speed_ratio, 0, 1), delta * 12.0)
 	step_phase = fmod(step_phase + delta * 15.0 * speed_ratio, TAU)
 	bob = absf(sin(step_phase)) * 2.5 * movement_amount
 	sway = sin(step_phase) * 0.055 * movement_amount
+	refresh_front()
 	queue_redraw()
+
+func refresh_front() -> void:
+	if not is_instance_valid(front_rig): return
+	front_rig.visible = facing_index == 2
+	front_rig.apply_pose(movement_amount, step_phase)
 
 func oval(center: Vector2, radii: Vector2, color: Color, border: float = 2.5) -> void:
 	var points := PackedVector2Array()
@@ -26,6 +42,7 @@ func oval(center: Vector2, radii: Vector2, color: Color, border: float = 2.5) ->
 
 func _draw() -> void:
 	oval(Vector2(1, 0), Vector2(24, 9), Color(0.08, 0.18, 0.14, 0.22), 0)
+	if facing_index == 2: return
 	var step := sin(step_phase) * 4.0 * movement_amount
 	oval(Vector2(-8, -5 + step), Vector2(7, 7), Color("4b5145"))
 	oval(Vector2(8, -5 - step), Vector2(7, 7), Color("4b5145"))

@@ -7,7 +7,9 @@ dosyasından ayrı proje olarak açılır. Godot **4.3 stable** ile içe aktar v
 Kökteki mevcut oyunun başlangıcı, sistemleri ve kayıtları değiştirilmedi.
 
 - Açık çayır haritası, yürünebilir patika, ağaç/kaya çarpışmaları ve harita sınırı.
-- Özgün kısa oval karakter; sekiz yönlü pozlar, kısa adımlar, hafif salınım ve dikey hareket.
+- Ön yönde yüklenen özgün asker rig'i; kısa adımlar, hafif kol/baş salınımı ve dikey hareket.
+- Paket yalnız ön yönü içerir. Diğer yedi yönde önceki placeholder görseller korunur;
+  `scout_soldier_8dir.png` pakette ve repoda bulunmadığından asker atlası varmış gibi kullanılmaz.
 - 360° hareket, yumuşak ve haritayla sınırlı kamera; Compatibility renderer, yatay mobil ekran.
 - Sol analog hareket; sağ analog yalnız bakış/nişan yönü. İki parmak aynı anda kullanılabilir.
 - Masaüstü: **WASD / oklar**, **sağ fareyi tutarak yönelme**. Analoglar sol fareyle de denenebilir.
@@ -16,7 +18,10 @@ Kökteki mevcut oyunun başlangıcı, sistemleri ve kayıtları değiştirilmedi
 `scripts/player.gd` hareketi, `character_visual.gd` değiştirilebilir çizimi/animasyonu,
 `input_router.gd` girişleri, `hud.gd` ekran yerleşimini yönetir. Ağaç/kayaların
 çarpışması yalnız yerdeki ayak izindedir; gövdelerin arkasından yürünebilir.
-Çizimler kodla üretilir; harici asset veya 3D model kullanılmaz.
+Çevre ve eski yön görselleri kodla çizilir. Kullanıcının yüklediği asker PNG'leri
+`assets/characters/scout_front_rig/` altında değiştirilmeden saklanır; 3D model yoktur.
+`scout_front_rig.gd`, sekiz PNG parçasını manifestteki pivotlarla birleştirir.
+Referans yüksekliği 91 dünya birimidir; karakterin hareket/çarpışma/kamera kodu aynıdır.
 `.gdignore`, bu bağımsız projenin eski ana projeye kaynak olarak karışmasını önler.
 
 Doğrulama komutları (Godot 4.3 executable'ı `godot` olarak varsayılmıştır):
@@ -24,6 +29,7 @@ Doğrulama komutları (Godot 4.3 executable'ı `godot` olarak varsayılmıştır
 ```sh
 godot --headless --path prototypes/phase0 --editor --import --quit
 godot --headless --fixed-fps 60 --path prototypes/phase0 --script tests/prototype_test.gd
+godot --headless --fixed-fps 60 --path prototypes/phase0 --script tests/soldier_rig_test.gd
 godot --headless --path prototypes/phase0 --quit-after 180
 ```
 
@@ -31,12 +37,18 @@ Grafik ekranı bulunan masaüstünde `tests/capture.gd` üç ekran oranını ve 
 sekiz yönünü render eder. `MAYHEM_CAPTURE_DIR` verilmezse görüntüler `user://captures`
 altına yazılır. Fiziksel Android dokunma/DPI/çentik ve cihaz performansı ayrıca denenmelidir.
 Gerçek Godot 4.3 import/açılış, headless ve grafik ekranlı 57 kontrol geçti.
+Asker rig'i için ek 39 kontrol kaynak piksel özeti, parça birleşimi, adımlar,
+duruş sıfırlama ve dünya çizim sırasını doğrular.
 Mevcut ana oyun için 4.7.2 regresyonu da tekrarlandı: 919 kontrol, 0 hata.
 Ayrıntılar: [TEST_RESULTS.md](TEST_RESULTS.md).
 
 Elle kontrol: iki analogla aynı anda hareket et/yönel; parmağı analog dışına sürükleyip
 bırak; ağaç ve kayalara yürü; köşelere gidip harita sınırını dene; uygulamadan çıkıp
 dönünce karakterin kendiliğinden yürümediğini kontrol et.
+Asker rig'i: **S / aşağı ok** veya sol analogu aşağı sürükleyerek ön yöne yürü.
+Sağ analog başka yöne bakıyorsa bırak veya onu da aşağı yönelt. Kısa adımları izle,
+durunca kolların/bacakların orijinal duruşuna döndüğünü kontrol et. Diğer yönler
+tam asker atlası eklenene kadar önceki görselleri kullanır.
 
 ## Mevcut ana proje — Godot 4.7.2
 
