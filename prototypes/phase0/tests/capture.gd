@@ -65,8 +65,6 @@ func run() -> void:
 		var direction := Vector2.from_angle(direction_index * PI / 4.0)
 		player.visual.update_motion(0, direction, 0)
 		if frame >= 0: player.visual.update_motion(1, direction, (frame + 0.001) / Visual.ANIMATION_FPS)
-		if frame >= 0 and direction_index == 1:
-			player.visual.se_rig.sample_cycle((frame+0.001)/frames)
 		caption.text = directions[direction_index] + (" / idle" if frame < 0 else " / %d" % (frame + 1))
 		await process_frame
 		await RenderingServer.frame_post_draw
