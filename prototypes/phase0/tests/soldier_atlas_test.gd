@@ -38,7 +38,7 @@ func run() -> void:
 
 	var visual := Visual.new()
 	root.add_child(visual)
-	check(visual.get_child_count() == 1 and visual.sprite is Sprite2D, "Exactly one renderer; no placeholder or old front rig")
+	check(visual.get_child_count() == 2 and visual.sprite is Sprite2D and not visual.se_rig.visible, "Atlas and SE rig are mutually exclusive renderers")
 	check(visual.sprite.texture_filter == CanvasItem.TEXTURE_FILTER_LINEAR and visual.sprite.region_filter_clip_enabled, "Smooth filtering with atlas-region bleed protection")
 	check(visual.sprite.z_index == 0 and visual.z_index == 0, "Sprite remains inside player y-sort group")
 	var nodes := visual.get_child_count()
@@ -62,7 +62,10 @@ func run() -> void:
 			frame_hashes[hash(pixels)] = true
 			visual.update_motion(0, direction, 0)
 			visual.update_motion(1, direction, (frame + 0.001) * 0.095)
-			check(visual.sprite.texture == Visual.WALK_ATLAS and visual.sprite.region_rect == Rect2(rect), "%s frame %d selected for actual rendering" % [direction_name, frame])
+			if direction_index == 1:
+				check(visual.se_rig.visible and not visual.sprite.visible, "SE uses continuous skeletal motion instead of atlas frame %d" % frame)
+			else:
+				check(visual.sprite.visible and visual.sprite.texture == Visual.WALK_ATLAS and visual.sprite.region_rect == Rect2(rect), "%s frame %d selected for actual rendering" % [direction_name, frame])
 			check((visual.sprite.position + Vector2(128, 272) * visual.sprite.scale).is_zero_approx(), "%s frame %d keeps foot at player origin" % [direction_name, frame])
 		# The supplied N/00 and N/04 are identical; keep both timed slots.
 		check(frame_hashes.size() == (7 if direction_name == "N" else 8), direction_name + " preserves the supplied number of distinct poses")

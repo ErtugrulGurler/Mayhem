@@ -1,6 +1,46 @@
 # Doğrulama sonuçları
 
-## Güncel sekiz yön / sekiz kare asker atlası — Godot 4.3
+## SE cutout/IK — teknik doğrulama ve açık kalite konusu
+
+Kapsam yalnız `prototypes/phase0` içindeki SE yönüdür. Gerçek motor
+**4.3.stable.official.77dcf97d8**, Linux Compatibility/Mesa yazılım renderer.
+
+| Kalite kontrolü | Sonuç |
+| --- | --- |
+| Tasarım korunumu | Baş/gözlük/saç/atkı ve görünen kıyafet orijinal SE PNG/UV; yüz yeniden çizilmedi |
+| Rig | Skeleton2D, 15 Bone2D; kalça/diz ve omuz/dirsek için analitik IK |
+| Sağ/sol ayak ve çapraz kollar | Farklı karşıt pozlar; sağ bacak öndeyken sol kol önde |
+| Tekme yerine adım | 2,88 birim kaldırma, kontrollü taşıma/basma; bot yönü sabit |
+| Temas kayması | 30/70/220 birim/sn testlerinde en fazla 0,000031 dünya birimi |
+| Eklem bağlantıları | 128 örnekte ters skin üçgeni yok; 24 alpha render'da 8 pikselden büyük ayrık parça yok |
+| Döngü | Faz 0 ve 1 aynı skin/baş pozu; bitişte tekrar kare bekletilmez |
+| Diğer yedi yön | 63 gerçek idle/kare render karşılaştırması, sıfır piksel farkı |
+| Regresyonlar | 321 atlas + 57 prototip + 37 eski cutout + 27 yeni SE = 442 kontrol |
+| Gerçek görsel kanıt | 24 normal + 24 eklem/temas karesi, 90 gerçek oyun karesi/60 FPS video |
+
+İlk render'da diz/bot kesikleri ve 12–18 piksellik ayrık el kenarı bulundu.
+Sürekli ortak-köşeli skin, üçgen alan kısıtları, rijit bot/eldiven, gizli alt boya
+ve yanlış pikselleri alan el maskesi düzeltilerek yeniden render edildi.
+Son 24 alpha örneğinin her birinde tek büyük bağlı silüet vardır.
+İnceleme normal yürüyüş temposunda bağlantıları ve karşıt adımları doğrular;
+profesyonel kalitenin her koşulda kusursuz olduğu iddia edilmez.
+
+**Açık kalite kapısı — tam hız:** Mevcut 220 birim/sn hareket kodu korunmuştur.
+15,12 birimlik kısa temas adımında kilitli ayakla döngü 0,1185 sn olur; bu tempo
+doğal yürüyüş olarak onaylanamaz. 40 birim/sn'deki döngü 0,6517 sn'dir. Teması
+koruyup tam hızda yavaş bir döngü göstermek çok daha uzun adım/uzuv veya hareket
+hızı değişikliği gerektirir. Bunlar mevcut hareketi/tasarım oranlarını koruma
+kuralı nedeniyle uygulanmadı. Bu yüzden **tam hız için profesyonel kalite onayı yoktur**.
+
+Kanıtlar: [yürüyüş GIF](prototypes/phase0/evidence/se/se-walk.gif),
+[eklem ve temas GIF](prototypes/phase0/evidence/se/se-joints.gif),
+[tam hız oyunu](prototypes/phase0/evidence/se/se-native-220.mp4),
+[24 kare](prototypes/phase0/evidence/se/se-contact-sheet.png),
+[sayısal rapor](prototypes/phase0/evidence/se/quality.json).
+Hareket/kamera/çarpışma/kontrol kodu, diğer yön görselleri ve kök proje korunur.
+Fiziksel Android, cihaz FPS/ısınma/çentik ve APK testi yapılmadı.
+
+## Önceki sekiz yön / sekiz kare asker atlası — arşiv
 
 Hedef `prototypes/phase0/project.godot`; gerçek motor
 **4.3.stable.official.77dcf97d8**, Linux, Compatibility/Mesa llvmpipe.

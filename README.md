@@ -7,8 +7,8 @@ dosyasından ayrı proje olarak açılır. Godot **4.3 stable** ile içe aktar v
 Kökteki mevcut oyunun başlangıcı, sistemleri ve kayıtları değiştirilmedi.
 
 - Açık çayır haritası, yürünebilir patika, ağaç/kaya çarpışmaları ve harita sınırı.
-- Sekiz yönde aynı asker; her yönde sekiz yürüyüş karesi ve ilk kareyle aynı duruş pozu.
-- Yürüyüş yaklaşık 10,53 FPS'tir (95 ms/kare) ve hareket hızıyla ölçeklenir. Durunca aynı yönde
+- SE yönünde orijinal dokulu, 15 kemikli sürekli cutout/IK yürüyüşü; diğer yedi yönün atlası aynıdır.
+- Atlas yönlerinde yürüyüş yaklaşık 10,53 FPS'tir (95 ms/kare). Durunca aynı yönde
   idle'a geçilir ve animasyon fazı sıfırlanır; başka karakter/placeholder çizilmez.
 - 360° hareket, yumuşak ve haritayla sınırlı kamera; Compatibility renderer, yatay mobil ekran.
 - Sol analog hareket; sağ analog yalnız bakış/nişan yönü. İki parmak aynı anda kullanılabilir.
@@ -19,7 +19,7 @@ Kökteki mevcut oyunun başlangıcı, sistemleri ve kayıtları değiştirilmedi
 `input_router.gd` girişleri, `hud.gd` ekran yerleşimini yönetir. Ağaç/kayaların
 çarpışması yalnız yerdeki ayak izindedir; gövdelerin arkasından yürünebilir.
 Çevre kodla çizilir; 3D model yoktur. Kullanıcının yüklediği asker PNG'leri
-`assets/characters/mayhem_soldier/` altında değiştirilmeden saklanır. Tek `Sprite2D`,
+`assets/characters/mayhem_soldier/` altında değiştirilmeden saklanır. SE dışındaki yönlerde tek `Sprite2D`,
 yürüyüşte 8×8 atlası, dururken 8×1 idle atlasını kullanır. Her hücre 256×288,
 ayak pivotu (128, 272), sabit ölçek 0,36'dır; hareket/çarpışma/kamera kodu aynıdır.
 Kareler kaynak sırasıyla oynar; runtime'da aynalanmaz veya yeniden sıralanmaz.
@@ -36,6 +36,7 @@ godot --headless --path prototypes/phase0 --editor --import --quit
 godot --headless --fixed-fps 60 --path prototypes/phase0 --script tests/prototype_test.gd
 godot --headless --fixed-fps 60 --path prototypes/phase0 --script tests/soldier_atlas_test.gd
 godot --headless --fixed-fps 60 --path prototypes/phase0 --script tests/soldier_rig_test.gd
+godot --headless --fixed-fps 60 --path prototypes/phase0 --script tests/se_rig_test.gd
 godot --headless --path prototypes/phase0 --quit-after 180
 ```
 
@@ -56,6 +57,27 @@ dönünce karakterin kendiliğinden yürümediğini kontrol et.
 Sekiz yön testi: WASD/oklarla dört ana ve dört çapraz yöne yürü. Her yönde durup
 doğru idle'a geçtiğini kontrol et. Sağ analogu/sağ fareyi tutarken bakış yönü
 hareket yönünden bağımsızdır; hareket yönünü görmek için nişanı bırak.
+
+### SE cutout yürüyüşü
+
+Yalnız SE, `scripts/se_walk_rig.gd` içindeki Skeleton2D/Bone2D ve analitik iki
+kemik IK kullanır. Baş/yüz/gözlük/saç/atkı ve görünen kıyafet UV'leri orijinal
+SE dokusundandır. Gizli eklem ve çanta alt boyamaları ayrı dokudur. Sürekli,
+ortak köşeli skin ağı eklem kıvrımlarında ters dönen üçgenleri engeller; botlar
+ve eldivenler ayrı rijit parçadır. Ayaklar gerçek hareket mesafesine göre yere kilitlenir.
+Durunca iki kısa yerleşme adımından sonra birebir orijinal idle görünüşü döner.
+
+[40 birim/sn yürüyüş](prototypes/phase0/evidence/se/se-walk.gif) ·
+[eklemler/temaslar](prototypes/phase0/evidence/se/se-joints.gif) ·
+[gerçek 220 birim/sn oyun videosu](prototypes/phase0/evidence/se/se-native-220.mp4) ·
+[24 örnek kare](prototypes/phase0/evidence/se/se-contact-sheet.png).
+
+**Kalite sınırı:** Hareket hızı değiştirilmedi. Kısa adımlarda temas kaydırmadan
+220 birim/sn'ye yetişmek 0,118 sn'lik çok hızlı döngü gerektiriyor. 40 birim/sn
+önizlemesi doğal tempo içindir; tam hız videosu bu sorunu gizlemez. Tam hızdaki
+doğallık, profesyonel kalite açısından açık konudur; diğer yedi yöne genişletilmedi.
+Mobilde sol analogu hafifçe sağ alta iterek düşük tempoyu, tam iterek yüksek
+tempoyu kıyaslayabilirsin. Masaüstünde D+S tam hızdır. Sağ nişanı bırak veya SE'ye yönelt.
 
 ## Mevcut ana proje — Godot 4.7.2
 

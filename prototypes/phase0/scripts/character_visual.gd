@@ -11,6 +11,7 @@ const FRAME_COUNT := 8
 const FRAME_DURATION := 0.095
 const ANIMATION_FPS := 1.0 / FRAME_DURATION
 const MOTION_THRESHOLD := 0.02
+const SEWalkRig = preload("res://scripts/se_walk_rig.gd")
 
 var facing_index := 2
 var frame_index := 0
@@ -18,6 +19,9 @@ var animation_phase := 0.0
 var movement_amount := 0.0
 var walking := false
 var sprite: Sprite2D
+var se_rig: Node2D
+var _se_active := false
+var _preview_actor := Vector2.ZERO
 
 func _ready() -> void:
 	sprite = Sprite2D.new()
@@ -29,6 +33,9 @@ func _ready() -> void:
 	sprite.scale = Vector2.ONE * WORLD_SCALE
 	sprite.position = -FOOT_ANCHOR * WORLD_SCALE
 	add_child(sprite)
+	se_rig = SEWalkRig.new()
+	se_rig.name = "SEWalkRig"
+	add_child(se_rig)
 	refresh_sprite()
 
 func update_motion(speed_ratio: float, direction: Vector2, delta: float) -> void:
@@ -44,9 +51,23 @@ func update_motion(speed_ratio: float, direction: Vector2, delta: float) -> void
 		animation_phase = 0.0
 		frame_index = 0
 	refresh_sprite()
+	if facing_index == 1:
+		var actor := get_parent() as CharacterBody2D
+		if actor != null and actor.is_physics_processing():
+			if not _se_active: se_rig.reset(actor.global_position)
+			se_rig.advance(actor.global_position,actor.get_real_velocity(),delta)
+		else:
+			if not _se_active: se_rig.reset(_preview_actor)
+			var velocity := SEWalkRig.SE*movement_amount*220.0
+			_preview_actor += velocity*maxf(delta,0)
+			se_rig.advance(_preview_actor,velocity,delta)
+	_se_active = facing_index == 1
 
 func refresh_sprite() -> void:
 	if not is_instance_valid(sprite): return
+	# Only SE switches renderer. All other atlas rows and playback stay intact.
+	sprite.visible = facing_index != 1
+	se_rig.visible = facing_index == 1
 	if walking:
 		sprite.texture = WALK_ATLAS
 		sprite.region_rect = Rect2(Vector2(frame_index, facing_index) * FRAME_SIZE, FRAME_SIZE)
