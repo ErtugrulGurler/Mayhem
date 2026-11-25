@@ -9,7 +9,6 @@ var title: Label
 var hint: Label
 var move_label: Label
 var aim_label: Label
-var punch_button: Button
 
 func _ready() -> void:
 	header = PanelContainer.new()
@@ -38,21 +37,12 @@ func _ready() -> void:
 	for label in [move_label, aim_label]:
 		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		root.add_child(label)
-	var note := make_label("WASD / Oklar  ·  Sağ fare: yönel\nSağ analog yön verir · YUMRUK: test animasyonu.", 14, Color("f4edce"))
+	var note := make_label("WASD / Oklar  ·  Sağ fare: yönel\nSağ analog yalnız yön verir; bu fazda saldırı yok.", 14, Color("f4edce"))
 	note.name = "ControlsNote"
 	note.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	root.add_child(note)
-	punch_button = Button.new()
-	punch_button.text = "YUMRUK"
-	punch_button.focus_mode = Control.FOCUS_NONE
-	punch_button.add_theme_font_size_override("font_size", 17)
-	root.add_child(punch_button)
-	punch_button.pressed.connect(_punch_pressed)
 	get_viewport().size_changed.connect(relayout)
 	relayout()
-
-func _punch_pressed() -> void:
-	get_parent().get_node("Actors/Player/Visual").request_punch()
 
 func make_label(text: String, font_size: int, color: Color) -> Label:
 	var label := Label.new()
@@ -93,6 +83,4 @@ func relayout() -> void:
 	var note_height := maxf(44, note.get_combined_minimum_size().y)
 	note.position = Vector2(view.x * 0.5 - 220, view.y - margin.y - note_height)
 	note.size = Vector2(440, note_height)
-	punch_button.position = Vector2(view.x * 0.5 - 58, view.y - margin.y - 142)
-	punch_button.size = Vector2(116, 56)
 	for stick in [move_stick, aim_stick]: stick.queue_redraw()
