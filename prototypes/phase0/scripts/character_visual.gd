@@ -19,6 +19,7 @@ var movement_amount := 0.0
 var walking := false
 var sprite: Sprite2D
 var right_walk_test: Texture2D
+var test_phase := 0.0
 const TEST_CELL := Vector2(627, 627)
 const TEST_FOOT := Vector2(313.5, 612)
 const TEST_SCALE := 0.155
@@ -61,9 +62,11 @@ func update_motion(speed_ratio: float, direction: Vector2, delta: float) -> void
 	movement_amount = clampf(speed_ratio, 0.0, 1.0)
 	walking = movement_amount > MOTION_THRESHOLD
 	if walking:
+		test_phase = fposmod(test_phase + maxf(delta, 0.0) * TEST_FPS * movement_amount, 4.0)
 		animation_phase = fposmod(animation_phase + maxf(delta, 0.0) * ANIMATION_FPS * movement_amount, FRAME_COUNT)
 		frame_index = floori(animation_phase)
 	else:
+		test_phase = 0.0
 		animation_phase = 0.0
 		frame_index = 0
 	refresh_sprite()
@@ -74,7 +77,7 @@ func refresh_sprite() -> void:
 		sprite.texture = right_walk_test
 		sprite.scale = Vector2.ONE * TEST_SCALE
 		sprite.position = -TEST_FOOT * TEST_SCALE
-		var test_frame := posmod(floori(animation_phase * TEST_FPS / ANIMATION_FPS), 4)
+		var test_frame := floori(test_phase)
 		sprite.region_rect = Rect2(Vector2(test_frame % 2, floori(float(test_frame) / 2.0)) * TEST_CELL, TEST_CELL)
 		return
 	sprite.scale = Vector2.ONE * WORLD_SCALE
