@@ -18,6 +18,28 @@ var animation_phase := 0.0
 var movement_amount := 0.0
 var walking := false
 var sprite: Sprite2D
+var right_walk_test: Texture2D
+const TEST_CELL := Vector2(627, 627)
+const TEST_FOOT := Vector2(313.5, 612)
+const TEST_SCALE := 0.155
+const TEST_FPS := 6.25
+
+func _load_right_walk_test() -> void:
+    # Download mayhem_sag_4k.png to the Android Downloads folder.
+    for path in ["res://assets/characters/mayhem_soldier/mayhem_sag_4k.png",
+            "/storage/emulated/0/Download/mayhem_sag_4k.png",
+            "/storage/emulated/0/Downloads/mayhem_sag_4k.png",
+            "/sdcard/Download/mayhem_sag_4k.png"]:
+        if not FileAccess.file_exists(path):
+            continue
+        var image := Image.new()
+        if image.load(path) != OK:
+            continue
+        if image.get_width() != 1254 or image.get_height() != 1254:
+            continue
+        right_walk_test = ImageTexture.create_from_image(image)
+        print("MAYHEM: 4-frame right walk test loaded from ", path)
+        return
 
 func _ready() -> void:
 	sprite = Sprite2D.new()
@@ -29,6 +51,7 @@ func _ready() -> void:
 	sprite.scale = Vector2.ONE * WORLD_SCALE
 	sprite.position = -FOOT_ANCHOR * WORLD_SCALE
 	add_child(sprite)
+	_load_right_walk_test()
 	refresh_sprite()
 
 func update_motion(speed_ratio: float, direction: Vector2, delta: float) -> void:
@@ -47,6 +70,15 @@ func update_motion(speed_ratio: float, direction: Vector2, delta: float) -> void
 
 func refresh_sprite() -> void:
 	if not is_instance_valid(sprite): return
+	if walking and facing_index == 0 and right_walk_test != null:
+		sprite.texture = right_walk_test
+		sprite.scale = Vector2.ONE * TEST_SCALE
+		sprite.position = -TEST_FOOT * TEST_SCALE
+		var test_frame := posmod(floori(animation_phase * TEST_FPS / ANIMATION_FPS), 4)
+		sprite.region_rect = Rect2(Vector2(test_frame % 2, floori(float(test_frame) / 2.0)) * TEST_CELL, TEST_CELL)
+		return
+	sprite.scale = Vector2.ONE * WORLD_SCALE
+	sprite.position = -FOOT_ANCHOR * WORLD_SCALE
 	if walking:
 		sprite.texture = WALK_ATLAS
 		sprite.region_rect = Rect2(Vector2(frame_index, facing_index) * FRAME_SIZE, FRAME_SIZE)
