@@ -20,27 +20,42 @@ var walking := false
 var sprite: Sprite2D
 var right_walk_test: Texture2D
 var test_phase := 0.0
-const TEST_CELL := Vector2(627, 627)
-const TEST_FOOT := Vector2(313.5, 612)
-const TEST_SCALE := 0.155
+const RIGHT_WALK_PATH := "res://assets/characters/mayhem_sag_4k.png"
 const TEST_FPS := 6.25
+var right_cell := Vector2.ZERO
+var right_feet: Array[Vector2] = []
+var right_scale := WORLD_SCALE
 
 func _load_right_walk_test() -> void:
-    # Download mayhem_sag_4k.png to the Android Downloads folder.
-    for path in ["res://assets/characters/mayhem_soldier/mayhem_sag_4k.png",
-            "/storage/emulated/0/Download/mayhem_sag_4k.png",
-            "/storage/emulated/0/Downloads/mayhem_sag_4k.png",
-            "/sdcard/Download/mayhem_sag_4k.png"]:
-        if not FileAccess.file_exists(path):
-            continue
-        var image := Image.new()
-        if image.load(path) != OK:
-            continue
-        if image.get_width() != 1254 or image.get_height() != 1254:
-            continue
-        right_walk_test = ImageTexture.create_from_image(image)
-        print("MAYHEM: 4-frame right walk test loaded from ", path)
-        return
+	# Imported project resource only: Android exports never access Downloads.
+	if not ResourceLoader.exists(RIGHT_WALK_PATH): return
+	var texture := load(RIGHT_WALK_PATH) as Texture2D
+	configure_right_walk(texture)
+
+func configure_right_walk(texture: Texture2D) -> bool:
+	right_walk_test = null
+	right_feet.clear()
+	if texture == null: return false
+	var dimensions := Vector2i(texture.get_size())
+	if dimensions.x < 2 or dimensions.y < 2 or dimensions.x % 2 != 0 or dimensions.y % 2 != 0:
+		return false
+	var image := texture.get_image()
+	if image == null or image.is_empty(): return false
+	var cell := dimensions / 2
+	var feet: Array[Vector2] = []
+	var maximum_height := 0
+	for index in range(4):
+		var at := Vector2i(index % 2, index / 2) * cell
+		var bounds := image.get_region(Rect2i(at, cell)).get_used_rect()
+		if not bounds.has_area(): return false
+		feet.append(Vector2(cell.x * 0.5, bounds.end.y))
+		maximum_height = maxi(maximum_height, bounds.size.y)
+	var reference := IDLE_ATLAS.get_image().get_region(Rect2i(0, 0, 256, 288)).get_used_rect()
+	right_scale = reference.size.y * WORLD_SCALE / maximum_height
+	right_cell = Vector2(cell)
+	right_feet = feet
+	right_walk_test = texture
+	return true
 
 func _ready() -> void:
 	sprite = Sprite2D.new()
@@ -75,10 +90,10 @@ func refresh_sprite() -> void:
 	if not is_instance_valid(sprite): return
 	if walking and facing_index == 0 and right_walk_test != null:
 		sprite.texture = right_walk_test
-		sprite.scale = Vector2.ONE * TEST_SCALE
-		sprite.position = -TEST_FOOT * TEST_SCALE
+		sprite.scale = Vector2.ONE * right_scale
 		var test_frame := floori(test_phase)
-		sprite.region_rect = Rect2(Vector2(test_frame % 2, floori(float(test_frame) / 2.0)) * TEST_CELL, TEST_CELL)
+		sprite.position = -right_feet[test_frame] * right_scale
+		sprite.region_rect = Rect2(Vector2(test_frame % 2, floori(float(test_frame) / 2.0)) * right_cell, right_cell)
 		return
 	sprite.scale = Vector2.ONE * WORLD_SCALE
 	sprite.position = -FOOT_ANCHOR * WORLD_SCALE

@@ -6,6 +6,11 @@ Yeni hareket prototipi **[prototypes/phase0/project.godot](prototypes/phase0/pro
 dosyasından ayrı proje olarak açılır. Godot **4.3 stable** ile içe aktar ve **F5**'e bas.
 Kökteki mevcut oyunun başlangıcı, sistemleri ve kayıtları değiştirilmedi.
 
+Sağa dört kare denemesi yalnız `res://assets/characters/mayhem_sag_4k.png`
+kaynağını kullanır; telefonun Download klasörüne erişmez. Bu dosya henüz repoda
+bulunmadığından önceki sağ yürüyüş atlası görünür kalır. Ham PNG sağlandığında
+gerçek boyut/kare sırası ve görsel hizalama ayrıca doğrulanmalıdır.
+
 - Açık çayır haritası, yürünebilir patika, ağaç/kaya çarpışmaları ve harita sınırı.
 - Sekiz yönde aynı asker; her yönde sekiz yürüyüş karesi ve ilk kareyle aynı duruş pozu.
 - Yürüyüş yaklaşık 10,53 FPS'tir (95 ms/kare) ve hareket hızıyla ölçeklenir. Durunca aynı yönde
@@ -36,6 +41,7 @@ godot --headless --path prototypes/phase0 --editor --import --quit
 godot --headless --fixed-fps 60 --path prototypes/phase0 --script tests/prototype_test.gd
 godot --headless --fixed-fps 60 --path prototypes/phase0 --script tests/soldier_atlas_test.gd
 godot --headless --fixed-fps 60 --path prototypes/phase0 --script tests/soldier_rig_test.gd
+godot --headless --fixed-fps 60 --path prototypes/phase0 --script tests/right_walk_test.gd
 godot --headless --path prototypes/phase0 --quit-after 180
 ```
 

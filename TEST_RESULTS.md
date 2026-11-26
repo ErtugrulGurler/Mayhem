@@ -1,5 +1,28 @@
 # Doğrulama sonuçları
 
+## Sağ dört kare yükleme hatası — PNG bekleniyor
+
+Godot **4.3.stable.official.77dcf97d8** ile hata tekrarlandı: `character_visual.gd:45`
+satırında dosyada önce kullanılan boşluklarla TAB girintileri karışmıştı. Script
+yüklenmediğinden oyuncu görünüşü oluşturulamıyordu. Girintiler tutarlı hale getirildi.
+
+Telefon Download yolları ve ham dış dosya yüklemesi kaldırıldı. Tek kaynak
+`res://assets/characters/mayhem_sag_4k.png` adlı import edilmiş Texture2D'dir.
+Hücre boyutu 2×2 dokudan hesaplanır; sabit 1254/627 boyut varsayımı kaldırıldı.
+Her hücrenin alpha sınırından ayak tabanı, mevcut karakter yüksekliğinden sabit
+ölçek hesaplanır. Eksik/geçersiz dosyada önceki atlas korunur.
+
+- Gerçek 4.3 editor import ve 180 kare headless açılış: hata yok.
+- Mevcut atlas/prototip/eski cutout testleri: **415 kontrol, 0 hata**.
+- `right_walk_test.gd`: **27 geometri kontrolü, 0 hata**; test yalnız bellekteki
+  renkli bloklarla boyut, dört bölge, 6,25 FPS döngü, ayak hesabı ve fallback'i doğrular.
+- Kamera, hareket, HUD, joystick ve diğer yedi yönün kaynakları değiştirilmedi.
+
+**Eksik girdi:** Sohbetteki görselin ham PNG dosyası çalışma alanında veya Git
+deposunda bulunmuyor. Dosya uydurulmadı/üretilmedi. Bu nedenle gerçek 4 karelik
+görselin boyutu, alpha'sı, sırası ve görüntü kayması henüz doğrulanmış değildir;
+üretim PNG'si henüz eklenmedi. Fiziksel Android testi yapılmadı.
+
 ## Güncel sekiz yön / sekiz kare asker atlası — Godot 4.3
 
 Hedef `prototypes/phase0/project.godot`; gerçek motor
