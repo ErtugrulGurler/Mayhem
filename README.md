@@ -6,14 +6,15 @@ Yeni hareket prototipi **[prototypes/phase0/project.godot](prototypes/phase0/pro
 dosyasından ayrı proje olarak açılır. Godot **4.3 stable** ile içe aktar ve **F5**'e bas.
 Kökteki mevcut oyunun başlangıcı, sistemleri ve kayıtları değiştirilmedi.
 
-Sağa dört kare denemesi yalnız `res://assets/characters/mayhem_sag_4k.png`
-kaynağını kullanır; telefonun Download klasörüne erişmez. Bu dosya henüz repoda
-bulunmadığından önceki sağ yürüyüş atlası görünür kalır. Ham PNG sağlandığında
-gerçek boyut/kare sırası ve görsel hizalama ayrıca doğrulanmalıdır.
+Sağa yürüyüş, yüklenen orijinal `res://assets/characters/mayhem_sag_4k.png`
+kaynağını kullanır; telefonun Download klasörüne erişmez. PNG değiştirilmeden
+projeye eklendi: 1254×1254, 2×2 düzende dört adet 627×627 hücre. Sıra sol üst →
+sağ üst → sol alt → sağ alt; tam hızda 6,25 FPS (160 ms/kare). Her karenin
+belirgin silüet merkezi ve ayak tabanı hizalanır; diğer yedi yön ve idle korunur.
 
 - Açık çayır haritası, yürünebilir patika, ağaç/kaya çarpışmaları ve harita sınırı.
-- Sekiz yönde aynı asker; her yönde sekiz yürüyüş karesi ve ilk kareyle aynı duruş pozu.
-- Yürüyüş yaklaşık 10,53 FPS'tir (95 ms/kare) ve hareket hızıyla ölçeklenir. Durunca aynı yönde
+- Sekiz yönde aynı asker; sağ yürüyüş dört, diğer yönler sekiz kare; mevcut duruş pozları korunur.
+- Diğer yönlerde yürüyüş yaklaşık 10,53 FPS'tir (95 ms/kare). Animasyon hareket hızıyla ölçeklenir. Durunca aynı yönde
   idle'a geçilir ve animasyon fazı sıfırlanır; başka karakter/placeholder çizilmez.
 - 360° hareket, yumuşak ve haritayla sınırlı kamera; Compatibility renderer, yatay mobil ekran.
 - Sol analog hareket; sağ analog yalnız bakış/nişan yönü. İki parmak aynı anda kullanılabilir.
@@ -25,7 +26,7 @@ gerçek boyut/kare sırası ve görsel hizalama ayrıca doğrulanmalıdır.
 çarpışması yalnız yerdeki ayak izindedir; gövdelerin arkasından yürünebilir.
 Çevre kodla çizilir; 3D model yoktur. Kullanıcının yüklediği asker PNG'leri
 `assets/characters/mayhem_soldier/` altında değiştirilmeden saklanır. Tek `Sprite2D`,
-yürüyüşte 8×8 atlası, dururken 8×1 idle atlasını kullanır. Her hücre 256×288,
+yürüyüşte sağ yön için yeni 2×2 kaynağı, diğer yönlerde 8×8 atlası, dururken 8×1 idle atlasını kullanır. Eski atlasın her hücresi 256×288,
 ayak pivotu (128, 272), sabit ölçek 0,36'dır; hareket/çarpışma/kamera kodu aynıdır.
 Kareler kaynak sırasıyla oynar; runtime'da aynalanmaz veya yeniden sıralanmaz.
 N yönünün 1. ve 5. kareleri kaynakta aynıdır; sekiz zaman yuvası aynen korunur.
@@ -46,15 +47,19 @@ godot --headless --path prototypes/phase0 --quit-after 180
 ```
 
 Grafik ekranı bulunan masaüstünde `tests/capture.gd` üç ekran oranını ve karakterin
-sekiz idle yönünü ve 64 yürüyüş karesini render eder. `MAYHEM_CAPTURE_DIR` verilmezse görüntüler `user://captures`
+sekiz idle yönünü ve 60 yürüyüş karesini (4+7×8) render eder. `tests/right_walk_capture.gd`
+gerçek dört sağ kareyi ve sağa yürüyen oyuncuyu ayrıca yakalar. `MAYHEM_CAPTURE_DIR` verilmezse görüntüler `user://captures`
 altına yazılır. Fiziksel Android dokunma/DPI/çentik ve cihaz performansı ayrıca denenmelidir.
 Gerçek Godot 4.3 import/açılış, headless ve grafik ekranlı 57 kontrol geçti.
 Atlasın 321 kontrolü yönleri, 64 kareyi, şeffaf kenarları, döngüyü, hızı, idle geçişini ve ayak
-hizasını doğrular. Korunan eski rig için 37 bileşen kontrolü de geçer.
+hizasını doğrular. Korunan eski rig için 37 bileşen, sağ PNG için 48 kontrol geçer:
+toplam **463 kontrol, 0 hata**; temiz import/headless ve grafik ekranlı çalıştırma doğrulandı.
+Diğer yedi yönde önceki sürümle 63 render karşılaştırması piksel olarak aynıdır.
 Önceki ana oyun doğrulaması: Godot 4.7.2'de 919 kontrol, 0 hata.
 Ayrıntılar: [TEST_RESULTS.md](TEST_RESULTS.md).
-[Godot render'ından sekiz yön yürüyüş önizlemesi](prototypes/phase0/evidence/soldier-8dir-walk.gif).
-[Dört kat yavaş inceleme](prototypes/phase0/evidence/soldier-8dir-walk-slow.gif).
+[Güncel sağ yürüyüş GIF'i](prototypes/phase0/evidence/right_walk/right-walk.gif),
+[dört kare](prototypes/phase0/evidence/right_walk/right-contact-sheet.png),
+[oyun ekranı](prototypes/phase0/evidence/right_walk/right-gameplay.png).
 
 Elle kontrol: iki analogla aynı anda hareket et/yönel; parmağı analog dışına sürükleyip
 bırak; ağaç ve kayalara yürü; köşelere gidip harita sınırını dene; uygulamadan çıkıp

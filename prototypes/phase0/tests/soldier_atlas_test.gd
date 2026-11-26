@@ -62,8 +62,14 @@ func run() -> void:
 			frame_hashes[hash(pixels)] = true
 			visual.update_motion(0, direction, 0)
 			visual.update_motion(1, direction, (frame + 0.001) * 0.095)
-			check(visual.sprite.texture == Visual.WALK_ATLAS and visual.sprite.region_rect == Rect2(rect), "%s frame %d selected for actual rendering" % [direction_name, frame])
-			check((visual.sprite.position + Vector2(128, 272) * visual.sprite.scale).is_zero_approx(), "%s frame %d keeps foot at player origin" % [direction_name, frame])
+			if direction_index == 0:
+				var right_index := floori(fposmod((frame+0.001)*0.095*Visual.TEST_FPS,4))
+				var right_rect := Rect2(Vector2(right_index%2,right_index/2)*627,Vector2(627,627))
+				check(visual.sprite.texture == visual.right_walk_test and visual.sprite.region_rect == right_rect,"E uses the independently timed four-frame PNG at legacy clock sample %d"%frame)
+				check((visual.sprite.position+visual.right_feet[right_index]*visual.sprite.scale).is_zero_approx(),"E source sole remains at origin at sample %d"%frame)
+			else:
+				check(visual.sprite.texture == Visual.WALK_ATLAS and visual.sprite.region_rect == Rect2(rect), "%s frame %d selected for actual rendering" % [direction_name, frame])
+				check((visual.sprite.position + Vector2(128, 272) * visual.sprite.scale).is_zero_approx(), "%s frame %d keeps foot at player origin" % [direction_name, frame])
 		# The supplied N/00 and N/04 are identical; keep both timed slots.
 		check(frame_hashes.size() == (7 if direction_name == "N" else 8), direction_name + " preserves the supplied number of distinct poses")
 		visual.update_motion(0, Vector2.ZERO, 0.01)
@@ -74,7 +80,7 @@ func run() -> void:
 	for i in range(8):
 		visual.update_motion(1, Vector2.RIGHT, 0.095)
 		sequence.append(visual.frame_index)
-	check(sequence == [1, 2, 3, 4, 5, 6, 7, 0], "Eight timed frame slots wrap from frame eight to frame one")
+	check(sequence == [1, 2, 3, 4, 5, 6, 7, 0], "Legacy eight-frame clock remains intact alongside the right-walk clock")
 	visual.update_motion(0, Vector2.ZERO, 0)
 	visual.update_motion(0.5, Vector2.RIGHT, 0.095)
 	check(visual.frame_index == 0, "Half speed waits twice as long for a frame")

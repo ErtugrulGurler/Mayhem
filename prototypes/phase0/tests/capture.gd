@@ -58,13 +58,19 @@ func run() -> void:
 	var source := Image.new()
 	source.load_png_from_buffer(FileAccess.get_file_as_bytes(Visual.WALK_ATLAS.resource_path))
 	source.convert(Image.FORMAT_RGBA8)
+	var right_source := Image.new()
+	right_source.load_png_from_buffer(FileAccess.get_file_as_bytes(Visual.RIGHT_WALK_PATH))
+	right_source.convert(Image.FORMAT_RGBA8)
 	var directions := ["E", "SE", "S", "SW", "W", "NW", "N", "NE"]
 	for index in range(8 + 8 * frames):
 		var direction_index: int = index if index < 8 else (index - 8) / frames
 		var frame: int = -1 if index < 8 else (index - 8) % frames
+		if direction_index == 0 and frame >= 4: continue
 		var direction := Vector2.from_angle(direction_index * PI / 4.0)
 		player.visual.update_motion(0, direction, 0)
-		if frame >= 0: player.visual.update_motion(1, direction, (frame + 0.001) / Visual.ANIMATION_FPS)
+		if frame >= 0:
+			var fps := Visual.TEST_FPS if direction_index == 0 else Visual.ANIMATION_FPS
+			player.visual.update_motion(1, direction, (frame + 0.001) / fps)
 		caption.text = directions[direction_index] + (" / idle" if frame < 0 else " / %d" % (frame + 1))
 		await process_frame
 		await RenderingServer.frame_post_draw
@@ -79,18 +85,23 @@ func run() -> void:
 			if not walk_hashes.has(direction_index): walk_hashes[direction_index] = {}
 			walk_hashes[direction_index][body_hash] = true
 			if not source_hashes.has(direction_index): source_hashes[direction_index] = {}
-			var cell := Rect2i(Vector2i(Vector2(frame, direction_index) * Visual.FRAME_SIZE), Vector2i(Visual.FRAME_SIZE))
-			source_hashes[direction_index][hash(source.get_region(cell).get_data())] = true
+			if direction_index == 0:
+				var cell := Rect2i(Vector2i(frame%2,frame/2)*627,Vector2i(627,627))
+				source_hashes[direction_index][hash(right_source.get_region(cell).get_data())] = true
+			else:
+				var cell := Rect2i(Vector2i(Vector2(frame, direction_index) * Visual.FRAME_SIZE), Vector2i(Visual.FRAME_SIZE))
+				source_hashes[direction_index][hash(source.get_region(cell).get_data())] = true
 			walk_sheet.blend_rect(pose, Rect2i(0, 0, 128, 144), Vector2i(frame * 128, direction_index * 144))
 	var distinct := idle_hashes.size() == 8
 	for direction_index in range(8):
 		distinct = distinct and walk_hashes[direction_index].size() == source_hashes[direction_index].size()
-		print("RENDER ", directions[direction_index], ": ", frames, " frame slots; source/render unique poses ", source_hashes[direction_index].size(), "/", walk_hashes[direction_index].size())
+		print("RENDER ", directions[direction_index], ": ", (4 if direction_index == 0 else frames), " frame slots; source/render unique poses ", source_hashes[direction_index].size(), "/", walk_hashes[direction_index].size())
 	viewport.queue_free()
 	await process_frame
 	var saved_idle := idle_sheet.save_png(destination.path_join("phase0-character-poses.png"))
-	var saved_walk := walk_sheet.save_png(destination.path_join("phase0-walk-%d-frames.png" % (8 * frames)))
-	print("RENDER: eight distinct idle poses and all ", 8 * frames, " frame slots match source pose counts: ", distinct)
+	var total_frames := 7*frames+4
+	var saved_walk := walk_sheet.save_png(destination.path_join("phase0-walk-%d-frames.png" % total_frames))
+	print("RENDER: eight distinct idle poses and all ", total_frames, " frame slots match source pose counts: ", distinct)
 	if not distinct or saved_idle != OK or saved_walk != OK:
 		push_error("Pose capture/uniqueness validation failed.")
 		quit(1)

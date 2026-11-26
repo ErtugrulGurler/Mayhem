@@ -25,6 +25,8 @@ const TEST_FPS := 6.25
 var right_cell := Vector2.ZERO
 var right_feet: Array[Vector2] = []
 var right_scale := WORLD_SCALE
+const RIGHT_ALPHA_THRESHOLD := 32
+static var _right_cache: Dictionary = {}
 
 func _load_right_walk_test() -> void:
 	# Imported project resource only: Android exports never access Downloads.
@@ -36,26 +38,52 @@ func configure_right_walk(texture: Texture2D) -> bool:
 	right_walk_test = null
 	right_feet.clear()
 	if texture == null: return false
+	if _right_cache.get("texture") == texture:
+		right_cell = _right_cache.cell
+		right_feet = _right_cache.feet.duplicate()
+		right_scale = _right_cache.scale
+		right_walk_test = texture
+		return true
 	var dimensions := Vector2i(texture.get_size())
 	if dimensions.x < 2 or dimensions.y < 2 or dimensions.x % 2 != 0 or dimensions.y % 2 != 0:
 		return false
 	var image := texture.get_image()
 	if image == null or image.is_empty(): return false
+	if image.is_compressed() and image.decompress() != OK: return false
+	image.convert(Image.FORMAT_RGBA8)
+	var pixels := image.get_data()
 	var cell := dimensions / 2
 	var feet: Array[Vector2] = []
 	var maximum_height := 0
 	for index in range(4):
 		var at := Vector2i(index % 2, index / 2) * cell
-		var bounds := image.get_region(Rect2i(at, cell)).get_used_rect()
+		# Ignore near-transparent source dust when measuring; never alter pixels.
+		var bounds := opaque_bounds(pixels,dimensions.x,Rect2i(at,cell))
 		if not bounds.has_area(): return false
-		feet.append(Vector2(cell.x * 0.5, bounds.end.y))
+		feet.append(Vector2(bounds.position.x+bounds.size.x*0.5,bounds.end.y))
 		maximum_height = maxi(maximum_height, bounds.size.y)
 	var reference := IDLE_ATLAS.get_image().get_region(Rect2i(0, 0, 256, 288)).get_used_rect()
 	right_scale = reference.size.y * WORLD_SCALE / maximum_height
 	right_cell = Vector2(cell)
 	right_feet = feet
 	right_walk_test = texture
+	# Measure once per imported texture, not once per spawned scene/frame.
+	_right_cache = {"texture":texture,"cell":right_cell,"feet":right_feet.duplicate(),"scale":right_scale}
 	return true
+
+func opaque_bounds(pixels: PackedByteArray, width: int, area: Rect2i) -> Rect2i:
+	var minimum := area.size
+	var maximum := Vector2i(-1,-1)
+	for y in range(area.size.y):
+		var offset := ((area.position.y+y)*width+area.position.x)*4+3
+		for x in range(area.size.x):
+			if pixels[offset+x*4] < RIGHT_ALPHA_THRESHOLD: continue
+			minimum.x = mini(minimum.x,x)
+			minimum.y = mini(minimum.y,y)
+			maximum.x = maxi(maximum.x,x)
+			maximum.y = maxi(maximum.y,y)
+	if maximum.x < 0: return Rect2i()
+	return Rect2i(minimum,maximum-minimum+Vector2i.ONE)
 
 func _ready() -> void:
 	sprite = Sprite2D.new()

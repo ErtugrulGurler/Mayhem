@@ -1,6 +1,44 @@
 # Doğrulama sonuçları
 
-## Sağ dört kare yükleme hatası — PNG bekleniyor
+## Sağ dört kare — orijinal PNG entegrasyonu tamamlandı
+
+Test motoru **Godot 4.3.stable.official.77dcf97d8**, Linux, Compatibility/Mesa
+llvmpipe. Yüklenen ZIP içindeki `mayhem_sag_4k.png` byte olarak değiştirilmeden
+`prototypes/phase0/assets/characters/` altına eklendi. SHA-256:
+`36e6527666b7a890685e22c1cc037b483c4201639af86ee0399cd2ca381addef`.
+
+Gerçek PNG **1254×1254**, her hücre **627×627**; sıra sol üst, sağ üst, sol alt,
+sağ alt. Tam hızda 6,25 FPS, dört karelik döngü 640 ms. PNG'nin çok düşük alfa
+değerli kenar pikselleri ölçümü bozduğundan yalnız hizalama hesabında alfa ≥32
+kullanılır; görselin pikselleri değiştirilmez. Hücre içi merkez/ayak ankrajları:
+`(341,559)`, `(279,568)`, `(353.5,576)`, `(287.5,575)`; tek ölçek
+`0.15539568345324`. Ölçüm texture başına önbelleğe alınır.
+
+| Kontrol | Sonuç |
+| --- | --- |
+| Önbelleksiz proje kopyasında gerçek editor import ve 180 kare açılış | Hata yok |
+| Gerçek PNG, SHA, dört bölge, hizalama, görünürlük, döngü ve fallback | 48 kontrol, 0 hata |
+| Eski atlas, yön, tempo, idle ve ayak kontrolleri | 321 kontrol, 0 hata |
+| Hareket, kamera, çarpışma ve sanal dokunma regresyonu | 57 kontrol, 0 hata |
+| Korunan eski cutout bileşeni | 37 kontrol, 0 hata |
+| Temiz kopyada headless ve ayrıca grafik ekranlı aynı dört test | Her çalıştırmada 463 kontrol, 0 hata |
+| Diğer yedi yönün önceki sürümle render karşılaştırması | 63 karşılaştırma, 0 piksel farkı |
+| Gerçek dört kare render ve klavyeyle sağa hareket | Üretim PNG'si seçildi, karakter görünür |
+
+Godot render'ındaki dört pozu görsel olarak inceledim: ayak tabanları ortak zemin
+çizgisindedir, baş/gövde hücreler arasında büyük yatay sıçrama yapmaz; kesik atlas
+bölgesi veya kayıp karakter yoktur. Kaynaktaki dört farklı kol/bacak pozu aynen
+korunur; yeni ara kare veya çizim üretilmedi. Idle'a geçiş mevcut duruş görseline
+döner; farklı kaynak pozları arasındaki çizim farkı değiştirilmedi.
+
+Kanıtlar: [GIF](prototypes/phase0/evidence/right_walk/right-walk.gif),
+[dört kare](prototypes/phase0/evidence/right_walk/right-contact-sheet.png),
+[oyun ekranı](prototypes/phase0/evidence/right_walk/right-gameplay.png),
+[komutlar ve sonuçlar](prototypes/phase0/evidence/right_walk/verification.json).
+Kamera/hareket/joystick/HUD kodları ve kökteki ana proje değiştirilmedi.
+**Fiziksel Android cihazında test yapılmadı.**
+
+### Önceki yükleme hatasının düzeltmesi
 
 Godot **4.3.stable.official.77dcf97d8** ile hata tekrarlandı: `character_visual.gd:45`
 satırında dosyada önce kullanılan boşluklarla TAB girintileri karışmıştı. Script
@@ -14,16 +52,14 @@ Her hücrenin alpha sınırından ayak tabanı, mevcut karakter yüksekliğinden
 
 - Gerçek 4.3 editor import ve 180 kare headless açılış: hata yok.
 - Mevcut atlas/prototip/eski cutout testleri: **415 kontrol, 0 hata**.
-- `right_walk_test.gd`: **27 geometri kontrolü, 0 hata**; test yalnız bellekteki
+- Önceki `right_walk_test.gd`: **27 geometri kontrolü, 0 hata**; test yalnız bellekteki
   renkli bloklarla boyut, dört bölge, 6,25 FPS döngü, ayak hesabı ve fallback'i doğrular.
 - Kamera, hareket, HUD, joystick ve diğer yedi yönün kaynakları değiştirilmedi.
 
-**Eksik girdi:** Sohbetteki görselin ham PNG dosyası çalışma alanında veya Git
-deposunda bulunmuyor. Dosya uydurulmadı/üretilmedi. Bu nedenle gerçek 4 karelik
-görselin boyutu, alpha'sı, sırası ve görüntü kayması henüz doğrulanmış değildir;
-üretim PNG'si henüz eklenmedi. Fiziksel Android testi yapılmadı.
+Bu ilk düzeltmede ham PNG henüz sağlanmamıştı. Yukarıdaki güncel testler,
+sonradan yüklenen ZIP'teki gerçek dosya ile eksik doğrulamaları tamamlar.
 
-## Güncel sekiz yön / sekiz kare asker atlası — Godot 4.3
+## Önceki sekiz yön / sekiz kare asker atlası — arşiv sonuçları
 
 Hedef `prototypes/phase0/project.godot`; gerçek motor
 **4.3.stable.official.77dcf97d8**, Linux, Compatibility/Mesa llvmpipe.
