@@ -169,6 +169,20 @@
     "passed": true
   },
   {
+    "name": "pip_runs",
+    "engine": "4.7.2.stable.official.ed1daf0bf",
+    "command": [
+      "godot",
+      "--headless",
+      "--path",
+      ".",
+      "--script",
+      "tests/pip/run_comparison.gd"
+    ],
+    "exit_code": 0,
+    "passed": true
+  },
+  {
     "name": "pip_animation",
     "engine": "4.7.2.stable.official.ed1daf0bf",
     "command": [

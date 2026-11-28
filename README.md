@@ -27,6 +27,11 @@ merkezine yakın hareket yürüyüşe, tam itme koşuya geçer. Sağ analog sald
 Hareket ederken **Kaç** düğmesiyle atılabilirsin. Düşman isabeti darbe tepkisini
 tetikler. Önceki Muhafız kayıtları aynı karakter slotu ve yeteneklerle açılır.
 
+Koşuları karşılaştırmak için Pip ile oynarken mini haritanın altındaki **Original**
+düğmesine dokun. Her dokunuşta Bouncy Run, Cartoon Run, Waddle Run ve Foot IK Run
+sırayla açılır; beşinci dokunuşta Original geri gelir. Düğmede etkin stilin adı
+görünür. [Beş koşunun aynı hızda karşılaştırması](docs/evidence/pip/run-comparison.gif).
+
 Pip’in çizimleri ve 15 kemikli Godot sahnesi `assets/characters/pip/` altında.
 Dirsekler, dizler ve atkı ağırlıklı mesh ile bükülür. Animasyon, oturumun gerçek
 konum, can ve savaş zamanlayıcılarını okur. Rig paketteki üç çeyrek görünümü kullanır ve sola bakışta
@@ -69,7 +74,7 @@ Space kaç, C yetenek, H medkit. Ayrıntılı kontroller oyun içindedir.
 
     python3 tools/verify.py --godot /path/to/Godot_v4.7.2-stable_linux.x86_64
 
-Sonuç: **961 kontrol, 0 hata**. Editör importu, 180 kare açılış ve 13 test paketi dahil 15 motor süreci başarılı.
+Sonuç: **974 kontrol, 0 hata**. Editör importu, 180 kare açılış ve 14 test paketi dahil 16 motor süreci başarılı.
 Native fare/klavye/sentetik touch, kayıt, pause, üç UI ölçeği ve dört yatay çözünürlük testli.
 Fiziksel Android, DPI/çentik, gerçek cihaz FPS ve APK testi yapılmadı.
 

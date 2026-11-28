@@ -27,6 +27,7 @@ var panel_target: Dictionary = {}
 var open_panel := ""
 var controls: Dictionary = {}
 var dock: Array[Button] = []
+var gait_button: Button
 var menu_button: Button
 var skip_button: Button
 var developer_enabled := false
@@ -73,6 +74,7 @@ func _ready() -> void:
 	root.add_child(bar)
 	stats = make_label(root,18)
 	resources = make_label(root,16)
+	gait_button = make_button(root, "Original", cycle_gait)
 	menu_button = make_button(root,"Menü",show_panel.bind("options"),"menu")
 	mission = Panel.new()
 	mission.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -203,6 +205,8 @@ func layout(viewport_size: Vector2) -> void:
 	toast.position = Vector2(175,size.y-126)
 	toast.size = Vector2(size.x-350,50)
 	minimap.position = Vector2(size.x-156,76)
+	gait_button.position = Vector2(size.x-170,176)
+	gait_button.size = Vector2(154,54)
 	panel.position = Vector2((size.x-560)/2,78)
 	panel.size = Vector2(560,size.y-250)
 	panel_title.position = Vector2(14,10)
@@ -325,8 +329,15 @@ func primary() -> void:
 		else: show_panel("object")
 	else: session.action("interact")
 
+func cycle_gait() -> void:
+	var motion = session.view.actor.motion
+	if motion != null:
+		motion.gaits.cycle(motion.bones)
+		gait_button.text = motion.gaits.NAMES[motion.gaits.selected]
+
 func is_world_point(point: Vector2) -> bool:
 	if not session.running or session.sim.state.lost or open_panel!="": return false
+	if gait_button.visible and gait_button.get_rect().has_point(point): return false
 	if point.y < 64: return false
 	if mission.visible and mission.get_rect().has_point(point): return false
 	if Rect2(minimap.position,Vector2(140,94)).has_point(point): return false
@@ -356,6 +367,10 @@ func refresh() -> void:
 	menu.visible = not session.running
 	report.visible = s.lost and session.running and session.managed_flow==null
 	panel.visible = session.running and not s.lost and open_panel!=""
+	gait_button.visible = minimap.visible and p.character == MayhemCatalog.PIP_PROFILE
+	if gait_button.visible and session.view.actor.motion != null:
+		var gaits = session.view.actor.motion.gaits
+		gait_button.text = gaits.NAMES[gaits.selected]
 	menu_button.visible = session.running and not s.lost
 	session.router.enabled = session.running and not s.lost and open_panel=="" and not session.local_paused
 	for button in dock: button.visible = session.running and not s.lost and open_panel==""
