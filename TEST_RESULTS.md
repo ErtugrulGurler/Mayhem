@@ -1,187 +1,27 @@
 # Doğrulama sonuçları
 
-## Sağ dört kare — orijinal PNG entegrasyonu tamamlandı
+Ana oyun testleri, kökteki `project.godot` ile Godot 4.7.2 üzerinde çalışır.
+[P0 mekanikleri ve testleri](docs/TEST_RESULTS.md) ve
+[menü ve kayıt testleri](docs/menu/REPORT.md) ilgili kabul senaryolarını içerir.
 
-Test motoru **Godot 4.3.stable.official.77dcf97d8**, Linux, Compatibility/Mesa
-llvmpipe. Yüklenen ZIP içindeki `mayhem_sag_4k.png` byte olarak değiştirilmeden
-`prototypes/phase0/assets/characters/` altına eklendi. SHA-256:
-`36e6527666b7a890685e22c1cc037b483c4201639af86ee0399cd2ca381addef`.
+## Ana proje temizliği ve oyuncu çizimi
 
-Gerçek PNG **1254×1254**, her hücre **627×627**; sıra sol üst, sağ üst, sol alt,
-sağ alt. Tam hızda 6,25 FPS, dört karelik döngü 640 ms. PNG'nin çok düşük alfa
-değerli kenar pikselleri ölçümü bozduğundan yalnız hizalama hesabında alfa ≥32
-kullanılır; görselin pikselleri değiştirilmez. Hücre içi merkez/ayak ankrajları:
-`(341,559)`, `(279,568)`, `(353.5,576)`, `(287.5,575)`; tek ölçek
-`0.15539568345324`. Ölçüm texture başına önbelleğe alınır.
+Godot `4.7.2.stable.official.ed1daf0bf` ile editör importu, 180 kare açılış
+ve 12 regresyon paketi geçti. Toplam 919 kontrol ve 14 başarılı motor süreci var.
+Compatibility renderer ile gerçek oturum sahnesinin 960×540 görüntüleri temizliğin
+öncesiyle karşılaştırıldı. Nişan, ağır yük ve koruma, yakın saldırı, oyuncuyla
+örtüşen inşa alanı ve yaralı oyuncu görüntülerinin her birinde piksel farkı sıfırdı.
+Bu karşılaştırma mevcut dört profili temsil eden geometrik oyuncu çiziminin
+katmanlara ayrılmasını sınar. Fiziksel Android cihazında test yapılmadı.
 
-| Kontrol | Sonuç |
-| --- | --- |
-| Önbelleksiz proje kopyasında gerçek editor import ve 180 kare açılış | Hata yok |
-| Gerçek PNG, SHA, dört bölge, hizalama, görünürlük, döngü ve fallback | 48 kontrol, 0 hata |
-| Eski atlas, yön, tempo, idle ve ayak kontrolleri | 321 kontrol, 0 hata |
-| Hareket, kamera, çarpışma ve sanal dokunma regresyonu | 57 kontrol, 0 hata |
-| Korunan eski cutout bileşeni | 37 kontrol, 0 hata |
-| Temiz kopyada headless ve ayrıca grafik ekranlı aynı dört test | Her çalıştırmada 463 kontrol, 0 hata |
-| Diğer yedi yönün önceki sürümle render karşılaştırması | 63 karşılaştırma, 0 piksel farkı |
-| Gerçek dört kare render ve klavyeyle sağa hareket | Üretim PNG'si seçildi, karakter görünür |
+## Bağımsız Faz 0 arşivi
 
-Godot render'ındaki dört pozu görsel olarak inceledim: ayak tabanları ortak zemin
-çizgisindedir, baş/gövde hücreler arasında büyük yatay sıçrama yapmaz; kesik atlas
-bölgesi veya kayıp karakter yoktur. Kaynaktaki dört farklı kol/bacak pozu aynen
-korunur; yeni ara kare veya çizim üretilmedi. Idle'a geçiş mevcut duruş görseline
-döner; farklı kaynak pozları arasındaki çizim farkı değiştirilmedi.
-
-Kanıtlar: [GIF](prototypes/phase0/evidence/right_walk/right-walk.gif),
-[dört kare](prototypes/phase0/evidence/right_walk/right-contact-sheet.png),
-[oyun ekranı](prototypes/phase0/evidence/right_walk/right-gameplay.png),
-[komutlar ve sonuçlar](prototypes/phase0/evidence/right_walk/verification.json).
-Kamera/hareket/joystick/HUD kodları ve kökteki ana proje değiştirilmedi.
-**Fiziksel Android cihazında test yapılmadı.**
-
-### Önceki yükleme hatasının düzeltmesi
-
-Godot **4.3.stable.official.77dcf97d8** ile hata tekrarlandı: `character_visual.gd:45`
-satırında dosyada önce kullanılan boşluklarla TAB girintileri karışmıştı. Script
-yüklenmediğinden oyuncu görünüşü oluşturulamıyordu. Girintiler tutarlı hale getirildi.
-
-Telefon Download yolları ve ham dış dosya yüklemesi kaldırıldı. Tek kaynak
-`res://assets/characters/mayhem_sag_4k.png` adlı import edilmiş Texture2D'dir.
-Hücre boyutu 2×2 dokudan hesaplanır; sabit 1254/627 boyut varsayımı kaldırıldı.
-Her hücrenin alpha sınırından ayak tabanı, mevcut karakter yüksekliğinden sabit
-ölçek hesaplanır. Eksik/geçersiz dosyada önceki atlas korunur.
-
-- Gerçek 4.3 editor import ve 180 kare headless açılış: hata yok.
-- Mevcut atlas/prototip/eski cutout testleri: **415 kontrol, 0 hata**.
-- Önceki `right_walk_test.gd`: **27 geometri kontrolü, 0 hata**; test yalnız bellekteki
-  renkli bloklarla boyut, dört bölge, 6,25 FPS döngü, ayak hesabı ve fallback'i doğrular.
-- Kamera, hareket, HUD, joystick ve diğer yedi yönün kaynakları değiştirilmedi.
-
-Bu ilk düzeltmede ham PNG henüz sağlanmamıştı. Yukarıdaki güncel testler,
-sonradan yüklenen ZIP'teki gerçek dosya ile eksik doğrulamaları tamamlar.
-
-## Önceki sekiz yön / sekiz kare asker atlası — arşiv sonuçları
-
-Hedef `prototypes/phase0/project.godot`; gerçek motor
-**4.3.stable.official.77dcf97d8**, Linux, Compatibility/Mesa llvmpipe.
-
-| Kontrol | Sonuç |
-| --- | --- |
-| Editor import ve 180 kare açılış | Script/motor hatası yok |
-| Atlas, yön, kare, tempo, idle, ayak/kenar kontrolleri | 321 kontrol, 0 hata |
-| Mevcut hareket/kamera/çarpışma/dokunma regresyonu | 57 kontrol, 0 hata |
-| Korunan eski cutout bileşeni | 37 kontrol, 0 hata |
-| Grafik ekranlı aynı üç test | 415 kontrol, 0 hata |
-| 960×540 / 1200×540 / 960×720 gerçek render | Görüntüler üretildi ve incelendi |
-
-Önbelleksiz ZIP kopyasında editor import, 180 kare açılış ve aynı 415 kontrol de geçti.
-
-82 kaynak PNG ve manifest byte olarak değiştirilmeden
-`prototypes/phase0/assets/characters/mayhem_soldier/` altına alındı. Atlas 2048×2304,
-hücre 256×288, ayak pivotu (128, 272), tek sabit ölçek 0,36, kare süresi 95 ms.
-64 atlas hücresi ve sekiz idle pozu, tekil yükleme PNG'leriyle piksel piksel eşleşir.
-PNG'lerde boş veya kenardan kırpılmış kare yoktur. Her idle, ilgili yönün ilk karesidir.
-
-Godot render'ında 64 zaman yuvası ve sekiz idle yönü kontrol edildi. N yönündeki
-1/5. kare kaynakta aynıdır; toplam 63 benzersiz yürüyüş resmi vardır. Bu tekrar
-deduplikasyonla silinmedi; sekiz kareli ritim ve 8→1 geçişi korunur. Ayak pivotu
-bütün karelerde oyuncu origin'inde kalır; kaynak görsellerdeki 1–3 piksel dikey
-sekme ekstra kodla bastırılmadı (oyunda en fazla 1,08 dünya birimi).
-
-S/SE/SW ikinci yarı adımları ve NE/NW arka çapraz yönler render temas tablosunda
-incelendi. Nötr poza dönüşler ve 8→1 zamanlamasında kare atlama/atlas kayması
-bulunmadı. E/W profil ve SE/SW temas pozlarının örtüşme/çizim tutarlılığı test
-sanatının sınırıdır; yazılım testi nihai animasyon kalitesi onayı değildir.
-Kaynak kareleri aynalama, yeniden çizme veya yeniden sıralama yapılmadı.
-
-Kanıtlar: [oyun](prototypes/phase0/evidence/soldier-8dir-gameplay.png),
-[64 kare](prototypes/phase0/evidence/soldier-8dir-64-frames.png),
-[normal tempo](prototypes/phase0/evidence/soldier-8dir-walk.gif),
-[4× yavaş](prototypes/phase0/evidence/soldier-8dir-walk-slow.gif),
-[motor/komut/exit sonuçları](prototypes/phase0/evidence/verification.json).
-Oyuncu hareketi, nişan önceliği, HUD, kamera, dünya, çarpışma ve kökteki ana proje
-değiştirilmedi. Fiziksel Android, cihaz FPS/ısınma, DPI/çentik ve APK denenmedi.
-
-## Önceki altı kare asker atlası — arşiv sonuçları
-
-Hedef yalnız `prototypes/phase0/project.godot`; motor gerçek
-**4.3.stable.official.77dcf97d8**, Linux, Compatibility/Mesa llvmpipe.
-
-| Kontrol | Sonuç |
-| --- | --- |
-| Editor import ve ana sahne 180 kare açılış | Script/motor hatası yok |
-| `soldier_atlas_test.gd` | 200 kontrol, 0 hata |
-| `prototype_test.gd` | 57 kontrol, 0 hata |
-| Korunan eski cutout bileşeni: `soldier_rig_test.gd` | 37 kontrol, 0 hata |
-| Grafik ekranlı aynı üç test | 294 kontrol, 0 hata |
-| Gerçek render, 960×540 / 1200×540 / 960×720 | Görüntüler üretildi ve incelendi |
-| Sekiz idle ve 48 yürüyüş karesi render'ı | Her yönde altı ayrı kare ve sekiz ayrı duruş doğrulandı |
-
-Yeni test atlas RGBA özetini yüklenen manifestle karşılaştırır; 48 yürüyüş
-hücresi ve sekiz idle hücresi, yüklenen tekil PNG'lerle piksel piksel eşleşir.
-Gerçek `Sprite2D` bölgeleri, E/SE/S/SW/W/NW/N/NE sırası, 8 FPS döngüsü,
-yarım hız, yürürken yön değişimi, durunca faz sıfırlama, idle'da nişanla yönelme,
-sabit ayak pivotu, tek renderer ve y-sort katmanı kontrol edildi.
-
-Eski ön rig ve kaynakları korunur, oyuncuya eklenmez. Oyuncu hareketi, input,
-HUD, kamera, çarpışma ve dünya dosyaları değiştirilmedi. Altı yan/çapraz yön
-geçici prosedürel çizim taslaklarıdır; ön ve arka yönler gönderilen GIF
-kareleridir. Bu paket nihai animasyon kalitesini doğrulamaz.
-
-Bu aşamanın kanıtları [f3752c6 sürümündedir](https://github.com/ErtugrulGurler/Mayhem/tree/f3752c6/prototypes/phase0/evidence).
-Eski [48 yürüyüş karesi](prototypes/phase0/evidence/soldier-8dir-48-frames.png) korunur.
-
-Önbelleksiz ZIP kopyasında editor import, 180 kare açılış ve 294 kontrol de geçti.
-Fiziksel Android, GPU/FPS/ısınma, çentik/DPI ve APK dışa aktarma denenmedi.
-
-## Önceki ön yön rig denemesi — arşiv sonuçları
-
-`mayhem_original_soldier_rig.zip` içindeki sekiz PNG parçası, orijinal ön görünüş
-ve manifest mevcut Faz 0 projesine eklendi. Kaynak dosyalar yüklemeyle bayt bayt
-aynıdır. Orijinal RGBA SHA-256 özeti manifestle eşleşir; cutout birleşimiyle
-orijinal arasında **0 farklı RGBA piksel** vardır.
-
-- `tests/soldier_rig_test.gd`: **39 kontrol, 0 hata**. Kaynak görsel bütünlüğü,
-  sekiz parça, 91 birim yükseklik/pivot, dönüşümlü kısa adımlar, kol/baş salınımı,
-  durunca tam pivot sıfırlama ve y-sort grubundan taşmayan çizim sırası kontrol edildi.
-- Mevcut `tests/prototype_test.gd`: **57 kontrol, 0 hata**. Hareket, kamera,
-  çarpışma ve mobil kontrol regresyonu geçti.
-- Her iki test de gerçek **4.3.stable.official.77dcf97d8** motorunda headless
-  ve grafik ekranlı Compatibility çalışma ile doğrulandı.
-- 960×540, 1200×540 ve 960×720 ekran görüntüleri ve yürüyüş atlası incelendi.
-  Önceki render ile karşılaştırmada diğer yedi yönün bütün pikselleri, ayrıca üç
-  çözünürlükte karakter dışındaki harita/HUD pikselleri aynı kaldı.
-
-Bu önceki pakette sekiz yönlü atlas yoktu. O aşamada yalnız ön yön (index 2)
-asker rig'ini kullanıyor, diğer yedi yön önceki placeholder görselleri koruyordu.
-Kol/bacak parçalarının altında eksik gizli çizimler üretilmedi; küçük açılar kullanılır.
-Fiziksel Android, cihaz FPS/DPI/çentik ve APK dışa aktarma bu değişiklikte test edilmedi.
-
-## Yeni Faz 0 — Godot 4.3
-
-Bağımsız proje: `prototypes/phase0/project.godot`. Test motoru:
-**4.3.stable.official.77dcf97d8**, Linux x86_64, Compatibility renderer.
-
-| Kontrol | Sonuç |
-| --- | --- |
-| Gerçek 4.3 editor import / GDScript yükleme | Geçti, script/motor hatası yok |
-| Ana sahne, 180 kare headless açılış | Geçti |
-| `tests/prototype_test.gd`, headless | 57 kontrol, 0 hata |
-| Aynı test, grafik ekranlı Compatibility çalışma | 57 kontrol, 0 hata |
-| 960×540, 1200×540, 960×720 gerçek render | PNG'ler üretildi ve görsel olarak incelendi |
-| Sekiz yön ve dört yürüyüş fazı | Render atlası incelendi; sekiz yönün piksel çıktıları farklı |
-| Mevcut ana oyunun 4.7.2 regresyonu | Import/açılış dahil 14 süreç başarılı, 919 kontrol, 0 hata |
-
-Faz 0 testleri gerçek Godot fiziğiyle hareket, çapraz hızın eşitliği, durma,
-ağaç/kaya/sınır çarpışması, yumuşak kamera takibi, sekiz yön, gerçek viewport giriş
-hattına gönderilen sentetik eşzamanlı dokunma/klavye/fare, analog dışı bırakma,
-iptal edilen dokunma ve odak kaybını kontrol eder. HUD sınır/çakışma kontrolleri
-960×540, 1200×540, 960×720, 1280×800, 1920×1080 ve 2400×1080 boyutlarında geçti.
-
-Render Linux Mesa llvmpipe yazılım sürücüsünde yapıldı; VSync'in desteklenmediği
-uyarısı bu ortama aittir. Fiziksel Android, gerçek iki parmaklı donanım girişi,
-çentik/safe-area, DPI, telefon FPS/ısınma/batarya ve APK dışa aktarma **test edilmedi**.
-İlk import denemesinde korumalı ev dizinine yazılamadı; XDG veri/ayar/önbellek
-yolları çalışma alanına alınarak import temiz biçimde tekrarlandı.
+Eski Godot 4.3 projesinin asker atlasları, ön yön rig denemesi ve bunlara özgü
+testler son Faz 0 sürümünde saklanır. O sürümde 463 kontrol geçmişti.
+Kaldırılan dizinde 303 asset ve metadata dosyası, 12 doğrulama çıktısı,
+9 betik, 6 test, 3 sahne, `project.godot` ve `.gdignore` vardı. Ana proje
+kaynak yollarında ve UID başvurularında bu projeye bağımlılık bulunmadı.
+[Dönemin tam raporu ve görsel kanıtları](https://github.com/ErtugrulGurler/Mayhem/blob/d0bffcbb12b5cb646f3f5b6722b6d160e7085d24/TEST_RESULTS.md)
 
 ## Önceki kule savunması prototipi
 

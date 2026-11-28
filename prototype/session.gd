@@ -7,7 +7,8 @@ var loss_reported := false
 var sim: MayhemSimulation
 var router: TwinStickInput
 var camera: Camera2D
-var view: Node2D
+const WorldView = preload("res://prototype/presentation/world_view.gd")
+var view: WorldView
 var hud: CanvasLayer
 var running := false
 var build_kind := ""
@@ -24,7 +25,7 @@ func _ready() -> void:
 	sim.checkpoint_due.connect(save_checkpoint)
 	router = TwinStickInput.new()
 	add_child(router)
-	view = preload("res://prototype/presentation/world_view.gd").new()
+	view = WorldView.new()
 	view.session = self
 	add_child(view)
 	camera = Camera2D.new()
@@ -77,7 +78,7 @@ func refresh_ui() -> void:
 	if is_instance_valid(hud):
 		hud.refresh()
 		if managed_flow!=null: hud.root.visible=not local_paused
-	if is_instance_valid(view): view.queue_redraw()
+	if is_instance_valid(view): view.refresh()
 
 func context_target() -> Dictionary:
 	if is_instance_valid(hud) and hud.open_panel in ["object","confirm"] and not hud.panel_target.is_empty():

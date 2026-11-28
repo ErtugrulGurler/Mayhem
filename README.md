@@ -1,78 +1,24 @@
 # Mayhem
 
-## Yeni Faz 0 — Godot 4.3
-
-Yeni hareket prototipi **[prototypes/phase0/project.godot](prototypes/phase0/project.godot)**
-dosyasından ayrı proje olarak açılır. Godot **4.3 stable** ile içe aktar ve **F5**'e bas.
-Kökteki mevcut oyunun başlangıcı, sistemleri ve kayıtları değiştirilmedi.
-
-Sağa yürüyüş, yüklenen orijinal `res://assets/characters/mayhem_sag_4k.png`
-kaynağını kullanır; telefonun Download klasörüne erişmez. PNG değiştirilmeden
-projeye eklendi: 1254×1254, 2×2 düzende dört adet 627×627 hücre. Sıra sol üst →
-sağ üst → sol alt → sağ alt; tam hızda 6,25 FPS (160 ms/kare). Her karenin
-belirgin silüet merkezi ve ayak tabanı hizalanır; diğer yedi yön ve idle korunur.
-
-- Açık çayır haritası, yürünebilir patika, ağaç/kaya çarpışmaları ve harita sınırı.
-- Sekiz yönde aynı asker; sağ yürüyüş dört, diğer yönler sekiz kare; mevcut duruş pozları korunur.
-- Diğer yönlerde yürüyüş yaklaşık 10,53 FPS'tir (95 ms/kare). Animasyon hareket hızıyla ölçeklenir. Durunca aynı yönde
-  idle'a geçilir ve animasyon fazı sıfırlanır; başka karakter/placeholder çizilmez.
-- 360° hareket, yumuşak ve haritayla sınırlı kamera; Compatibility renderer, yatay mobil ekran.
-- Sol analog hareket; sağ analog yalnız bakış/nişan yönü. İki parmak aynı anda kullanılabilir.
-- Masaüstü: **WASD / oklar**, **sağ fareyi tutarak yönelme**. Analoglar sol fareyle de denenebilir.
-- Faz 0'da düşman, silah/saldırı, inşa, envanter, kaynak veya multiplayer yoktur.
-
-`scripts/player.gd` hareketi, `character_visual.gd` değiştirilebilir çizimi/animasyonu,
-`input_router.gd` girişleri, `hud.gd` ekran yerleşimini yönetir. Ağaç/kayaların
-çarpışması yalnız yerdeki ayak izindedir; gövdelerin arkasından yürünebilir.
-Çevre kodla çizilir; 3D model yoktur. Kullanıcının yüklediği asker PNG'leri
-`assets/characters/mayhem_soldier/` altında değiştirilmeden saklanır. Tek `Sprite2D`,
-yürüyüşte sağ yön için yeni 2×2 kaynağı, diğer yönlerde 8×8 atlası, dururken 8×1 idle atlasını kullanır. Eski atlasın her hücresi 256×288,
-ayak pivotu (128, 272), sabit ölçek 0,36'dır; hareket/çarpışma/kamera kodu aynıdır.
-Kareler kaynak sırasıyla oynar; runtime'da aynalanmaz veya yeniden sıralanmaz.
-N yönünün 1. ve 5. kareleri kaynakta aynıdır; sekiz zaman yuvası aynen korunur.
-Bu bir test çizim paketidir; profil/çapraz pozların nihai sanat değerlendirmesi gerekir.
-Eski `scout_front_rig.gd`, ön cutout kaynakları ve `assets/mayhem_soldier/`
-altındaki altı karelik paket korunur, aktif oyuncu tarafından çizilmez.
-`.gdignore`, bu bağımsız projenin eski ana projeye kaynak olarak karışmasını önler.
-
-Doğrulama komutları (Godot 4.3 executable'ı `godot` olarak varsayılmıştır):
-
-```sh
-godot --headless --path prototypes/phase0 --editor --import --quit
-godot --headless --fixed-fps 60 --path prototypes/phase0 --script tests/prototype_test.gd
-godot --headless --fixed-fps 60 --path prototypes/phase0 --script tests/soldier_atlas_test.gd
-godot --headless --fixed-fps 60 --path prototypes/phase0 --script tests/soldier_rig_test.gd
-godot --headless --fixed-fps 60 --path prototypes/phase0 --script tests/right_walk_test.gd
-godot --headless --path prototypes/phase0 --quit-after 180
-```
-
-Grafik ekranı bulunan masaüstünde `tests/capture.gd` üç ekran oranını ve karakterin
-sekiz idle yönünü ve 60 yürüyüş karesini (4+7×8) render eder. `tests/right_walk_capture.gd`
-gerçek dört sağ kareyi ve sağa yürüyen oyuncuyu ayrıca yakalar. `MAYHEM_CAPTURE_DIR` verilmezse görüntüler `user://captures`
-altına yazılır. Fiziksel Android dokunma/DPI/çentik ve cihaz performansı ayrıca denenmelidir.
-Gerçek Godot 4.3 import/açılış, headless ve grafik ekranlı 57 kontrol geçti.
-Atlasın 321 kontrolü yönleri, 64 kareyi, şeffaf kenarları, döngüyü, hızı, idle geçişini ve ayak
-hizasını doğrular. Korunan eski rig için 37 bileşen, sağ PNG için 48 kontrol geçer:
-toplam **463 kontrol, 0 hata**; temiz import/headless ve grafik ekranlı çalıştırma doğrulandı.
-Diğer yedi yönde önceki sürümle 63 render karşılaştırması piksel olarak aynıdır.
-Önceki ana oyun doğrulaması: Godot 4.7.2'de 919 kontrol, 0 hata.
-Ayrıntılar: [TEST_RESULTS.md](TEST_RESULTS.md).
-[Güncel sağ yürüyüş GIF'i](prototypes/phase0/evidence/right_walk/right-walk.gif),
-[dört kare](prototypes/phase0/evidence/right_walk/right-contact-sheet.png),
-[oyun ekranı](prototypes/phase0/evidence/right_walk/right-gameplay.png).
-
-Elle kontrol: iki analogla aynı anda hareket et/yönel; parmağı analog dışına sürükleyip
-bırak; ağaç ve kayalara yürü; köşelere gidip harita sınırını dene; uygulamadan çıkıp
-dönünce karakterin kendiliğinden yürümediğini kontrol et.
-Sekiz yön testi: WASD/oklarla dört ana ve dört çapraz yöne yürü. Her yönde durup
-doğru idle'a geçtiğini kontrol et. Sağ analogu/sağ fareyi tutarken bakış yönü
-hareket yönünden bağımsızdır; hareket yönünü görmek için nişanı bırak.
-
-## Mevcut ana proje — Godot 4.7.2
-
 **Godot 4.7.2 · GDScript · Compatibility · Android yatay ekran.**
 Fiziksel kaynak toplama, üretim ve üs savunması içeren yukarıdan bakışlı 2D prototip.
 Ana menüdeki hacimli çekirdek dekoru, oyun kamerasını 3D'ye dönüştürmez.
+
+## Proje düzeni
+
+Kökteki `project.godot` ana menü sahnesini (`ui/main_menu.tscn`) açar.
+`ui/app_flow.gd` oturumu `prototype/scenes/session.tscn` üzerinden başlatır.
+`prototype/core/` oyun durumunu ve simülasyon adımını, `prototype/systems/` hareketi,
+savaşı, üretimi ve kayıtları yönetir. Dünya çizimi, HUD ve çift analog denetimi
+`prototype/presentation/` altındadır.
+
+`world_view.gd` önce araziyi, yapıları, düşmanları ve mermileri çizer.
+`player_appearance.gd` seçili karakterin gövdesini oyuncunun dünya konumunda
+gösterir. `world_indicators.gd` nişan çizgisini, yakın saldırı yayını, yükü,
+korumayı ve inşa işaretlerini karakterin üzerinde çizer.
+
+Bağımsız Faz 0 hareket ve asker animasyonu çalışmasının kodu, testleri ve
+çıktıları [Faz 0 arşivinde](https://github.com/ErtugrulGurler/Mayhem/tree/d0bffcbb12b5cb646f3f5b6722b6d160e7085d24/prototypes/phase0) bulunur.
 
 ## Başlat
 
@@ -123,6 +69,6 @@ Fiziksel Android, DPI/çentik, gerçek cihaz FPS ve APK testi yapılmadı.
 olarak ulaşmadığından docs/design/MAYHEM_UI_THEME_REFERENCE.png henüz eklenemedi.
 [Dosya durumu](docs/design/REFERENCE_STATUS.md). Yeniden çizilmiş bir kopya orijinal diye sunulmadı.
 
-Gerçek online co-op, bütün boss/çağ içerikleri ve leaderboard yoktur. Eski demo git
-geçmişinde ve scenes/scripts altında korunur; kullanıcı ana menüsünde bağlantısı yoktur.
+Gerçek online co-op, bütün boss/çağ içerikleri ve leaderboard yoktur. Önceki kule savunması demosunu `scenes/main.tscn` ve `scripts/` çalıştırır.
+Mevcut smoke ve combat testleri bu sahneyi açar.
 APK için Godot 4.7.2 Android template, JDK ve SDK ayrıca gerekir.

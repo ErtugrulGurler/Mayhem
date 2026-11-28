@@ -1,5 +1,19 @@
 extends Node2D
 var session: Node
+var actor := preload("res://prototype/presentation/player_appearance.gd").new()
+var indicators := preload("res://prototype/presentation/world_indicators.gd").new()
+
+func _ready() -> void:
+	add_child(actor)
+	indicators.session = session
+	add_child(indicators)
+	refresh()
+
+func refresh() -> void:
+	actor.present(session.sim.state.player)
+	indicators.queue_redraw()
+	queue_redraw()
+
 func label(at: Vector2,text: String,color: Color=Color("#fff4d6"),size: int=15) -> void:
 	draw_string(ThemeDB.fallback_font,at,text,HORIZONTAL_ALIGNMENT_LEFT,-1,size,color)
 func _draw() -> void:
@@ -16,7 +30,6 @@ func _draw() -> void:
 	for y in range(470,740,22): draw_line(Vector2(850,y),Vector2(950,y),Color("#8c9066"),3)
 	draw_rect(Rect2(1260,150,140,180),Color("#7b8c83"))
 	label(Vector2(1267,175),"UÇURUM")
-	var active: Dictionary = session.context_target()
 	for source in s.sources:
 		draw_circle(source.pos+Vector2(3,15),27,Color(0.15,0.28,0.2,0.18))
 		ObjectGlyphs.draw(self,source.kind,source.pos,Color.WHITE)
@@ -67,29 +80,7 @@ func _draw() -> void:
 		draw_circle(enemy.pos+Vector2(6,-3),2,Color("#333542"))
 		health_bar(enemy.pos+Vector2(0,-radius-10),enemy.hp/enemy.max_hp,32)
 	for shot in s.projectiles: draw_line(shot.pos,shot.pos-shot.dir*13,Color("#fff3ab"),4)
-	var p: Dictionary=s.player
-	var profile: Dictionary=MayhemCatalog.CHARACTERS[p.character]
-	draw_circle(p.pos+Vector2(0,8),20,Color("#537e55"))
-	ObjectGlyphs.polygon(self,[p.pos+Vector2(-13,2),p.pos+Vector2(-20,26),p.pos+Vector2(18,24),p.pos+Vector2(12,0)],Color(profile.color).darkened(0.25))
-	draw_circle(p.pos,19,Color("#364b50"))
-	draw_circle(p.pos,16,Color("#aa8881") if p.down else Color(profile.color))
-	draw_circle(p.pos+Vector2(-5,-3),3,Color("#fff5db"))
-	draw_circle(p.pos+Vector2(5,-3),3,Color("#fff5db"))
-	draw_arc(p.pos+Vector2(0,-2),18,PI,TAU,20,Color("#e3e8d4"),6)
-	draw_line(p.pos,p.pos+p.aim*29,Color("#fff4d2"),4)
-	if p.shot_cd>0.32 and p.slot<0:
-		draw_arc(p.pos,65,p.aim.angle()-0.7,p.aim.angle()+0.7,20,Color("#ffe19d"),5)
-	if p.heavy: draw_line(p.pos+Vector2(-20,-24),p.pos+Vector2(20,-24),Color("#795d47"),12)
-	if p.brace>0: draw_arc(p.pos,24,0,TAU,24,Color("#abcdf3"),3)
-	if not active.is_empty():
-		draw_arc(active.data.pos,40,0,TAU,48,Color("#fff4af"),3)
-	if session.running and not s.tutorial.skipped and s.tutorial.step<TutorialGuide.STEPS.size():
-		var target: Vector2=TutorialGuide.task(s).target
-		draw_arc(target,46,0,TAU,48,Color("#bdf5e9"),3)
-	if session.build_kind!="" and session.running:
-		var ghost: Vector2=BuildingSystem.snap(s,session.ghost)
-		var tint:=Color(0.7,1,0.7,0.5) if BuildingSystem.can_place(s,session.build_kind,ghost) else Color(1,0.4,0.4,0.5)
-		draw_rect(Rect2(ghost-Vector2(28,28),Vector2(56,56)),tint)
+
 func health_bar(at: Vector2,ratio: float,width: float) -> void:
 	draw_rect(Rect2(at-Vector2(width/2,0),Vector2(width,5)),Color("#4b4d44"))
 	draw_rect(Rect2(at-Vector2(width/2,0),Vector2(width*clampf(ratio,0,1),5)),Color("#b8e990"))
