@@ -37,11 +37,18 @@ func run() -> void:
 	for i in range(4): await process_frame
 	check(root.gui_get_focus_owner()==app.page.buttons.new,"MM-016 primary menu button has keyboard focus")
 	await key(KEY_ENTER)
-	check(app.page_name=="character","MM-016 Enter opens real new-game setup")
-	await key(KEY_ESCAPE)
-	check(app.page_name=="home","MM-016 Escape navigates back without quitting")
+	await process_frame
+	check(current_scene != null and current_scene.name=="CombatPlayground","Enter starts the meadow directly")
+	current_scene.leave()
+	await scene_changed
+	app=current_scene
 	await click(app.page.buttons.new,true)
-	check(app.page_name=="character","MM-004 native GUI touchscreen opens setup")
+	check(current_scene.name=="CombatPlayground","Touch starts the same playground")
+	current_scene.leave()
+	await scene_changed
+	app=current_scene
+	# Exercise the retained campaign setup and save flow independently.
+	app.new_setup()
 	await click(app.page.cards[2],true)
 	check(app.draft.character==2,"MM-005 native character card selects Cem")
 	await click(app.page.buttons.next)

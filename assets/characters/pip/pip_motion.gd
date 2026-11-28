@@ -1,7 +1,8 @@
 extends RefCounted
 ## All transforms are offsets from the imported bind pose. Distances are skin
 ## pixels; the rig's Art node converts them to world units.
-var gaits := preload("res://assets/characters/pip/run_styles.gd").new()
+var gaits := preload("res://assets/characters/pip/cartoon_run.gd").new()
+var skin := preload("directional_skin.gd").new()
 var rig: Node2D
 var bones: Dictionary[StringName, Bone2D] = {}
 var clock := 0.0
@@ -20,6 +21,7 @@ func bind_rig(node: Node2D) -> void:
 	rig = node
 	for bone: Bone2D in rig.get_node("Art/Skeleton2D").find_children("*", "Bone2D", true, false):
 		bones[bone.name] = bone
+	skin.bind(node,bones)
 	reset()
 
 func reset(direction := Vector2.RIGHT, down := false) -> void:
@@ -49,8 +51,7 @@ func advance(dt: float, velocity: Vector2, aim: Vector2, attack: bool,
 	var heading := aim if aim.length() >= 0.15 else velocity.normalized()
 	if dodge:
 		heading = velocity.normalized()
-	if absf(heading.x) > 0.14 and (dodge or dodge_time < 0):
-		facing = signf(heading.x)
+	facing = skin.orient(heading,bones)
 	if attack:
 		strike_time = 0
 		ranged_attack = ranged
@@ -152,3 +153,6 @@ func advance(dt: float, velocity: Vector2, aim: Vector2, attack: bool,
 	bones[&"lamp"].rotation = 0.13*effort*sin(stride-0.95)+0.024*sin(clock*3.6-1.0)-0.22*lean
 	bones[&"scarf_tip"].rotation = 0.13*effort*sin(stride-0.48)+0.025*breath-0.25*lean
 	gaits.apply(bones, velocity, facing, dt, pose_name in ["walk", "run", "idle"])
+	bones[&"head"].rotation *= 0.8
+	# Counter 30% of the gait's vertical displacement at the neck only.
+	bones[&"head"].position = bones[&"head"].rest.origin - Vector2(0,0.30*(body.position.y-body.rest.origin.y)*gaits.blend)

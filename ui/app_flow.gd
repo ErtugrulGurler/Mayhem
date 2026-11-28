@@ -54,6 +54,9 @@ func back() -> void:
 		notice=""
 		show_page(history.pop_back())
 	elif page_name!="home": show_page("home")
+func start_playground() -> void:
+	get_tree().change_scene_to_file("res://playground/arena.tscn")
+
 func new_setup() -> void:
 	draft={"character":0,"location":0,"variation":0}
 	navigate("character")

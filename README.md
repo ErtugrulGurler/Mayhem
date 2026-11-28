@@ -7,7 +7,7 @@ Ana menüdeki hacimli çekirdek dekoru, oyun kamerasını 3D'ye dönüştürmez.
 ## Proje düzeni
 
 Kökteki `project.godot` ana menü sahnesini (`ui/main_menu.tscn`) açar.
-`ui/app_flow.gd` oturumu `prototype/scenes/session.tscn` üzerinden başlatır.
+Yeni Oyun doğrudan `playground/arena.tscn` sahnesine geçer. Devam Et, eski kampanya kaydını `prototype/scenes/session.tscn` ile açar.
 `prototype/core/` oyun durumunu ve simülasyon adımını, `prototype/systems/` hareketi,
 savaşı, üretimi ve kayıtları yönetir. Dünya çizimi, HUD ve çift analog denetimi
 `prototype/presentation/` altındadır.
@@ -22,30 +22,26 @@ Bağımsız Faz 0 hareket ve asker animasyonu çalışmasının kodu, testleri v
 
 ## Pip ile oyna
 
-**Yeni Oyun → Ada / Muhafız → Başlat** akışında Pip görünür. Sol analoğun
-merkezine yakın hareket yürüyüşe, tam itme koşuya geçer. Sağ analog saldırır.
-Hareket ederken **Kaç** düğmesiyle atılabilirsin. Düşman isabeti darbe tepkisini
-tetikler. Önceki Muhafız kayıtları aynı karakter slotu ve yeteneklerle açılır.
+**Yeni Oyun** düğmesi Pip ile ağaçlı ve kayalıklı eğitim çayırını açar.
+Sol analog yürütür. Sağ analog boş elle yalnızca bakışı değiştirir. Tabanca,
+tüfek veya balta seçiliyken sağ analogu basılı tutmak, o silahın temposunda
+saldırır. Analogu bırakınca saldırı durur. Klavyede WASD veya oklarla yürü,
+sağ fareyi tutarak imlece nişan al, 1–4 ile el değiştir, Space ile kaç.
 
-Koşuları karşılaştırmak için Pip ile oynarken mini haritanın altındaki **Original**
-düğmesine dokun. Her dokunuşta Bouncy Run, Cartoon Run, Waddle Run ve Foot IK Run
-sırayla açılır; beşinci dokunuşta Original geri gelir. Düğmede etkin stilin adı
-görünür. [Beş koşunun aynı hızda karşılaştırması](docs/evidence/pip/run-comparison.gif).
+Pip'in 15 kemikli rig'i, tasarım paftasından alınan ön, yan, arka ve arka çapraz
+baş parçalarını mevcut üç çeyrek görünümle birleştirir. Çanta ve fenerin derinliği,
+omuz ve kalça açıklıkları ile yüzeylerin eni yöne göre değişir. Cartoon Run tüm
+yönlerde kullanılır. Kuklada son üç saniyenin ortalama DPS değeri ve oturumun
+toplam hasarı görünür. Ana Menü çayırdan çıkar. Çayır istatistikleri oturumluktur.
 
-Pip’in çizimleri ve 15 kemikli Godot sahnesi `assets/characters/pip/` altında.
-Dirsekler, dizler ve atkı ağırlıklı mesh ile bükülür. Animasyon, oturumun gerçek
-konum, can ve savaş zamanlayıcılarını okur. Rig paketteki üç çeyrek görünümü kullanır ve sola bakışta
-yatay aynalanır.
-
-[Oyun içinden GIF](docs/evidence/pip/pip-in-game.gif) · [Altı poz](docs/evidence/pip/pip-poses.png) · [Oyun ekranı](docs/evidence/pip/gameplay.png)
+[Sekiz yön](docs/evidence/playground/directions.gif) · [Üç silah](docs/evidence/playground/weapons.gif) · [Çayır ekranı](docs/evidence/playground/meadow.png)
 
 ## Başlat
 
 Güncel main dalını çek veya GitHub ZIP'ini tamamen aç.
 Godot 4.7.2 ile kökteki project.godot dosyasını içe aktar, **F5 / Projeyi Çalıştır**.
 
-- **Yeni Oyun → karakter → harita/merkez/varyasyon → özet → Başlat.**
-- Var olan ara verme kaydı varsa üzerine yazmak ayrıca onay ister; İptal kaydı korur.
+- **Yeni Oyun → Combat & Animation Playground.** Çayır mevcut kampanya kaydının üzerine yazmaz.
 - **Devam Et** yalnız geçerli ara verme kaydıyla etkinleşir. Checkpoint devam kaydı değildir.
 - **Arkadaşlarla Oyna** henüz geliştirilmedi ve devre dışıdır.
 - **İstatistikler** yalnız gerçek kayıt verilerini gösterir.
@@ -53,7 +49,7 @@ Godot 4.7.2 ile kökteki project.godot dosyasını içe aktar, **F5 / Projeyi Ç
 - Çıkış/Quit/Bölüm Seç düğmesi yoktur. Esc / Android Back alt ekranda geri gider;
   ana menüde oyunu kapatmaz.
 
-## Oyna, duraklat, devam et
+## Kayıttan açılan kampanya
 
 Sol analog hareket; sağ analog tuttuğun yöne otomatik saldırı. Nişan yardımı yok.
 Alt bağlamsal düğme Topla / Teslim et / Tesisi aç olur. İnşa ve Çanta panelleri
@@ -74,7 +70,7 @@ Space kaç, C yetenek, H medkit. Ayrıntılı kontroller oyun içindedir.
 
     python3 tools/verify.py --godot /path/to/Godot_v4.7.2-stable_linux.x86_64
 
-Sonuç: **974 kontrol, 0 hata**. Editör importu, 180 kare açılış ve 14 test paketi dahil 16 motor süreci başarılı.
+Sonuç: **16 başarılı motor süreci**. Editör importu, 180 kare açılış ve 14 test paketi geçti.
 Native fare/klavye/sentetik touch, kayıt, pause, üç UI ölçeği ve dört yatay çözünürlük testli.
 Fiziksel Android, DPI/çentik, gerçek cihaz FPS ve APK testi yapılmadı.
 

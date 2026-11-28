@@ -27,8 +27,8 @@ suites = [
     ("menu_navigation", ["--script", "tests/menu/navigation_test.gd"]),
     ("menu_layout", ["--script", "tests/menu/layout_test.gd"]),
     ("menu_pointer", ["--script", "tests/menu/pointer_test.gd"]),
-    ("pip_runs", ["--script", "tests/pip/run_comparison.gd"]),
     ("pip_animation", ["--script", "tests/pip/session_animation.gd"]),
+    ("playground", ["--script", "tests/playground/acceptance.gd"]),
     ("legacy_smoke", ["--script", "tests/smoke_test.gd"]),
     ("legacy_combat", ["--script", "tests/combat_test.gd"]),
 ]

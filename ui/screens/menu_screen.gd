@@ -69,7 +69,7 @@ func add_button(parent: Node,text: String,callback: Callable,id: String="",prima
 
 func home() -> void:
 	heading.hide()
-	add_button(body,"Yeni Oyun",flow.new_setup,"new",true)
+	add_button(body,"Yeni Oyun",flow.start_playground,"new",true)
 	var resume:=add_button(body,"Devam Et",flow.resume_saved,"continue")
 	var valid:=MenuData.suspend(flow.suspend_path)
 	resume.disabled=valid.is_empty()
@@ -212,7 +212,7 @@ func defeat() -> void:
 	MenuTheme.label(body,"Merkez veya karakter kaybedildi.\nSüre %.0f sn · Rekor %d · Deneme %d\nSen: %.0f hasar · Kule/takım: %.0f hasar" % [s.seconds,s.peak_wave,s.attempt,s.player.damage,s.team.damage],21)
 	buttons.back.text="Ana Menü"
 	add_button(body,"Checkpoint'ten tekrar dene",flow.retry_checkpoint,"retry",true)
-	add_button(body,"Yeni Oyun",flow.new_setup,"new")
+	add_button(body,"Yeni Oyun",flow.start_playground,"new")
 	add_button(body,"Ana Menü",flow.home_after_defeat,"home")
 
 func focus_first() -> void:

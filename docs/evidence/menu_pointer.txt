@@ -1,9 +1,8 @@
 Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
 
 PASS MM-016 primary menu button has keyboard focus
-PASS MM-016 Enter opens real new-game setup
-PASS MM-016 Escape navigates back without quitting
-PASS MM-004 native GUI touchscreen opens setup
+PASS Enter starts the meadow directly
+PASS Touch starts the same playground
 PASS MM-005 native character card selects Cem
 PASS MM-004 pointer continues to map
 PASS MM-004 pointer continues to summary
@@ -15,4 +14,4 @@ PASS MM-007 native Continue restores exact paused snapshot
 PASS MM-016 Android Back closes dropdown before leaving settings
 PASS MM-016 next Back returns to pause
 PASS MM-016 Android Back on home does not quit or launch gameplay
-MENU POINTER: 15 checks, 0 failures
+MENU POINTER: 14 checks, 0 failures

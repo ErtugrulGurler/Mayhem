@@ -4,6 +4,26 @@ Ana oyun testleri, kökteki `project.godot` ile Godot 4.7.2 üzerinde çalışı
 [P0 mekanikleri ve testleri](docs/TEST_RESULTS.md) ve
 [menü ve kayıt testleri](docs/menu/REPORT.md) ilgili kabul senaryolarını içerir.
 
+## Combat & Animation Playground
+
+Kökteki proje Godot 4.7.2 ve Compatibility renderer ile doğrulandı. Import,
+180 kare açılış ve 14 test paketi geçti. Playground için headless modda 51
+kontrol geçti. Grafik testinde bunlara 60 kare dosyasının yazılma kontrolü
+eklendi. Menü geçişi klavye ve sentetik dokunmayla sınandı.
+
+Sekiz yönün koşu, duruş ve aksiyon pozları, açı eşiğindeki kararlılık, boş el,
+bağımsız hareket ve nişan, analog bırakma ve hedefteki hasar doğrulandı.
+Darbe alma pozu testte doğrudan tetiklendi; eğitim kuklası saldırmaz.
+Çayırdaki çarpışma gövdeleri ve ayaktan derinlik sırası bağımsız Faz 0
+projesinin son sürümünden alınmıştır. Yeni yönler paftadaki çizimleri ve
+paylaşılan gövde parçalarını kullanır. Özellikle profil ve arka çizimlerin
+kaynak çözünürlüğü ana üç çeyrek çizimden düşüktür. Fiziksel Android, APK
+ve cihaz performansı denenmedi.
+
+[Yön karşılaştırması](docs/evidence/playground/directions.gif) ·
+[Silah karşılaştırması](docs/evidence/playground/weapons.gif) ·
+[Oyun ekranı](docs/evidence/playground/meadow.png)
+
 ## Pip karakteri
 
 Kökteki proje temiz bir kopyada resmi Godot **4.7.2.stable.official.ed1daf0bf** ile

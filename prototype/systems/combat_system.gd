@@ -2,6 +2,11 @@ class_name CombatSystem
 extends RefCounted
 static func hit_enemy(s: Dictionary,e: Dictionary,amount: float,source: String) -> void:
 	if not s.enemies.has(e): return
+	if e.get("training",false):
+		e.total += amount
+		e.last_hit = amount
+		e.flash = 0.15
+		return
 	var dealt:=minf(e.hp,amount)
 	e.hp-=amount
 	e.flash=0.15
@@ -52,7 +57,7 @@ static func skill(s: Dictionary) -> void:
 		"sprint": s.player.buff=5.0
 		"brace": s.player.brace=5.0
 		"bandage": s.player.hp=minf(100,s.player.hp+28)
-static func tick(s: Dictionary,dt: float) -> void:
+static func tick(s: Dictionary,dt: float, barrier: Callable = Callable()) -> void:
 	for b in s.structures:
 		b.cooldown=maxf(0,b.cooldown-dt)
 		if not b.built or not b.enabled or b.cooldown>0: continue
@@ -73,7 +78,7 @@ static func tick(s: Dictionary,dt: float) -> void:
 		shot.life-=dt
 		var old: Vector2=shot.pos
 		shot.pos+=shot.dir*550*dt
-		var collided:=MayhemTerrain.blocked(shot.pos)
+		var collided: bool = barrier.call(old,shot.pos) if barrier.is_valid() else MayhemTerrain.blocked(shot.pos)
 		for b in s.structures:
 			if b.pos.distance_to(Geometry2D.get_closest_point_to_segment(b.pos,old,shot.pos))<25 and old.distance_to(b.pos)>35: collided=true
 		if not collided:
