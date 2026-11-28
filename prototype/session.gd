@@ -50,7 +50,10 @@ func _process(dt: float) -> void:
 		if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT): aim = (get_global_mouse_position()-sim.state.player.pos).normalized()
 	if not input_allowed: movement=Vector2.ZERO; aim=Vector2.ZERO
 	if running and not paused_now():
-		sim.tick(minf(dt,0.05),movement.limit_length(),aim)
+		var step := minf(dt, 0.05)
+		if not sim.state.lost:
+			sim.tick(step, movement.limit_length(), aim)
+			view.actor.advance(sim.state.player, step, aim)
 		camera.position = sim.state.player.pos
 		if sim.state.lost:
 			DirAccess.remove_absolute("user://suspend.bin")

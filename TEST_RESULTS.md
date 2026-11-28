@@ -4,7 +4,44 @@ Ana oyun testleri, kökteki `project.godot` ile Godot 4.7.2 üzerinde çalışı
 [P0 mekanikleri ve testleri](docs/TEST_RESULTS.md) ve
 [menü ve kayıt testleri](docs/menu/REPORT.md) ilgili kabul senaryolarını içerir.
 
-## Ana proje temizliği ve oyuncu çizimi
+## Pip karakteri
+
+Kökteki proje temiz bir kopyada resmi Godot **4.7.2.stable.official.ed1daf0bf** ile
+import edildi. Açılışta 180 kare çalıştı. 919 mevcut kontrol ve Pip için eklenen
+42 kontrol geçti. Karakter testi ana menüden bir oturum açar. 15 kemiğin ve
+11 dokulu yüzeyin bağlarını, her köşedeki ağırlık toplamını, karşılıklı kol/bacak
+hareketini, envanterde boş silah seçimini, kaçınmayı, gerçek düşman darbesini,
+duraklatmayı, sola dönüşü ve kayıttan dönüşü kontrol eder.
+
+**Görsel inceleme.** Kaynak pakette bazı kol parçalarına bir el, gövdeye iki kol
+ve yüze kulaklar çizilmişti. Birleşik referanstan gözlük ve saçla birlikte baş
+silueti alındı. Ceket kolları ayrıldı, atkıdaki etiket ayıklandı ve her kola
+tek bir el bırakıldı. Referansın baş/gövde oranına göre ayak, omuz, diz ve dirsek
+konumları belirlendi. İki kol, iki bacak ve atkının ağında komşu kemiklerin
+ağırlıkları eklem çevresinde kademeli değişir.
+
+Compatibility/Mesa llvmpipe ile gerçek sahneden 20 FPS hızında 72 kare alındı.
+Duruş, yürüyüş, koşu, saldırı, kaçınma ve darbe anlarındaki baş, botlar,
+kol bağlantıları ve fener görsel olarak kontrol edildi. Kaçınmadaki eğim hareket
+yönüne çevrildi ve nişan işaretinin başlangıcı gövdeden uzaklaştırıldı.
+Yakın planlar oyun kamerasının yakınlaştırmasıyla alındı. Fiziksel Android,
+APK ve cihaz üzerindeki kare süresi test edilmedi.
+
+[Hareketli kayıt](docs/evidence/pip/pip-in-game.gif) · [Pozlar](docs/evidence/pip/pip-poses.png) · [Normal yakınlaştırma](docs/evidence/pip/gameplay.png) · [Test sonuçları](docs/evidence/commands.json)
+
+Dosyalarda yapılan değişiklikler:
+
+- `assets/characters/pip/`: rig sahnesi, animasyon betiği, paketten hazırlanan
+  11 PNG ve Godot import/UID dosyaları eklendi.
+- `prototype/core/catalog.gd`, `prototype/session.gd`, `prototype/presentation/player_appearance.gd`
+  ve `world_indicators.gd`: Muhafız profili, görsel güncelleme ve nişan işareti bağlandı.
+- `ui/art/character_portrait.gd` ve `ui/screens/menu_screen.gd`: seçim kartına
+  aynı rig ve Pip adı eklendi.
+- `tests/pip/`, `tools/verify.py`, `docs/evidence/`, README ve test raporu
+  doğrulama ve görsel kanıtlarla güncellendi. Bu entegrasyonda dosya taşınmadı
+  veya silinmedi. Önceki temizlikte kaldırılan dizin aşağıda listelenir.
+
+## Ana proje temizliği ve oyuncu çizimi (Pip öncesi)
 
 Godot `4.7.2.stable.official.ed1daf0bf` ile editör importu, 180 kare açılış
 ve 12 regresyon paketi geçti. Toplam 919 kontrol ve 14 başarılı motor süreci var.

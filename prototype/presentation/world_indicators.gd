@@ -7,7 +7,8 @@ func _draw() -> void:
 	var player: Dictionary = state.player
 	var pos: Vector2 = player.pos
 	var aim: Vector2 = player.aim
-	draw_line(pos, pos + aim * 29, Color("#fff4d2"), 4)
+	var pointer_start := pos + aim * 21.0 if player.character == MayhemCatalog.PIP_PROFILE else pos
+	draw_line(pointer_start, pos + aim * 29, Color("#fff4d2"), 4)
 	if player.shot_cd > 0.32 and player.slot < 0:
 		draw_arc(pos, 65, aim.angle() - 0.7, aim.angle() + 0.7, 20, Color("#ffe19d"), 5)
 	if player.heavy:

@@ -1,7 +1,19 @@
 extends Control
 var character:=0
-func _ready() -> void: mouse_filter=Control.MOUSE_FILTER_IGNORE
+func _ready() -> void:
+	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	if character == MayhemCatalog.PIP_PROFILE:
+		var portrait: Node2D = preload("res://assets/characters/pip/pip_rig.tscn").instantiate()
+		add_child(portrait)
+		var fit := func() -> void:
+			var factor := minf(size.x / 52.0, size.y / 78.0)
+			portrait.scale = Vector2.ONE * factor
+			portrait.position = Vector2(size.x * 0.5, size.y * 0.5 + 35.0 * factor)
+		resized.connect(fit)
+		fit.call()
 func _draw() -> void:
+	if character == MayhemCatalog.PIP_PROFILE:
+		return
 	var color:=Color(MayhemCatalog.CHARACTERS[character].color)
 	draw_set_transform(Vector2(size.x/2,size.y/2+7))
 	draw_circle(Vector2(0,29),25,Color(0.1,0.2,0.12,0.25))
@@ -9,9 +21,6 @@ func _draw() -> void:
 	draw_circle(Vector2(0,-8),22,Color("#f3c78d"))
 	draw_circle(Vector2(-7,-10),3,Color("#284335")); draw_circle(Vector2(7,-10),3,Color("#284335"))
 	match character:
-		0:
-			draw_arc(Vector2(0,-10),23,PI,TAU,20,color,9)
-			draw_rect(Rect2(-5,-42,10,15),Color("#e6e3b7"))
 		1:
 			draw_colored_polygon(PackedVector2Array([Vector2(-27,-21),Vector2(22,-21),Vector2(10,-41)]),color)
 			draw_line(Vector2(21,9),Vector2(30,-26),Color("#8a6942"),4)

@@ -3,6 +3,8 @@ extends RefCounted
 ## All numbers here are prototype balance assumptions, not final user decisions.
 const SIZE = Vector2(1800, 1200)
 const REACH = 95.0
+## The original Guard profile keeps its index in checkpoints and suspended games.
+const PIP_PROFILE := 0
 const CHARACTERS = [
 	{"name":"Ada / Muhafız", "color":"#ffc66b", "hp":120.0, "speed":185.0, "melee":42.0, "skill":"shockwave"},
 	{"name":"Bora / İzci", "color":"#83d9a2", "hp":90.0, "speed":215.0, "melee":34.0, "skill":"sprint"},

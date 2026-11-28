@@ -1,0 +1,199 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/characters/pip/parts/satchel.png" id="1"]
+[ext_resource type="Texture2D" path="res://assets/characters/pip/parts/lamp.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/characters/pip/parts/far_leg.png" id="3"]
+[ext_resource type="Texture2D" path="res://assets/characters/pip/parts/far_boot.png" id="4"]
+[ext_resource type="Texture2D" path="res://assets/characters/pip/parts/near_leg.png" id="5"]
+[ext_resource type="Texture2D" path="res://assets/characters/pip/parts/near_boot.png" id="6"]
+[ext_resource type="Texture2D" path="res://assets/characters/pip/parts/far_arm.png" id="7"]
+[ext_resource type="Texture2D" path="res://assets/characters/pip/parts/coat.png" id="8"]
+[ext_resource type="Texture2D" path="res://assets/characters/pip/parts/near_arm.png" id="9"]
+[ext_resource type="Texture2D" path="res://assets/characters/pip/parts/collar.png" id="10"]
+[ext_resource type="Texture2D" path="res://assets/characters/pip/parts/head.png" id="11"]
+
+[node name="Pip" type="Node2D"]
+
+[node name="Art" type="Node2D" parent="."]
+texture_filter = 4
+scale = Vector2(0.143, 0.143)
+
+[node name="Skeleton2D" type="Skeleton2D" parent="Art"]
+
+[node name="body" type="Bone2D" parent="Art/Skeleton2D"]
+position = Vector2(1.0000, -117.0000)
+rest = Transform2D(1, 0, 0, 1, 1, -117)
+auto_calculate_length_and_angle = false
+length = 25.0
+
+[node name="head" type="Bone2D" parent="Art/Skeleton2D/body"]
+position = Vector2(1.0000, -140.0000)
+rest = Transform2D(1, 0, 0, 1, 1, -140)
+auto_calculate_length_and_angle = false
+length = 25.0
+
+[node name="pack" type="Bone2D" parent="Art/Skeleton2D/body"]
+position = Vector2(-70.0000, -101.0000)
+rest = Transform2D(1, 0, 0, 1, -70, -101)
+auto_calculate_length_and_angle = false
+length = 25.0
+
+[node name="lamp" type="Bone2D" parent="Art/Skeleton2D/body/pack"]
+position = Vector2(-60.0000, 30.0000)
+rest = Transform2D(1, 0, 0, 1, -60, 30)
+auto_calculate_length_and_angle = false
+length = 25.0
+
+[node name="scarf_tip" type="Bone2D" parent="Art/Skeleton2D/body"]
+position = Vector2(-31.0000, -135.0000)
+rest = Transform2D(1, 0, 0, 1, -31, -135)
+auto_calculate_length_and_angle = false
+length = 25.0
+
+[node name="near_arm" type="Bone2D" parent="Art/Skeleton2D/body"]
+position = Vector2(-28.0000, -103.0000)
+rest = Transform2D(1, 0, 0, 1, -28, -103)
+auto_calculate_length_and_angle = false
+length = 25.0
+
+[node name="near_forearm" type="Bone2D" parent="Art/Skeleton2D/body/near_arm"]
+position = Vector2(-15.0000, 53.0000)
+rest = Transform2D(1, 0, 0, 1, -15, 53)
+auto_calculate_length_and_angle = false
+length = 25.0
+
+[node name="far_arm" type="Bone2D" parent="Art/Skeleton2D/body"]
+position = Vector2(54.0000, -97.0000)
+rest = Transform2D(1, 0, 0, 1, 54, -97)
+auto_calculate_length_and_angle = false
+length = 25.0
+
+[node name="far_forearm" type="Bone2D" parent="Art/Skeleton2D/body/far_arm"]
+position = Vector2(18.0000, 48.0000)
+rest = Transform2D(1, 0, 0, 1, 18, 48)
+auto_calculate_length_and_angle = false
+length = 25.0
+
+[node name="near_leg" type="Bone2D" parent="Art/Skeleton2D/body"]
+position = Vector2(-29.0000, 9.0000)
+rest = Transform2D(1, 0, 0, 1, -29, 9)
+auto_calculate_length_and_angle = false
+length = 25.0
+
+[node name="near_shin" type="Bone2D" parent="Art/Skeleton2D/body/near_leg"]
+position = Vector2(-10.0000, 41.0000)
+rest = Transform2D(1, 0, 0, 1, -10, 41)
+auto_calculate_length_and_angle = false
+length = 25.0
+
+[node name="near_foot" type="Bone2D" parent="Art/Skeleton2D/body/near_leg/near_shin"]
+position = Vector2(1.0000, 39.0000)
+rest = Transform2D(1, 0, 0, 1, 1, 39)
+auto_calculate_length_and_angle = false
+length = 25.0
+
+[node name="far_leg" type="Bone2D" parent="Art/Skeleton2D/body"]
+position = Vector2(36.0000, 9.0000)
+rest = Transform2D(1, 0, 0, 1, 36, 9)
+auto_calculate_length_and_angle = false
+length = 25.0
+
+[node name="far_shin" type="Bone2D" parent="Art/Skeleton2D/body/far_leg"]
+position = Vector2(12.0000, 40.0000)
+rest = Transform2D(1, 0, 0, 1, 12, 40)
+auto_calculate_length_and_angle = false
+length = 25.0
+
+[node name="far_foot" type="Bone2D" parent="Art/Skeleton2D/body/far_leg/far_shin"]
+position = Vector2(3.0000, 36.0000)
+rest = Transform2D(1, 0, 0, 1, 3, 36)
+auto_calculate_length_and_angle = false
+length = 25.0
+
+[node name="satchel" type="Polygon2D" parent="Art"]
+texture = ExtResource("1")
+skeleton = NodePath("../Skeleton2D")
+polygon = PackedVector2Array(-158, -262, -38, -262, -158, -99, -38, -99)
+uv = PackedVector2Array(0, 0, 163, 0, 0, 137, 163, 137)
+polygons = [PackedInt32Array(0, 1, 3), PackedInt32Array(0, 3, 2)]
+bones = [NodePath("body/pack"), PackedFloat32Array(1, 1, 1, 1)]
+
+[node name="lamp" type="Polygon2D" parent="Art"]
+texture = ExtResource("2")
+skeleton = NodePath("../Skeleton2D")
+polygon = PackedVector2Array(-166, -196, -89, -196, -166, -77, -89, -77)
+uv = PackedVector2Array(0, 0, 73, 0, 0, 121, 73, 121)
+polygons = [PackedInt32Array(0, 1, 3), PackedInt32Array(0, 3, 2)]
+bones = [NodePath("body/pack/lamp"), PackedFloat32Array(1, 1, 1, 1)]
+
+[node name="far_leg" type="Polygon2D" parent="Art"]
+texture = ExtResource("3")
+skeleton = NodePath("../Skeleton2D")
+polygon = PackedVector2Array(17, -121, 76, -121, 17, -105.5, 76, -105.5, 17, -90, 76, -90, 17, -74.5, 76, -74.5, 17, -59, 76, -59, 17, -43.5, 76, -43.5, 17, -28, 76, -28)
+uv = PackedVector2Array(0, 0, 60, 0, 0, 14.667, 60, 14.667, 0, 29.333, 60, 29.333, 0, 44, 60, 44, 0, 58.667, 60, 58.667, 0, 73.333, 60, 73.333, 0, 88, 60, 88)
+polygons = [PackedInt32Array(0, 1, 3), PackedInt32Array(0, 3, 2), PackedInt32Array(2, 3, 5), PackedInt32Array(2, 5, 4), PackedInt32Array(4, 5, 7), PackedInt32Array(4, 7, 6), PackedInt32Array(6, 7, 9), PackedInt32Array(6, 9, 8), PackedInt32Array(8, 9, 11), PackedInt32Array(8, 11, 10), PackedInt32Array(10, 11, 13), PackedInt32Array(10, 13, 12)]
+bones = [NodePath("body/far_leg"), PackedFloat32Array(1, 1, 1, 1, 1, 1, 0.63333, 0.63333, 0.077778, 0.077778, 0, 0, 0, 0), NodePath("body/far_leg/far_shin"), PackedFloat32Array(0, 0, 0, 0, 0, 0, 0.36667, 0.36667, 0.92222, 0.92222, 1, 1, 1, 1)]
+
+[node name="far_boot" type="Polygon2D" parent="Art"]
+texture = ExtResource("4")
+skeleton = NodePath("../Skeleton2D")
+polygon = PackedVector2Array(16, -55, 100, -55, 16, -5, 100, -5)
+uv = PackedVector2Array(0, 0, 79, 0, 0, 64, 79, 64)
+polygons = [PackedInt32Array(0, 1, 3), PackedInt32Array(0, 3, 2)]
+bones = [NodePath("body/far_leg/far_shin/far_foot"), PackedFloat32Array(1, 1, 1, 1)]
+
+[node name="near_leg" type="Polygon2D" parent="Art"]
+texture = ExtResource("5")
+skeleton = NodePath("../Skeleton2D")
+polygon = PackedVector2Array(-70, -123, 11, -123, -70, -106, 11, -106, -70, -89, 11, -89, -70, -72, 11, -72, -70, -55, 11, -55, -70, -38, 11, -38, -70, -21, 11, -21)
+uv = PackedVector2Array(0, 0, 80, 0, 0, 16.5, 80, 16.5, 0, 33, 80, 33, 0, 49.5, 80, 49.5, 0, 66, 80, 66, 0, 82.5, 80, 82.5, 0, 99, 80, 99)
+polygons = [PackedInt32Array(0, 1, 3), PackedInt32Array(0, 3, 2), PackedInt32Array(2, 3, 5), PackedInt32Array(2, 5, 4), PackedInt32Array(4, 5, 7), PackedInt32Array(4, 7, 6), PackedInt32Array(6, 7, 9), PackedInt32Array(6, 9, 8), PackedInt32Array(8, 9, 11), PackedInt32Array(8, 11, 10), PackedInt32Array(10, 11, 13), PackedInt32Array(10, 13, 12)]
+bones = [NodePath("body/near_leg"), PackedFloat32Array(1, 1, 1, 1, 1, 1, 0.66667, 0.66667, 0.11111, 0.11111, 0, 0, 0, 0), NodePath("body/near_leg/near_shin"), PackedFloat32Array(0, 0, 0, 0, 0, 0, 0.33333, 0.33333, 0.88889, 0.88889, 1, 1, 1, 1)]
+
+[node name="near_boot" type="Polygon2D" parent="Art"]
+texture = ExtResource("6")
+skeleton = NodePath("../Skeleton2D")
+polygon = PackedVector2Array(-75, -52, 6, -52, -75, 0, 6, 0)
+uv = PackedVector2Array(0, 0, 76, 0, 0, 63, 76, 63)
+polygons = [PackedInt32Array(0, 1, 3), PackedInt32Array(0, 3, 2)]
+bones = [NodePath("body/near_leg/near_shin/near_foot"), PackedFloat32Array(1, 1, 1, 1)]
+
+[node name="far_arm" type="Polygon2D" parent="Art"]
+texture = ExtResource("7")
+skeleton = NodePath("../Skeleton2D")
+polygon = PackedVector2Array(33, -226, 120, -226, 33, -205.83, 120, -205.83, 33, -185.67, 120, -185.67, 33, -165.5, 120, -165.5, 33, -145.33, 120, -145.33, 33, -125.17, 120, -125.17, 33, -105, 120, -105)
+uv = PackedVector2Array(0, 0, 66, 0, 0, 14.167, 66, 14.167, 0, 28.333, 66, 28.333, 0, 42.5, 66, 42.5, 0, 56.667, 66, 56.667, 0, 70.833, 66, 70.833, 0, 85, 66, 85)
+polygons = [PackedInt32Array(0, 1, 3), PackedInt32Array(0, 3, 2), PackedInt32Array(2, 3, 5), PackedInt32Array(2, 5, 4), PackedInt32Array(4, 5, 7), PackedInt32Array(4, 7, 6), PackedInt32Array(6, 7, 9), PackedInt32Array(6, 9, 8), PackedInt32Array(8, 9, 11), PackedInt32Array(8, 11, 10), PackedInt32Array(10, 11, 13), PackedInt32Array(10, 13, 12)]
+bones = [NodePath("body/far_arm"), PackedFloat32Array(1, 1, 1, 1, 1, 1, 0.6, 0.6, 0.044444, 0.044444, 0, 0, 0, 0), NodePath("body/far_arm/far_forearm"), PackedFloat32Array(0, 0, 0, 0, 0, 0, 0.4, 0.4, 0.95556, 0.95556, 1, 1, 1, 1)]
+
+[node name="coat" type="Polygon2D" parent="Art"]
+texture = ExtResource("8")
+skeleton = NodePath("../Skeleton2D")
+polygon = PackedVector2Array(-130, -256, 121, -256, -130, -80, 121, -80)
+uv = PackedVector2Array(0, 0, 159, 0, 0, 118, 159, 118)
+polygons = [PackedInt32Array(0, 1, 3), PackedInt32Array(0, 3, 2)]
+bones = [NodePath("body"), PackedFloat32Array(1, 1, 1, 1)]
+
+[node name="near_arm" type="Polygon2D" parent="Art"]
+texture = ExtResource("9")
+skeleton = NodePath("../Skeleton2D")
+polygon = PackedVector2Array(-91, -229, 3, -229, -91, -206.83, 3, -206.83, -91, -184.67, 3, -184.67, -91, -162.5, 3, -162.5, -91, -140.33, 3, -140.33, -91, -118.17, 3, -118.17, -91, -96, 3, -96)
+uv = PackedVector2Array(0, 0, 84, 0, 0, 18.667, 84, 18.667, 0, 37.333, 84, 37.333, 0, 56, 84, 56, 0, 74.667, 84, 74.667, 0, 93.333, 84, 93.333, 0, 112, 84, 112)
+polygons = [PackedInt32Array(0, 1, 3), PackedInt32Array(0, 3, 2), PackedInt32Array(2, 3, 5), PackedInt32Array(2, 5, 4), PackedInt32Array(4, 5, 7), PackedInt32Array(4, 7, 6), PackedInt32Array(6, 7, 9), PackedInt32Array(6, 9, 8), PackedInt32Array(8, 9, 11), PackedInt32Array(8, 11, 10), PackedInt32Array(10, 11, 13), PackedInt32Array(10, 13, 12)]
+bones = [NodePath("body/near_arm"), PackedFloat32Array(1, 1, 1, 1, 1, 1, 0.55882, 0.55882, 0.068627, 0.068627, 0, 0, 0, 0), NodePath("body/near_arm/near_forearm"), PackedFloat32Array(0, 0, 0, 0, 0, 0, 0.44118, 0.44118, 0.93137, 0.93137, 1, 1, 1, 1)]
+
+[node name="collar" type="Polygon2D" parent="Art"]
+texture = ExtResource("10")
+skeleton = NodePath("../Skeleton2D")
+polygon = PackedVector2Array(-81, -274, 83, -274, -81, -256.83, 83, -256.83, -81, -239.67, 83, -239.67, -81, -222.5, 83, -222.5, -81, -205.33, 83, -205.33, -81, -188.17, 83, -188.17, -81, -171, 83, -171)
+uv = PackedVector2Array(0, 0, 159, 0, 0, 22.5, 159, 22.5, 0, 45, 159, 45, 0, 67.5, 159, 67.5, 0, 90, 159, 90, 0, 112.5, 159, 112.5, 0, 135, 159, 135)
+polygons = [PackedInt32Array(0, 1, 3), PackedInt32Array(0, 3, 2), PackedInt32Array(2, 3, 5), PackedInt32Array(2, 5, 4), PackedInt32Array(4, 5, 7), PackedInt32Array(4, 7, 6), PackedInt32Array(6, 7, 9), PackedInt32Array(6, 9, 8), PackedInt32Array(8, 9, 11), PackedInt32Array(8, 11, 10), PackedInt32Array(10, 11, 13), PackedInt32Array(10, 13, 12)]
+bones = [NodePath("body"), PackedFloat32Array(1, 1, 1, 1, 0.94253, 1, 0.65517, 1, 0.36782, 1, 0.08046, 1, 0, 1), NodePath("body/scarf_tip"), PackedFloat32Array(0, 0, 0, 0, 0.057471, 0, 0.34483, 0, 0.63218, 0, 0.91954, 0, 1, 0)]
+
+[node name="head" type="Polygon2D" parent="Art"]
+texture = ExtResource("11")
+skeleton = NodePath("../Skeleton2D")
+polygon = PackedVector2Array(-178, -488, 145, -488, -178, -244, 145, -244)
+uv = PackedVector2Array(0, 0, 323, 0, 0, 244, 323, 244)
+polygons = [PackedInt32Array(0, 1, 3), PackedInt32Array(0, 3, 2)]
+bones = [NodePath("body/head"), PackedFloat32Array(1, 1, 1, 1)]

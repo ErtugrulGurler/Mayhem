@@ -20,6 +20,20 @@ korumayı ve inşa işaretlerini karakterin üzerinde çizer.
 Bağımsız Faz 0 hareket ve asker animasyonu çalışmasının kodu, testleri ve
 çıktıları [Faz 0 arşivinde](https://github.com/ErtugrulGurler/Mayhem/tree/d0bffcbb12b5cb646f3f5b6722b6d160e7085d24/prototypes/phase0) bulunur.
 
+## Pip ile oyna
+
+**Yeni Oyun → Ada / Muhafız → Başlat** akışında Pip görünür. Sol analoğun
+merkezine yakın hareket yürüyüşe, tam itme koşuya geçer. Sağ analog saldırır.
+Hareket ederken **Kaç** düğmesiyle atılabilirsin. Düşman isabeti darbe tepkisini
+tetikler. Önceki Muhafız kayıtları aynı karakter slotu ve yeteneklerle açılır.
+
+Pip’in çizimleri ve 15 kemikli Godot sahnesi `assets/characters/pip/` altında.
+Dirsekler, dizler ve atkı ağırlıklı mesh ile bükülür. Animasyon, oturumun gerçek
+konum, can ve savaş zamanlayıcılarını okur. Rig paketteki üç çeyrek görünümü kullanır ve sola bakışta
+yatay aynalanır.
+
+[Oyun içinden GIF](docs/evidence/pip/pip-in-game.gif) · [Altı poz](docs/evidence/pip/pip-poses.png) · [Oyun ekranı](docs/evidence/pip/gameplay.png)
+
 ## Başlat
 
 Güncel main dalını çek veya GitHub ZIP'ini tamamen aç.
@@ -55,7 +69,7 @@ Space kaç, C yetenek, H medkit. Ayrıntılı kontroller oyun içindedir.
 
     python3 tools/verify.py --godot /path/to/Godot_v4.7.2-stable_linux.x86_64
 
-Sonuç: **919 kontrol, 0 hata**; editor import ve startup dahil 14 motor süreci başarılı.
+Sonuç: **961 kontrol, 0 hata**. Editör importu, 180 kare açılış ve 13 test paketi dahil 15 motor süreci başarılı.
 Native fare/klavye/sentetik touch, kayıt, pause, üç UI ölçeği ve dört yatay çözünürlük testli.
 Fiziksel Android, DPI/çentik, gerçek cihaz FPS ve APK testi yapılmadı.
 

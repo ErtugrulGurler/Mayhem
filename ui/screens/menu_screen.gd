@@ -88,7 +88,7 @@ func characters() -> void:
 	grid.add_theme_constant_override("h_separation",12)
 	grid.add_theme_constant_override("v_separation",12)
 	body.add_child(grid)
-	var styles=["Darbeleri göğüsler · alan darbesi","Hızlı hareket eder · depar","Savunmada dayanır · siper","Kendini iyileştirir · sargı"]
+	var styles=["Pip · Darbeleri göğüsler","Hızlı hareket eder · depar","Savunmada dayanır · siper","Kendini iyileştirir · sargı"]
 	var skills={"shockwave":"Alan darbesi","sprint":"Depar","brace":"Siper","bandage":"Sargı"}
 	for i in range(MayhemCatalog.CHARACTERS.size()):
 		var data: Dictionary=MayhemCatalog.CHARACTERS[i]
